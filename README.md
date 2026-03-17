@@ -1,80 +1,82 @@
-# GRISI — Global Retail Investor Sentiment Index
+# GRISI
 
-> A daily-updated contrarian indicator that tells you: **what's the historical win rate if you enter the market today?**
+**Global Retail Investor Sentiment Index**
 
-[![US Dashboard](https://img.shields.io/badge/Dashboard-US_(EN)-blue)](https://wenyuchiou.github.io/grisi/index.html)
-[![TW Dashboard](https://img.shields.io/badge/Dashboard-台灣_(中文)-orange)](https://wenyuchiou.github.io/grisi/tw.html)
+A daily contrarian indicator for US and Taiwan markets.
+When retail investors are fearful, markets tend to rise. When they're greedy, markets underperform.
 
-## What It Does
+> Open the dashboard → check the score → see the historical win rate at this level → decide.
 
-Open the dashboard → see three things:
+**[🇺🇸 US Dashboard](https://wenyuchiou.github.io/grisi/index.html)** · **[🇹🇼 台灣 Dashboard](https://wenyuchiou.github.io/grisi/tw.html)**
 
-1. **Current score** — US and TW retail sentiment (0–100, high = greedy)
-2. **Expected return** — based on 16 years of data, when sentiment was at this level, what happened next
-3. **Signal** — HOLD / BUY / SELL with reasoning
+---
 
-**Example:** When the score is ~30 (fearful), SPY has historically returned **+2.2% over the next 20 days with 73% win rate**. At ~70 (greedy), only +0.8%.
+## Today's Reading
+
+| Market | Score | Sentiment | 20d Expected Return | Win Rate |
+|--------|-------|-----------|---------------------|----------|
+| 🇺🇸 US (SPY) | 32 | Cautious | +2.2% | 73% |
+| 🇹🇼 TW (TAIEX) | 44 | Neutral | +0.8% | 63% |
+
+*Updated: 2026-03-17. Auto-updates Mon–Fri via GitHub Actions.*
+
+---
 
 ## How It Works
 
 ```
-Public market data (Yahoo Finance + FinMind)
-  → 5 indicators per market, Z-score normalized (252-day rolling)
-  → Behavioral adjustment at extremes (loss aversion, FOMO, herding)
+Public market data (Yahoo Finance, FinMind)
+  → 5 indicators per market
+  → Z-score normalized (252-day rolling, no lookahead)
+  → Behavioral adjustment at extremes
   → Score 0–100
-  → Historical forward return lookup at current score level
-  → Daily auto-update via GitHub Actions
+  → Forward return lookup: "At this score, what happened historically?"
 ```
 
-### What goes into the score
+### Scoring Components
 
-**US (SPY):** VIX complacency · SPY vs 52W high · 20d momentum · VIX-SPY correlation · Gold/SPY ratio
+| US (SPY) | TW (TAIEX) |
+|----------|------------|
+| VIX complacency | US 10Y rate pressure |
+| SPY vs 52W high | Gold/SPY risk appetite |
+| 20d momentum | Realized volatility |
+| VIX-SPY correlation | TAIEX vs 52W high |
+| Gold/SPY ratio | Volume surge |
 
-**TW (TAIEX):** US 10Y rate pressure · Gold/SPY ratio · realized vol · TAIEX vs 52W high · volume surge
+### Key Result
 
-### Why it works
+Buying in **Extreme Fear** (Q1) vs **Extreme Greed** (Q5):
 
-Retail investors systematically overreact at extremes. When they're greedy (score >70), markets tend to underperform. When they're fearful (score <30), markets outperform. This is a well-documented behavioral finance phenomenon (Kahneman & Tversky, 1979).
+| | Q1 (Fear) | Q5 (Greed) | Edge |
+|--|-----------|------------|------|
+| SPY 20d | +2.43% | +0.82% | **+1.61%** |
+| TAIEX 20d | +1.21% | +0.40% | **+0.81%** |
 
-### Backtest (2010–2026)
+Backtest: 2010–2026 (16 years), IC = -0.175 (p < 0.0001).
 
-| Market | Horizon | IC | p-value | Interpretation |
-|--------|---------|-----|---------|----------------|
-| SPY | 20d | **-0.175** | < 0.0001 | High greed → low future returns |
-| SPY | 60d | **-0.180** | < 0.0001 | Stronger over longer horizons |
-| TAIEX | 20d | **-0.128** | < 0.0001 | Same pattern in Taiwan |
+---
 
 ## Data Sources
 
-| Data | Source | Update |
-|------|--------|--------|
-| SPY, VIX, Gold, 10Y yield | Yahoo Finance (yfinance) | Daily |
-| TAIEX, TSMC | Yahoo Finance (yfinance) | Daily |
-| Margin balance (融資餘額) | FinMind API (TWSE OpenData) | Daily |
-| Institutional flows (三大法人) | FinMind API (TWSE OpenData) | Daily |
-| Behavioral parameters | Prospect Theory literature | Static |
+| Data | Source | Frequency |
+|------|--------|-----------|
+| US prices (SPY, VIX, Gold, 10Y) | Yahoo Finance | Daily |
+| TW prices (TAIEX, TSMC) | Yahoo Finance | Daily |
+| TW margin balance (融資餘額) | FinMind / TWSE | Daily |
+| TW institutional flows (三大法人) | FinMind / TWSE | Daily |
+| Behavioral parameters | Prospect Theory (Kahneman & Tversky, 1979) | Static |
 
-## Auto-Update
+---
 
-GitHub Actions runs Mon–Fri at 22:00 UTC (6PM ET / 6AM TWN):
-1. Pulls latest market data
-2. Updates dashboard JSON
-3. Commits and pushes → GitHub Pages auto-deploys
-
-Agent narrative (cultural sentiment analysis) is updated manually by Claude.
-
-## Project Structure
+## Structure
 
 ```
-grisi/
-├── docs/           ← Dashboard (GitHub Pages serves from here)
-│   ├── index.html  ← US market (English)
-│   └── tw.html     ← TW market (繁體中文)
-├── data/           ← All data + results
-├── src/            ← Python scoring engine + pipelines
-└── .github/        ← Daily auto-update workflow
+docs/         Dashboard (GitHub Pages)
+data/         Market data + scoring results
+src/          Python scoring engine + pipelines
+.github/      Daily auto-update (Mon–Fri 22:00 UTC)
 ```
 
-## Not Financial Advice
+---
 
-GRISI is a research tool based on historical patterns. Past performance does not guarantee future results. Use at your own risk.
+*Not financial advice. Past performance ≠ future results.*

@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GRISI Dashboard — EN</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #0d1117;
+  color: #e6edf3;
+  max-width: 800px;
+  margin: 0 auto;
+  padding-bottom: 40px;
+}
+
+/* Header */
+.header {
+  padding: 20px 16px 12px;
+  text-align: center;
+  border-bottom: 1px solid #30363d;
+  position: relative;
+}
+.header h1 { font-size: 1.5em; font-weight: 700; letter-spacing: 0.5px; }
+.header .sub { color: #8b949e; font-size: 0.78em; margin-top: 3px; }
+.header .date { color: #58a6ff; font-size: 0.82em; margin-top: 6px; }
+.lang-switch {
+  position: absolute;
+  top: 20px;
+  right: 16px;
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 0.75em;
+  color: #58a6ff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+.lang-switch:hover { background: #21262d; }
+
+/* Sections */
+.section { padding: 14px 16px; border-bottom: 1px solid #21262d; }
+.section:last-child { border-bottom: none; }
+.section-title {
+  font-size: 0.70em;
+  color: #58a6ff;
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+/* Score cards */
+.score-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.score-card {
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 10px;
+  padding: 14px;
+}
+.score-card .market-label {
+  font-size: 0.70em;
+  color: #8b949e;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+.score-card .score-number {
+  font-size: 2.6em;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.score-card .sentiment-label {
+  font-size: 0.78em;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.gauge-bar {
+  height: 6px;
+  background: #21262d;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+.gauge-fill { height: 100%; border-radius: 3px; transition: width 0.8s ease; }
+.score-card .percentile {
+  font-size: 0.70em;
+  color: #8b949e;
+}
+
+/* Forward returns */
+.returns-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.returns-card {
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 10px;
+  padding: 12px;
+}
+.returns-card .ticker {
+  font-size: 0.78em;
+  color: #8b949e;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+.returns-cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
+.ret-col { text-align: center; }
+.ret-col .period {
+  font-size: 0.60em;
+  color: #8b949e;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 3px;
+}
+.ret-col .avg {
+  font-size: 0.95em;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+.ret-col .wr {
+  font-size: 0.60em;
+  color: #8b949e;
+  margin-bottom: 2px;
+}
+.ret-col .range {
+  font-size: 0.58em;
+  color: #6e7681;
+}
+.returns-card .hist-note {
+  font-size: 0.60em;
+  color: #6e7681;
+  margin-top: 8px;
+  text-align: center;
+}
+
+/* Charts */
+.chart-wrap {
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 2px;
+}
+.chart-wrap canvas { width: 100% !important; }
+
+/* Quintile edge box */
+.edge-box {
+  background: #0d2818;
+  border: 1px solid #1f6335;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-top: 10px;
+  font-size: 0.80em;
+}
+.edge-box .edge-title {
+  color: #3fb950;
+  font-weight: 700;
+  margin-bottom: 4px;
+  font-size: 0.90em;
+}
+.edge-box .edge-text { color: #7ee787; line-height: 1.5; }
+
+/* Signal */
+.signal-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 10px;
+}
+.signal-badge {
+  font-size: 1.1em;
+  font-weight: 800;
+  padding: 8px 16px;
+  border-radius: 8px;
+  letter-spacing: 2px;
+  flex-shrink: 0;
+}
+.badge-hold { background: #2d2a00; color: #e3b341; border: 1px solid #9e6a03; }
+.badge-buy  { background: #0d2818; color: #3fb950; border: 1px solid #1f6335; }
+.badge-sell { background: #2d1116; color: #f85149; border: 1px solid #6e1c1c; }
+.signal-text { font-size: 0.80em; color: #8b949e; line-height: 1.5; }
+.signal-text strong { color: #e6edf3; display: block; margin-bottom: 3px; }
+
+/* Agent cards */
+.agent-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.agent-card {
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 10px;
+  padding: 12px;
+}
+.agent-card .agent-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.agent-flag {
+  font-size: 1.2em;
+  line-height: 1;
+}
+.agent-name {
+  font-size: 0.72em;
+  font-weight: 700;
+  color: #8b949e;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.conviction-badge {
+  margin-left: auto;
+  font-size: 0.58em;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 700;
+  background: #21262d;
+  color: #8b949e;
+}
+.agent-narrative {
+  font-size: 0.73em;
+  color: #c9d1d9;
+  line-height: 1.55;
+  margin-bottom: 8px;
+}
+.agent-factors { list-style: none; padding: 0; margin: 0; }
+.agent-factors li {
+  font-size: 0.65em;
+  color: #8b949e;
+  padding: 3px 0;
+  padding-left: 12px;
+  position: relative;
+  line-height: 1.4;
+  border-top: 1px solid #21262d;
+}
+.agent-factors li::before {
+  content: '›';
+  position: absolute;
+  left: 0;
+  color: #58a6ff;
+}
+
+/* Market data grid */
+.mkt-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+.mkt-item {
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 8px;
+  padding: 10px 8px;
+  text-align: center;
+}
+.mkt-item .mkt-label {
+  font-size: 0.60em;
+  color: #8b949e;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+.mkt-item .mkt-value {
+  font-size: 0.88em;
+  font-weight: 700;
+  color: #e6edf3;
+}
+.mkt-item .mkt-sub {
+  font-size: 0.58em;
+  color: #6e7681;
+  margin-top: 2px;
+}
+
+/* Loading / Error */
+.loading-state {
+  text-align: center;
+  padding: 40px 16px;
+  color: #8b949e;
+  font-size: 0.85em;
+}
+.error-state {
+  text-align: center;
+  padding: 20px 16px;
+  color: #f85149;
+  font-size: 0.82em;
+  background: #2d1116;
+  border: 1px solid #6e1c1c;
+  border-radius: 8px;
+  margin: 10px 16px;
+}
+
+/* Footer */
+.footer {
+  padding: 16px;
+  text-align: center;
+  color: #6e7681;
+  font-size: 0.70em;
+  border-top: 1px solid #21262d;
+  margin-top: 10px;
+  line-height: 1.6;
+}
+
+/* Color utilities */
+.clr-green { color: #3fb950; }
+.clr-yellow { color: #e3b341; }
+.clr-red    { color: #f85149; }
+.clr-blue   { color: #58a6ff; }
+.clr-muted  { color: #8b949e; }
+
+@media (max-width: 480px) {
+  .score-grid       { grid-template-columns: 1fr 1fr; }
+  .returns-grid     { grid-template-columns: 1fr; }
+  .agent-grid       { grid-template-columns: 1fr; }
+  .mkt-grid         { grid-template-columns: repeat(4, 1fr); }
+  .returns-cols     { grid-template-columns: repeat(4, 1fr); }
+  .header h1        { font-size: 1.2em; }
+  .lang-switch      { font-size: 0.68em; padding: 4px 8px; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <a class="lang-switch" href="tw.html">中文 TW</a>
+  <h1>GRISI Dashboard</h1>
+  <div class="sub">Global Retail Investor Sentiment Index</div>
+  <div class="date" id="header-date">Loading...</div>
+</div>
+
+<!-- 1. Current Sentiment -->
+<div class="section">
+  <div class="section-title">Current Sentiment</div>
+  <div class="score-grid">
+    <div class="score-card" id="us-score-card">
+      <div class="market-label">US Market</div>
+      <div class="score-number" id="us-score">--</div>
+      <div class="sentiment-label" id="us-label">Loading...</div>
+      <div class="gauge-bar"><div class="gauge-fill" id="us-gauge" style="width:0%"></div></div>
+      <div class="percentile" id="us-pct">Percentile: --%</div>
+    </div>
+    <div class="score-card" id="tw-score-card">
+      <div class="market-label">TW Market</div>
+      <div class="score-number" id="tw-score">--</div>
+      <div class="sentiment-label" id="tw-label">Loading...</div>
+      <div class="gauge-bar"><div class="gauge-fill" id="tw-gauge" style="width:0%"></div></div>
+      <div class="percentile" id="tw-pct">Percentile: --%</div>
+    </div>
+  </div>
+</div>
+
+<!-- 2. Expected Forward Returns -->
+<div class="section">
+  <div class="section-title">Expected Forward Returns</div>
+  <div class="returns-grid">
+    <div class="returns-card">
+      <div class="ticker">SPY (US)</div>
+      <div class="returns-cols" id="spy-returns"></div>
+      <div class="hist-note" id="spy-n"></div>
+    </div>
+    <div class="returns-card">
+      <div class="ticker">TAIEX (TW)</div>
+      <div class="returns-cols" id="taiex-returns"></div>
+      <div class="hist-note" id="taiex-n"></div>
+    </div>
+  </div>
+</div>
+
+<!-- 3. Historical Proof — Quintile Chart -->
+<div class="section">
+  <div class="section-title">Historical Proof — Quintile Returns</div>
+  <div class="chart-wrap">
+    <canvas id="quintileChart" height="200"></canvas>
+  </div>
+  <div class="edge-box">
+    <div class="edge-title">Buy in Fear, Not in Greed</div>
+    <div class="edge-text" id="edge-text">Loading...</div>
+  </div>
+</div>
+
+<!-- 4. Score vs Market Overlay -->
+<div class="section">
+  <div class="section-title">Sentiment vs Market Price (2010–2026)</div>
+  <div class="chart-wrap">
+    <canvas id="overlayChart" height="220"></canvas>
+  </div>
+  <div style="font-size:0.68em; color:#8b949e; margin-top:8px; text-align:center;">
+    Low scores (green zones) preceded rallies &mdash; high scores (red zones) preceded declines
+  </div>
+</div>
+
+<!-- 5. Signal -->
+<div class="section">
+  <div class="section-title">Signal</div>
+  <div class="signal-row" id="signal-row">
+    <div class="signal-badge badge-hold" id="signal-badge">HOLD</div>
+    <div class="signal-text" id="signal-text">Loading...</div>
+  </div>
+</div>
+
+<!-- 6. Cultural Agent Analysis -->
+<div class="section">
+  <div class="section-title">Cultural Agent Analysis</div>
+  <div class="agent-grid">
+    <div class="agent-card" id="us-agent-card">
+      <div class="agent-header">
+        <span class="agent-flag">🇺🇸</span>
+        <span class="agent-name">US Agent</span>
+        <span class="conviction-badge" id="us-conviction">--</span>
+      </div>
+      <div class="agent-narrative" id="us-narrative">Loading...</div>
+      <ul class="agent-factors" id="us-factors"></ul>
+    </div>
+    <div class="agent-card" id="tw-agent-card">
+      <div class="agent-header">
+        <span class="agent-flag">🇹🇼</span>
+        <span class="agent-name">TW Agent</span>
+        <span class="conviction-badge" id="tw-conviction">--</span>
+      </div>
+      <div class="agent-narrative" id="tw-narrative">Loading...</div>
+      <ul class="agent-factors" id="tw-factors"></ul>
+    </div>
+  </div>
+</div>
+
+<!-- 7. Market Data -->
+<div class="section">
+  <div class="section-title">Market Data</div>
+  <div class="mkt-grid" id="mkt-grid">
+    <div class="mkt-item"><div class="mkt-label">SPY</div><div class="mkt-value" id="mkt-spy">--</div><div class="mkt-sub" id="mkt-spy-sub"></div></div>
+    <div class="mkt-item"><div class="mkt-label">VIX</div><div class="mkt-value" id="mkt-vix">--</div><div class="mkt-sub">Fear Index</div></div>
+    <div class="mkt-item"><div class="mkt-label">TAIEX</div><div class="mkt-value" id="mkt-taiex">--</div><div class="mkt-sub" id="mkt-taiex-sub"></div></div>
+    <div class="mkt-item"><div class="mkt-label">TSMC</div><div class="mkt-value" id="mkt-tsmc">--</div><div class="mkt-sub" id="mkt-tsmc-sub"></div></div>
+    <div class="mkt-item"><div class="mkt-label">Gold</div><div class="mkt-value" id="mkt-gold">--</div><div class="mkt-sub">Safe Haven</div></div>
+    <div class="mkt-item"><div class="mkt-label">US 10Y</div><div class="mkt-value" id="mkt-10y">--</div><div class="mkt-sub">Yield</div></div>
+    <div class="mkt-item"><div class="mkt-label">Margin 5d</div><div class="mkt-value" id="mkt-margin">--</div><div class="mkt-sub">Retail Leverage</div></div>
+    <div class="mkt-item"><div class="mkt-label">Foreign</div><div class="mkt-value" id="mkt-foreign">--</div><div class="mkt-sub" id="mkt-foreign-sub"></div></div>
+  </div>
+</div>
+
+<div class="footer">
+  GRISI — 16-year backtest (2010–2026). Contrarian indicator: retail greed predicts lower returns.<br>
+  Data as of <span id="footer-date">2026-03-16</span>. Generated by Claude Agent pipeline.
+</div>
+
+<script>
+// ── Helpers ──────────────────────────────────────────────────────────────────
+function sentimentLabel(score) {
+  if (score < 15) return 'Extreme Fear';
+  if (score < 30) return 'Fear';
+  if (score < 40) return 'Cautious';
+  if (score < 60) return 'Neutral';
+  if (score < 70) return 'Cautious Optimism';
+  if (score < 85) return 'Greed';
+  return 'Euphoria';
+}
+
+function scoreColor(score) {
+  if (score < 35)  return '#3fb950';
+  if (score <= 65) return '#e3b341';
+  return '#f85149';
+}
+
+function gaugeColor(score) {
+  if (score < 35)  return '#238636';
+  if (score <= 65) return '#9e6a03';
+  return '#da3633';
+}
+
+function fmtPct(v, decimals=2) {
+  const sign = v >= 0 ? '+' : '';
+  return sign + v.toFixed(decimals) + '%';
+}
+
+function fmtNum(v, decimals=1) {
+  return v.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+}
+
+// ── Render helpers ────────────────────────────────────────────────────────────
+function renderScoreCard(idPrefix, score, pctile) {
+  const label = sentimentLabel(score);
+  const clr   = scoreColor(score);
+  const gclr  = gaugeColor(score);
+  document.getElementById(idPrefix + '-score').textContent = score.toFixed(1);
+  document.getElementById(idPrefix + '-score').style.color = clr;
+  document.getElementById(idPrefix + '-label').textContent = label;
+  document.getElementById(idPrefix + '-label').style.color = clr;
+  const fill = document.getElementById(idPrefix + '-gauge');
+  fill.style.width = score + '%';
+  fill.style.background = gclr;
+  document.getElementById(idPrefix + '-pct').textContent = 'Percentile: ' + pctile + '%';
+}
+
+function renderReturnCols(containerId, data, periods, keys) {
+  const el = document.getElementById(containerId);
+  el.innerHTML = periods.map((p, i) => {
+    const d = data[keys[i]];
+    const clr = d.mean >= 0 ? '#3fb950' : '#f85149';
+    return `<div class="ret-col">
+      <div class="period">${p}</div>
+      <div class="avg" style="color:${clr}">${fmtPct(d.mean)}</div>
+      <div class="wr">${d.positive_pct.toFixed(0)}% win</div>
+      <div class="range">${fmtPct(d.p25, 1)}~${fmtPct(d.p75, 1)}</div>
+    </div>`;
+  }).join('');
+}
+
+// ── Quintile Chart ────────────────────────────────────────────────────────────
+function buildQuintileChart(usReturns, twReturns) {
+  const labels = ['Q1\nExtreme Fear', 'Q2\nFear', 'Q3\nNeutral', 'Q4\nGreed', 'Q5\nExtreme Greed'];
+  const ctx = document.getElementById('quintileChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: 'SPY 20d Avg Return (%)',
+          data: usReturns,
+          backgroundColor: ['#1f6335','#238636','#2ea043','#3fb950','#56d364'],
+          borderRadius: 4,
+          borderSkipped: false,
+        },
+        {
+          label: 'TAIEX 20d Avg Return (%)',
+          data: twReturns,
+          backgroundColor: ['#0d3a6e','#1158a6','#1a73c8','#2188ff','#58a6ff'],
+          borderRadius: 4,
+          borderSkipped: false,
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      plugins: {
+        legend: {
+          labels: { color: '#8b949e', font: { size: 11 }, boxWidth: 12 }
+        },
+        tooltip: {
+          callbacks: {
+            label: ctx => ` ${ctx.dataset.label}: +${ctx.parsed.y.toFixed(2)}%`
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: { color: '#8b949e', font: { size: 10 } },
+          grid: { color: '#21262d' }
+        },
+        y: {
+          ticks: {
+            color: '#8b949e',
+            font: { size: 10 },
+            callback: v => '+' + v.toFixed(1) + '%'
+          },
+          grid: { color: '#21262d' }
+        }
+      }
+    }
+  });
+}
+
+// ── Overlay Chart (EN: US score + SPY) ───────────────────────────────────────
+function buildOverlayChart(overlayData) {
+  const ctx = document.getElementById('overlayChart').getContext('2d');
+  const dates    = overlayData.dates;
+  const usScores = overlayData.us_score;
+  const spyDates = overlayData.spy_dates;
+  const spyPx    = overlayData.spy;
+
+  // Align SPY prices to score dates (use closest spy_date index)
+  const spyMap = {};
+  spyDates.forEach((d, i) => { spyMap[d] = spyPx[i]; });
+  const alignedSpy = dates.map(d => spyMap[d] !== undefined ? spyMap[d] : null);
+
+  // Background zone annotations via plugin (custom draw)
+  const greenZonePlugin = {
+    id: 'bgZones',
+    beforeDraw(chart) {
+      const { ctx: c, chartArea: { left, right, top, bottom }, scales } = chart;
+      const yScore = scales['y-score'];
+      const yPrice = scales['y-price'];
+      if (!yScore) return;
+      c.save();
+      c.globalAlpha = 0.12;
+      for (let i = 0; i < dates.length - 1; i++) {
+        const s = usScores[i];
+        if (s === null || s === undefined) continue;
+        const x0 = scales.x.getPixelForValue(i);
+        const x1 = scales.x.getPixelForValue(i + 1);
+        if (s < 30) {
+          c.fillStyle = '#2ea043';
+          c.fillRect(x0, top, x1 - x0, bottom - top);
+        } else if (s > 70) {
+          c.fillStyle = '#da3633';
+          c.fillRect(x0, top, x1 - x0, bottom - top);
+        }
+      }
+      c.restore();
+    }
+  };
+
+  new Chart(ctx, {
+    type: 'line',
+    plugins: [greenZonePlugin],
+    data: {
+      labels: dates,
+      datasets: [
+        {
+          label: 'US Sentiment Score',
+          data: usScores,
+          yAxisID: 'y-score',
+          borderColor: '#58a6ff',
+          backgroundColor: 'transparent',
+          borderWidth: 1.5,
+          pointRadius: 0,
+          tension: 0.3,
+          order: 1,
+        },
+        {
+          label: 'SPY Price',
+          data: alignedSpy,
+          yAxisID: 'y-price',
+          borderColor: 'rgba(88,166,255,0.5)',
+          backgroundColor: 'rgba(88,166,255,0.07)',
+          borderWidth: 1,
+          pointRadius: 0,
+          fill: true,
+          tension: 0.3,
+          order: 2,
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: {
+          labels: { color: '#8b949e', font: { size: 11 }, boxWidth: 12 }
+        },
+        tooltip: {
+          callbacks: {
+            title: items => items[0].label,
+            label: ctx => {
+              if (ctx.datasetIndex === 0)
+                return ` Score: ${ctx.parsed.y !== null ? ctx.parsed.y.toFixed(1) : 'N/A'}`;
+              return ` SPY: $${ctx.parsed.y !== null ? ctx.parsed.y.toFixed(2) : 'N/A'}`;
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: {
+            color: '#8b949e',
+            font: { size: 9 },
+            maxTicksLimit: 10,
+            callback: function(val, idx) {
+              const d = dates[idx];
+              return d ? d.substring(0, 4) : '';
+            },
+            maxRotation: 0,
+          },
+          grid: { color: '#21262d' }
+        },
+        'y-score': {
+          type: 'linear',
+          position: 'left',
+          min: 0,
+          max: 100,
+          ticks: { color: '#58a6ff', font: { size: 10 }, stepSize: 20 },
+          grid: { color: '#21262d' },
+          title: { display: true, text: 'Score', color: '#58a6ff', font: { size: 10 } }
+        },
+        'y-price': {
+          type: 'linear',
+          position: 'right',
+          ticks: {
+            color: '#8b949e',
+            font: { size: 10 },
+            callback: v => '$' + v.toFixed(0)
+          },
+          grid: { drawOnChartArea: false },
+          title: { display: true, text: 'SPY', color: '#8b949e', font: { size: 10 } }
+        }
+      }
+    }
+  });
+}
+
+// ── Signal rendering ──────────────────────────────────────────────────────────
+function renderSignal(summary) {
+  const raw = summary.actionable_signal || '';
+  let sigWord = 'HOLD';
+  if (/BUY/i.test(raw))  sigWord = 'BUY';
+  if (/SELL/i.test(raw)) sigWord = 'SELL';
+
+  const badge = document.getElementById('signal-badge');
+  badge.textContent = sigWord;
+  badge.className = 'signal-badge';
+  if (sigWord === 'BUY')       badge.classList.add('badge-buy');
+  else if (sigWord === 'SELL') badge.classList.add('badge-sell');
+  else                         badge.classList.add('badge-hold');
+
+  document.getElementById('signal-text').innerHTML =
+    `<strong>Cross-Market View</strong>${summary.cross_market_view || ''}<br>
+     <span style="color:#e6edf3;margin-top:5px;display:block">${raw}</span>`;
+}
+
+// ── Market data rendering ─────────────────────────────────────────────────────
+function renderMarketData(snap) {
+  const us = snap.us_market || {};
+  const tw = snap.tw_market || {};
+  const ret = snap.tw_retail_indicators || {};
+  const gl  = snap.global_context || {};
+
+  document.getElementById('mkt-spy').textContent   = '$' + fmtNum(us.SPY_close || 0);
+  document.getElementById('mkt-spy-sub').textContent = fmtPct(us.SPY_20d_return_pct || 0, 2) + ' 20d';
+
+  const vixEl = document.getElementById('mkt-vix');
+  vixEl.textContent = fmtNum(us.VIX || 0);
+  vixEl.style.color = (us.VIX || 0) > 30 ? '#f85149' : (us.VIX || 0) > 20 ? '#e3b341' : '#3fb950';
+
+  document.getElementById('mkt-taiex').textContent   = fmtNum(tw.TAIEX_close || 0, 0);
+  document.getElementById('mkt-taiex-sub').textContent = 'RSI ' + (tw.TAIEX_RSI14 || '--');
+
+  document.getElementById('mkt-tsmc').textContent   = fmtNum(tw.TSMC_close || 0, 0);
+  document.getElementById('mkt-tsmc-sub').textContent = (tw.TSMC_vs_52w_high_pct || '--') + '% of 52w high';
+
+  document.getElementById('mkt-gold').textContent   = '$' + fmtNum(gl.Gold || 0, 0);
+
+  document.getElementById('mkt-10y').textContent = (us.US_10Y_yield || '--') + '%';
+
+  const m5d = ret.margin_5d_change_pct;
+  const mEl = document.getElementById('mkt-margin');
+  mEl.textContent = m5d !== undefined ? fmtPct(m5d, 2) : '--';
+  mEl.style.color = m5d > 2 ? '#f85149' : m5d < -2 ? '#3fb950' : '#e3b341';
+
+  const fw  = ret.foreign_net_TWD;
+  const fEl = document.getElementById('mkt-foreign');
+  fEl.textContent = fw !== undefined ? 'TWD ' + (fw > 0 ? '+' : '') + fmtNum(fw, 1) + 'B' : '--';
+  fEl.style.color = fw >= 0 ? '#3fb950' : '#f85149';
+  const days = ret.foreign_consecutive_days || 0;
+  const dir  = ret.foreign_consecutive_direction || '';
+  document.getElementById('mkt-foreign-sub').textContent = days + 'd ' + dir;
+}
+
+// ── Main data fetch ───────────────────────────────────────────────────────────
+async function loadDashboard() {
+  try {
+    const [fwdData, agentData, quintileData, dashData, overlayData] = await Promise.all([
+      fetch('../data/forward_outlook.json').then(r => r.json()),
+      fetch('../data/phase2_agent_results.json').then(r => r.json()),
+      fetch('../data/quintile_data.json').then(r => r.json()),
+      fetch('../data/dashboard_data.json').then(r => r.json()),
+      fetch('../data/overlay_data.json').then(r => r.json()),
+    ]);
+
+    const date = agentData.date || dashData.snapshot?.date || '2026-03-16';
+    document.getElementById('header-date').textContent = 'As of ' + date;
+    document.getElementById('footer-date').textContent = date;
+
+    // 1. Scores
+    const usScore  = fwdData.us_current_score;
+    const twScore  = fwdData.tw_current_score;
+    const usPct    = quintileData.us_percentile;
+    const twPct    = quintileData.tw_percentile;
+    renderScoreCard('us', usScore, usPct);
+    renderScoreCard('tw', twScore, twPct);
+
+    // 2. Forward returns
+    renderReturnCols('spy-returns', fwdData.us_forward,
+      ['5d','10d','20d','60d'],
+      ['spy_fwd_5d','spy_fwd_10d','spy_fwd_20d','spy_fwd_60d']);
+    document.getElementById('spy-n').textContent =
+      (fwdData.us_forward.spy_fwd_20d.n || '--') + ' similar days in history';
+
+    renderReturnCols('taiex-returns', fwdData.tw_forward,
+      ['5d','10d','20d','60d'],
+      ['taiex_fwd_5d','taiex_fwd_10d','taiex_fwd_20d','taiex_fwd_60d']);
+    document.getElementById('taiex-n').textContent =
+      (fwdData.tw_forward.taiex_fwd_20d.n || '--') + ' similar days in history';
+
+    // 3. Quintile chart
+    buildQuintileChart(quintileData.us['20d'].returns, quintileData.tw['20d'].returns);
+    const usQ1ret = quintileData.us['20d'].returns[0].toFixed(2);
+    const usQ5ret = quintileData.us['20d'].returns[4].toFixed(2);
+    document.getElementById('edge-text').textContent =
+      `You are here: Extreme Fear zone (bottom 20% of all readings). ` +
+      `Historically, SPY returns +${usQ1ret}% avg over 20 days from this zone vs +${usQ5ret}% from Extreme Greed. ` +
+      `Fear is the better entry.`;
+
+    // 4. Overlay chart
+    buildOverlayChart(overlayData);
+
+    // 5. Signal
+    renderSignal(agentData.summary);
+
+    // 6. Agent narratives
+    const usAgent = agentData.us_agent;
+    const twAgent = agentData.tw_agent;
+
+    document.getElementById('us-conviction').textContent = usAgent.conviction || '--';
+    document.getElementById('us-narrative').textContent  = usAgent.narrative  || '';
+    const usFactorsEl = document.getElementById('us-factors');
+    (usAgent.key_factors || []).forEach(f => {
+      const li = document.createElement('li');
+      li.textContent = f;
+      usFactorsEl.appendChild(li);
+    });
+
+    document.getElementById('tw-conviction').textContent = twAgent.conviction || '--';
+    document.getElementById('tw-narrative').textContent  = twAgent.narrative  || '';
+    const twFactorsEl = document.getElementById('tw-factors');
+    (twAgent.key_factors || []).forEach(f => {
+      const li = document.createElement('li');
+      li.textContent = f;
+      twFactorsEl.appendChild(li);
+    });
+
+    // 7. Market data
+    renderMarketData(dashData.snapshot);
+
+  } catch (err) {
+    console.error(err);
+    const errDiv = document.createElement('div');
+    errDiv.className = 'error-state';
+    errDiv.textContent = 'Failed to load dashboard data. ' + err.message;
+    document.body.insertBefore(errDiv, document.body.children[1]);
+  }
+}
+
+loadDashboard();
+</script>
+</body>
+</html>

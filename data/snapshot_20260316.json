@@ -1,0 +1,40 @@
+{
+  "date": "2026-03-16",
+  "us_market": {
+    "SPY_close": 669.03,
+    "SPY_RSI14": 36.0,
+    "SPY_SMA20": 680.8,
+    "SPY_SMA60": 685.68,
+    "SPY_vs_52w_high_pct": 96.2,
+    "SPY_5d_return_pct": -1.36,
+    "SPY_20d_return_pct": -1.87,
+    "VIX": 23.51,
+    "US_10Y_yield": 4.22
+  },
+  "tw_market": {
+    "TAIEX_close": 33343.0,
+    "TAIEX_RSI14": 47.7,
+    "TAIEX_SMA20": 33541.0,
+    "TAIEX_vs_52w_high_pct": 94.1,
+    "TSMC_close": 1845.0,
+    "TSMC_vs_52w_high_pct": 91.6
+  },
+  "tw_retail_indicators": {
+    "margin_balance": 8085690,
+    "margin_30d_change_pct": 0.01,
+    "margin_5d_change_pct": 3.42,
+    "margin_5d_trend": "INCREASING",
+    "institutional_net_TWD": -469.3,
+    "retail_net_est_TWD": 469.3,
+    "foreign_net_TWD": -438.3,
+    "foreign_consecutive_days": 3,
+    "foreign_consecutive_direction": "sell",
+    "TSMC_margin_balance": 26249,
+    "TSMC_margin_30d_change_pct": 26.34
+  },
+  "global_context": {
+    "USDJPY": 159.2,
+    "USDTWD": 32.03,
+    "Gold": 5010.0
+  }
+}

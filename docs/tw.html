@@ -306,6 +306,21 @@ body {
 .clr-blue   { color: #58a6ff; }
 .clr-muted  { color: #8b949e; }
 
+/* Range buttons */
+.range-btn {
+  background: #21262d;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  padding: 5px 12px;
+  font-size: 0.72em;
+  color: #8b949e;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+.range-btn:hover { border-color: #58a6ff; color: #58a6ff; }
+.range-btn.active { background: #0d419d; border-color: #58a6ff; color: #fff; }
+
 @media (max-width: 480px) {
   .score-grid       { grid-template-columns: 1fr 1fr; }
   .returns-grid     { grid-template-columns: 1fr; }
@@ -378,12 +393,19 @@ body {
 
 <!-- 4. 情緒指數 vs 市場走勢 -->
 <div class="section">
-  <div class="section-title">情緒指數 vs 市場走勢（2010–2026）</div>
+  <div class="section-title">情緒指數 vs 市場走勢</div>
+  <div style="display:flex;gap:6px;margin-bottom:10px;">
+    <button class="range-btn active" data-range="30">30天</button>
+    <button class="range-btn" data-range="120">半年</button>
+    <button class="range-btn" data-range="252">1年</button>
+    <button class="range-btn" data-range="0">全部</button>
+  </div>
   <div class="chart-wrap">
     <canvas id="overlayChart" height="220"></canvas>
   </div>
   <div style="font-size:0.68em; color:#8b949e; margin-top:8px; text-align:center;">
-    低分（綠色區）之後市場上漲 &mdash; 高分（紅色區）之後市場下跌
+    綠色區（分數 &lt;30）之後市場上漲 &mdash; 紅色區（分數 &gt;70）之後市場下跌。<br>
+    分數由 GRISI 引擎計算（252天滾動 Z-score + 行為調整）。
   </div>
 </div>
 
@@ -561,132 +583,84 @@ function buildQuintileChart(usReturns, twReturns) {
   });
 }
 
-// ── Overlay Chart (TW: TW score + TAIEX) ─────────────────────────────────────
-function buildOverlayChart(overlayData) {
-  const ctx = document.getElementById('overlayChart').getContext('2d');
-  const dates    = overlayData.dates;
-  const twScores = overlayData.tw_score;
-  const twiiDates = overlayData.twii_dates;
-  const twiiPx    = overlayData.twii;
+// ── Overlay Chart with Range Switching (TW: TW score + TAIEX) ────────────────
+let overlayChart = null;
+let overlayFullData = null;
 
-  // Align TWII prices to score dates
+function buildOverlayChart(overlayData, rangeDays) {
+  overlayFullData = overlayData;
+  const allDates = overlayData.dates;
+  const allScores = overlayData.tw_score;
   const twiiMap = {};
-  twiiDates.forEach((d, i) => { twiiMap[d] = twiiPx[i]; });
-  const alignedTwii = dates.map(d => twiiMap[d] !== undefined ? twiiMap[d] : null);
+  overlayData.twii_dates.forEach((d, i) => { twiiMap[d] = overlayData.twii[i]; });
 
-  // Background zone plugin
-  const bgZonePlugin = {
+  const n = rangeDays > 0 ? Math.min(rangeDays, allDates.length) : allDates.length;
+  const dates = allDates.slice(-n);
+  const scores = allScores.slice(-n);
+  const prices = dates.map(d => twiiMap[d] !== undefined ? twiiMap[d] : null);
+
+  if (overlayChart) { overlayChart.destroy(); overlayChart = null; }
+
+  const ctx = document.getElementById('overlayChart').getContext('2d');
+
+  const zonePlugin = {
     id: 'bgZones',
     beforeDraw(chart) {
-      const { ctx: c, chartArea: { top, bottom }, scales } = chart;
+      const { ctx: c, chartArea: { left, right, top, bottom }, scales } = chart;
       if (!scales['y-score']) return;
       c.save();
       c.globalAlpha = 0.12;
-      for (let i = 0; i < dates.length - 1; i++) {
-        const s = twScores[i];
+      for (let i = 0; i < scores.length - 1; i++) {
+        const s = scores[i];
         if (s === null || s === undefined) continue;
         const x0 = scales.x.getPixelForValue(i);
         const x1 = scales.x.getPixelForValue(i + 1);
-        if (s < 30) {
-          c.fillStyle = '#2ea043';
-          c.fillRect(x0, top, x1 - x0, bottom - top);
-        } else if (s > 70) {
-          c.fillStyle = '#da3633';
-          c.fillRect(x0, top, x1 - x0, bottom - top);
-        }
+        if (s < 30) { c.fillStyle = '#2ea043'; c.fillRect(x0, top, x1 - x0, bottom - top); }
+        else if (s > 70) { c.fillStyle = '#da3633'; c.fillRect(x0, top, x1 - x0, bottom - top); }
       }
       c.restore();
     }
   };
 
-  new Chart(ctx, {
+  const dateFmt = n <= 60 ? d => d.substring(5) : n <= 252 ? d => d.substring(2, 7) : d => d.substring(0, 4);
+
+  overlayChart = new Chart(ctx, {
     type: 'line',
-    plugins: [bgZonePlugin],
+    plugins: [zonePlugin],
     data: {
       labels: dates,
       datasets: [
-        {
-          label: '台灣情緒分數',
-          data: twScores,
-          yAxisID: 'y-score',
-          borderColor: '#e3b341',
-          backgroundColor: 'transparent',
-          borderWidth: 1.5,
-          pointRadius: 0,
-          tension: 0.3,
-          order: 1,
-        },
-        {
-          label: '加權指數',
-          data: alignedTwii,
-          yAxisID: 'y-price',
-          borderColor: 'rgba(227,179,65,0.5)',
-          backgroundColor: 'rgba(227,179,65,0.07)',
-          borderWidth: 1,
-          pointRadius: 0,
-          fill: true,
-          tension: 0.3,
-          order: 2,
-        }
+        { label: '情緒分數', data: scores, yAxisID: 'y-score', borderColor: '#e3b341', backgroundColor: 'transparent', borderWidth: 1.8, pointRadius: n <= 60 ? 2 : 0, tension: 0.2, order: 1 },
+        { label: '加權指數', data: prices, yAxisID: 'y-price', borderColor: 'rgba(227,179,65,0.4)', backgroundColor: 'rgba(227,179,65,0.06)', borderWidth: 1, pointRadius: 0, fill: true, tension: 0.2, order: 2 }
       ]
     },
     options: {
-      responsive: true,
-      maintainAspectRatio: true,
+      responsive: true, maintainAspectRatio: true,
       interaction: { mode: 'index', intersect: false },
       plugins: {
-        legend: {
-          labels: { color: '#8b949e', font: { size: 11 }, boxWidth: 12 }
-        },
-        tooltip: {
-          callbacks: {
-            title: items => items[0].label,
-            label: ctx => {
-              if (ctx.datasetIndex === 0)
-                return ` 分數: ${ctx.parsed.y !== null ? ctx.parsed.y.toFixed(1) : 'N/A'}`;
-              return ` 加權: ${ctx.parsed.y !== null ? ctx.parsed.y.toFixed(0) : 'N/A'}`;
-            }
-          }
-        }
+        legend: { labels: { color: '#8b949e', font: { size: 10 }, boxWidth: 10 } },
+        tooltip: { callbacks: {
+          title: items => items[0].label,
+          label: c => c.datasetIndex === 0 ? ` 分數: ${c.parsed.y?.toFixed(1)}` : ` 加權: ${c.parsed.y?.toFixed(0)}`
+        }}
       },
       scales: {
-        x: {
-          ticks: {
-            color: '#8b949e',
-            font: { size: 9 },
-            maxTicksLimit: 10,
-            callback: function(val, idx) {
-              const d = dates[idx];
-              return d ? d.substring(0, 4) : '';
-            },
-            maxRotation: 0,
-          },
-          grid: { color: '#21262d' }
-        },
-        'y-score': {
-          type: 'linear',
-          position: 'left',
-          min: 0,
-          max: 100,
-          ticks: { color: '#e3b341', font: { size: 10 }, stepSize: 20 },
-          grid: { color: '#21262d' },
-          title: { display: true, text: '分數', color: '#e3b341', font: { size: 10 } }
-        },
-        'y-price': {
-          type: 'linear',
-          position: 'right',
-          ticks: {
-            color: '#8b949e',
-            font: { size: 10 },
-            callback: v => v.toFixed(0)
-          },
-          grid: { drawOnChartArea: false },
-          title: { display: true, text: '加權', color: '#8b949e', font: { size: 10 } }
-        }
+        x: { ticks: { color: '#8b949e', font: { size: 9 }, maxTicksLimit: 8, callback: (v, i) => dateFmt(dates[i] || ''), maxRotation: 0 }, grid: { color: '#21262d' } },
+        'y-score': { type: 'linear', position: 'left', min: 0, max: 100, ticks: { color: '#e3b341', font: { size: 10 }, stepSize: 20 }, grid: { color: '#21262d' }, title: { display: true, text: '分數', color: '#e3b341', font: { size: 10 } } },
+        'y-price': { type: 'linear', position: 'right', ticks: { color: '#8b949e', font: { size: 10 }, callback: v => v.toFixed(0) }, grid: { drawOnChartArea: false }, title: { display: true, text: '加權', color: '#8b949e', font: { size: 10 } } }
       }
     }
   });
 }
+
+document.querySelectorAll('.range-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.range-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const range = parseInt(btn.dataset.range);
+    if (overlayFullData) buildOverlayChart(overlayFullData, range);
+  });
+});
 
 // ── Signal rendering ──────────────────────────────────────────────────────────
 function renderSignal(summary) {
@@ -792,7 +766,7 @@ async function loadDashboard() {
       `恐懼是更好的進場時機。`;
 
     // 4. Overlay chart
-    buildOverlayChart(overlayData);
+    buildOverlayChart(overlayData, 30);
 
     // 5. Signal
     renderSignal(agentData.summary);

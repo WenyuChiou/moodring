@@ -789,10 +789,32 @@ function buildOverlayChart(overlayData, rangeDays, mktKey) {
     }
   };
 
+  // Zone background: subtle green (<30) and red (>70) zones on y-score axis
+  const zonePlugin = {
+    id: 'scoreZones',
+    beforeDraw(chart) {
+      const { ctx: c, chartArea: { left, right, top, bottom }, scales } = chart;
+      const yScore = scales['y-score'];
+      if (!yScore) return;
+      c.save();
+      // Green zone: score 0-30 (fear = historically good entry)
+      const y30 = yScore.getPixelForValue(30);
+      const y0 = yScore.getPixelForValue(0);
+      c.fillStyle = 'rgba(63,185,80,0.06)';
+      c.fillRect(left, y30, right - left, y0 - y30);
+      // Red zone: score 70-100 (greed = historically bad entry)
+      const y100 = yScore.getPixelForValue(100);
+      const y70 = yScore.getPixelForValue(70);
+      c.fillStyle = 'rgba(248,81,73,0.06)';
+      c.fillRect(left, y100, right - left, y70 - y100);
+      c.restore();
+    }
+  };
+
   const mcol = cfg.color;
   _overlayChart = new Chart(ctx, {
     type: 'line',
-    plugins: [nowDotPlugin],
+    plugins: [zonePlugin, nowDotPlugin],
     data: {
       labels: dates,
       datasets: [

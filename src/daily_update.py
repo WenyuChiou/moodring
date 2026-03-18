@@ -641,6 +641,446 @@ def update_forward_outlook():
     print("[SAVE] forward_outlook.json scores updated")
 
 
+def generate_memory_scene():
+    """Find historical dates with similar sentiment scores and show forward returns.
+    Reads overlay_data.json, computes analogues, writes memory_scene.json."""
+    import math
+
+    ov_path = os.path.join(DATA_DIR, 'overlay_data.json')
+    if not os.path.exists(ov_path):
+        print("[MEMORY] overlay_data.json not found, skipping")
+        return
+
+    print("[MEMORY] Generating memory scene...")
+    with open(ov_path, 'r', encoding='utf-8') as f:
+        ov = json.load(f)
+
+    today = datetime.now().strftime('%Y-%m-%d')
+    threshold = 3.0  # ±3 points
+
+    # Market configs: (score_dates_key, score_key, price_dates_key, price_key)
+    market_configs = {
+        'us': ('dates', 'us_score', 'spy_dates', 'spy'),
+        'tw': ('dates', 'tw_score', 'twii_dates', 'twii'),
+        'jp': ('jp_dates', 'jp_score', 'nikkei_dates', 'nikkei'),
+        'kr': ('kr_dates', 'kr_score', 'kospi_dates', 'kospi'),
+        'eu': ('eu_dates', 'eu_score', 'stoxx50_dates', 'stoxx50'),
+    }
+
+    def _build_price_map(dates_key, price_key):
+        """Build date->price lookup dict."""
+        dates = ov.get(dates_key, [])
+        prices = ov.get(price_key, [])
+        return {d: p for d, p in zip(dates, prices) if p is not None}
+
+    def _forward_return(price_map, sorted_price_dates, date, days):
+        """Calculate forward return from date, looking ahead `days` trading days."""
+        if date not in price_map:
+            return None
+        try:
+            idx = sorted_price_dates.index(date)
+        except ValueError:
+            return None
+        target_idx = idx + days
+        if target_idx >= len(sorted_price_dates):
+            return None
+        target_date = sorted_price_dates[target_idx]
+        start_price = price_map[date]
+        end_price = price_map[target_date]
+        if start_price is None or end_price is None or start_price == 0:
+            return None
+        return round((end_price / start_price - 1) * 100, 2)
+
+    def _generate_context(price_map, sorted_price_dates, score_dates, scores, date, idx):
+        """Generate a data-derived context string for a historical analogue date."""
+        parts = []
+
+        # Check score vs 252d range
+        start_idx = max(0, idx - 252)
+        window_scores = [s for s in scores[start_idx:idx+1] if s is not None]
+        if len(window_scores) >= 20:
+            s_min = min(window_scores)
+            s_max = max(window_scores)
+            current = scores[idx]
+            if s_max > s_min:
+                pct = (current - s_min) / (s_max - s_min) * 100
+                if pct < 10:
+                    parts.append("Score near 52w low")
+                elif pct > 90:
+                    parts.append("Score near 52w high")
+
+        # 5d price change leading into this date
+        if date in price_map:
+            try:
+                pidx = sorted_price_dates.index(date)
+                if pidx >= 5:
+                    prev_date = sorted_price_dates[pidx - 5]
+                    p_now = price_map[date]
+                    p_prev = price_map.get(prev_date)
+                    if p_prev and p_prev > 0:
+                        chg = (p_now / p_prev - 1) * 100
+                        if abs(chg) > 3:
+                            parts.append(f"{'Sharp' if abs(chg) > 5 else ''} 5d {'rally' if chg > 0 else 'decline'} of {chg:+.1f}%".strip())
+            except ValueError:
+                pass
+
+        # 20d price change
+        if date in price_map:
+            try:
+                pidx = sorted_price_dates.index(date)
+                if pidx >= 20:
+                    prev_date = sorted_price_dates[pidx - 20]
+                    p_now = price_map[date]
+                    p_prev = price_map.get(prev_date)
+                    if p_prev and p_prev > 0:
+                        chg = (p_now / p_prev - 1) * 100
+                        if abs(chg) > 5:
+                            parts.append(f"20d move {chg:+.1f}%")
+            except ValueError:
+                pass
+
+        # Always include the zone as fallback context
+        if not parts:
+            zone = _score_zone(scores[idx])
+            parts.append(f"{zone} zone")
+
+        return ", ".join(parts)
+
+    def _score_zone(score):
+        """Classify score into sentiment zone."""
+        if score is None:
+            return "unknown"
+        if score < 25:
+            return "Extreme Fear"
+        elif score < 40:
+            return "Fear"
+        elif score < 60:
+            return "Neutral"
+        elif score < 75:
+            return "Greed"
+        else:
+            return "Extreme Greed"
+
+    result = {"date": today}
+
+    for mkt, (sdates_key, score_key, pdates_key, price_key) in market_configs.items():
+        score_dates = ov.get(sdates_key, [])
+        scores = ov.get(score_key, [])
+        if not score_dates or not scores or len(score_dates) != len(scores):
+            print(f"[MEMORY] {mkt.upper()}: insufficient data, skipping")
+            continue
+
+        # Current score is the last entry
+        current_score = scores[-1]
+        if current_score is None:
+            print(f"[MEMORY] {mkt.upper()}: current score is None, skipping")
+            continue
+
+        price_map = _build_price_map(pdates_key, price_key)
+        sorted_price_dates = sorted(price_map.keys())
+
+        # Find all similar historical dates (exclude last 5 days to allow fwd calc)
+        similar = []
+        for i in range(len(score_dates) - 5):
+            s = scores[i]
+            if s is None:
+                continue
+            dist = abs(s - current_score)
+            if dist <= threshold:
+                d = score_dates[i]
+                fwd_5d = _forward_return(price_map, sorted_price_dates, d, 5)
+                fwd_10d = _forward_return(price_map, sorted_price_dates, d, 10)
+                fwd_20d = _forward_return(price_map, sorted_price_dates, d, 20)
+                context = _generate_context(price_map, sorted_price_dates, score_dates, scores, d, i)
+                similar.append({
+                    "date": d,
+                    "score": safe_round(s, 1),
+                    "distance": safe_round(dist, 1),
+                    "fwd_5d": safe_round(fwd_5d, 2),
+                    "fwd_10d": safe_round(fwd_10d, 2),
+                    "fwd_20d": safe_round(fwd_20d, 2),
+                    "context": context,
+                })
+
+        if not similar:
+            print(f"[MEMORY] {mkt.upper()}: no similar dates found")
+            continue
+
+        # Top 5 closest by distance, then by recency
+        top5 = sorted(similar, key=lambda x: (x['distance'], -(score_dates.index(x['date']) if x['date'] in score_dates else 0)))[:5]
+
+        # Summary stats
+        fwd_20d_vals = [x['fwd_20d'] for x in similar if x['fwd_20d'] is not None]
+        avg_fwd_20d = safe_round(sum(fwd_20d_vals) / len(fwd_20d_vals), 2) if fwd_20d_vals else None
+        win_rate = safe_round(sum(1 for v in fwd_20d_vals if v > 0) / len(fwd_20d_vals) * 100, 0) if fwd_20d_vals else None
+
+        best_analogue = max(similar, key=lambda x: x['fwd_20d'] if x['fwd_20d'] is not None else -9999)['date'] if fwd_20d_vals else None
+        worst_analogue = min(similar, key=lambda x: x['fwd_20d'] if x['fwd_20d'] is not None else 9999)['date'] if fwd_20d_vals else None
+
+        result[mkt] = {
+            "current_score": safe_round(current_score, 1),
+            "analogues": top5,
+            "summary": {
+                "n_similar": len(similar),
+                "avg_fwd_20d": avg_fwd_20d,
+                "win_rate_20d": win_rate,
+                "best_analogue": best_analogue,
+                "worst_analogue": worst_analogue,
+            }
+        }
+        print(f"[MEMORY] {mkt.upper()}: score={current_score}, {len(similar)} analogues found, avg 20d fwd={avg_fwd_20d}%")
+
+    # Cross-market pattern analysis
+    us_score = scores[-1] if (scores := ov.get('us_score', [])) else None
+    tw_score = scores[-1] if (scores := ov.get('tw_score', [])) else None
+    if us_score is not None and tw_score is not None:
+        us_zone = _score_zone(us_score)
+        tw_zone = _score_zone(tw_score)
+        pattern = f"US {us_zone} + TW {tw_zone}"
+
+        # Find historical occurrences of same cross-market pattern
+        us_dates = ov.get('dates', [])
+        us_scores = ov.get('us_score', [])
+        tw_scores_all = ov.get('tw_score', [])
+        n = min(len(us_dates), len(us_scores), len(tw_scores_all))
+
+        us_price_map = _build_price_map('spy_dates', 'spy')
+        tw_price_map = _build_price_map('twii_dates', 'twii')
+        us_sorted = sorted(us_price_map.keys())
+        tw_sorted = sorted(tw_price_map.keys())
+
+        cross_matches = []
+        for i in range(n - 20):  # need 20d forward
+            us_s = us_scores[i]
+            tw_s = tw_scores_all[i]
+            if us_s is None or tw_s is None:
+                continue
+            if _score_zone(us_s) == us_zone and _score_zone(tw_s) == tw_zone:
+                d = us_dates[i]
+                us_fwd = _forward_return(us_price_map, us_sorted, d, 20)
+                tw_fwd = _forward_return(tw_price_map, tw_sorted, d, 20)
+                cross_matches.append({"date": d, "us_fwd_20d": us_fwd, "tw_fwd_20d": tw_fwd})
+
+        if cross_matches:
+            us_fwd_vals = [x['us_fwd_20d'] for x in cross_matches if x['us_fwd_20d'] is not None]
+            tw_fwd_vals = [x['tw_fwd_20d'] for x in cross_matches if x['tw_fwd_20d'] is not None]
+            result['cross_market'] = {
+                "pattern": pattern,
+                "n_occurrences": len(cross_matches),
+                "avg_fwd_20d_us": safe_round(sum(us_fwd_vals) / len(us_fwd_vals), 2) if us_fwd_vals else None,
+                "avg_fwd_20d_tw": safe_round(sum(tw_fwd_vals) / len(tw_fwd_vals), 2) if tw_fwd_vals else None,
+                "last_occurred": cross_matches[-1]['date'],
+            }
+            print(f"[MEMORY] Cross-market: {pattern}, {len(cross_matches)} occurrences")
+
+    result = sanitize_for_json(result)
+    out_path = os.path.join(DATA_DIR, 'memory_scene.json')
+    with open(out_path, 'w', encoding='utf-8') as f:
+        json.dump(result, f, indent=2, ensure_ascii=False)
+    print(f"[MEMORY] Saved: {out_path}")
+
+
+def generate_self_improve():
+    """Track component-level performance and signal health.
+    Reads overlay_data.json, computes IC and health metrics, writes self_improve.json."""
+    import math
+    from scipy.stats import spearmanr
+
+    ov_path = os.path.join(DATA_DIR, 'overlay_data.json')
+    if not os.path.exists(ov_path):
+        print("[SELF-IMPROVE] overlay_data.json not found, skipping")
+        return
+
+    print("[SELF-IMPROVE] Generating self-improve diagnostics...")
+    with open(ov_path, 'r', encoding='utf-8') as f:
+        ov = json.load(f)
+
+    today = datetime.now().strftime('%Y-%m-%d')
+
+    # Market configs: (score_dates_key, score_key, price_dates_key, price_key)
+    market_configs = {
+        'us': ('dates', 'us_score', 'spy_dates', 'spy'),
+        'tw': ('dates', 'tw_score', 'twii_dates', 'twii'),
+        'jp': ('jp_dates', 'jp_score', 'nikkei_dates', 'nikkei'),
+        'kr': ('kr_dates', 'kr_score', 'kospi_dates', 'kospi'),
+        'eu': ('eu_dates', 'eu_score', 'stoxx50_dates', 'stoxx50'),
+    }
+
+    def _compute_ic(score_dates, scores, price_dates, prices, window=None):
+        """Compute Spearman IC between scores and forward 20d returns.
+        If window is set, use only the last `window` score observations."""
+        # Build price lookup
+        price_map = {d: p for d, p in zip(price_dates, prices) if p is not None}
+        sorted_pdates = sorted(price_map.keys())
+
+        # Build aligned (score, fwd_20d_return) pairs
+        pairs = []
+        start_idx = max(0, len(score_dates) - window) if window else 0
+        for i in range(start_idx, len(score_dates) - 20):
+            s = scores[i]
+            d = score_dates[i]
+            if s is None:
+                continue
+            if d not in price_map:
+                continue
+            try:
+                pidx = sorted_pdates.index(d)
+            except ValueError:
+                continue
+            if pidx + 20 >= len(sorted_pdates):
+                continue
+            fwd_date = sorted_pdates[pidx + 20]
+            p_start = price_map[d]
+            p_end = price_map[fwd_date]
+            if p_start is None or p_end is None or p_start == 0:
+                continue
+            fwd_ret = (p_end / p_start - 1) * 100
+            pairs.append((s, fwd_ret))
+
+        if len(pairs) < 30:
+            return None, len(pairs)
+
+        s_vals, r_vals = zip(*pairs)
+        ic, _ = spearmanr(s_vals, r_vals)
+        if math.isnan(ic):
+            return None, len(pairs)
+        return round(ic, 4), len(pairs)
+
+    def _score_zone_label(score):
+        if score < 25:
+            return "extreme_fear"
+        elif score < 40:
+            return "fear"
+        elif score < 60:
+            return "neutral"
+        elif score < 75:
+            return "greed"
+        else:
+            return "extreme_greed"
+
+    markets_result = {}
+    active_flags = []
+    overall_health = "good"
+
+    for mkt, (sdates_key, score_key, pdates_key, price_key) in market_configs.items():
+        score_dates = ov.get(sdates_key, [])
+        scores = ov.get(score_key, [])
+        price_dates = ov.get(pdates_key, [])
+        prices = ov.get(price_key, [])
+
+        if not score_dates or not scores or len(score_dates) != len(scores):
+            print(f"[SELF-IMPROVE] {mkt.upper()}: insufficient score data, skipping")
+            continue
+        if not price_dates or not prices:
+            print(f"[SELF-IMPROVE] {mkt.upper()}: insufficient price data, skipping")
+            continue
+
+        # Full history IC
+        full_ic, full_n = _compute_ic(score_dates, scores, price_dates, prices)
+
+        # Recent 252d IC
+        recent_ic, recent_n = _compute_ic(score_dates, scores, price_dates, prices, window=252)
+
+        # IC trend and health
+        # Compare absolute IC values -- higher |IC| means stronger signal
+        flags = []
+        if full_ic is not None and recent_ic is not None and abs(full_ic) > 0.001:
+            ic_change_pct = round((abs(recent_ic) - abs(full_ic)) / abs(full_ic) * 100, 1)
+            # Also check if sign has flipped (signal inversion = decaying)
+            sign_flipped = (full_ic < 0 and recent_ic > 0) or (full_ic > 0 and recent_ic < 0)
+            if sign_flipped or ic_change_pct < -20:
+                ic_trend = "decaying"
+                flags.append(f"IC decaying: recent {recent_ic} vs historical {full_ic}")
+            elif ic_change_pct > 20:
+                ic_trend = "improving"
+            else:
+                ic_trend = "stable"
+        else:
+            ic_change_pct = None
+            ic_trend = "insufficient_data"
+
+        # Health based on absolute recent IC
+        if recent_ic is not None:
+            abs_ic = abs(recent_ic)
+            if abs_ic > 0.08:
+                health = "good"
+            elif abs_ic >= 0.05:
+                health = "warning"
+            else:
+                health = "poor"
+                flags.append(f"Weak IC: {recent_ic}")
+        else:
+            health = "insufficient_data"
+
+        # Score distribution over last 60 entries
+        recent_scores = [s for s in scores[-60:] if s is not None]
+        score_mean_60d = safe_round(sum(recent_scores) / len(recent_scores), 1) if recent_scores else None
+        if len(recent_scores) >= 2:
+            mean = sum(recent_scores) / len(recent_scores)
+            variance = sum((x - mean) ** 2 for x in recent_scores) / (len(recent_scores) - 1)
+            score_std_60d = safe_round(variance ** 0.5, 1)
+        else:
+            score_std_60d = None
+
+        zone_dist = {"extreme_fear": 0, "fear": 0, "neutral": 0, "greed": 0, "extreme_greed": 0}
+        for s in recent_scores:
+            zone_dist[_score_zone_label(s)] += 1
+
+        # Check if score is stuck in one zone
+        total_recent = len(recent_scores)
+        if total_recent > 0:
+            max_zone_pct = max(zone_dist.values()) / total_recent * 100
+            max_zone_name = max(zone_dist, key=zone_dist.get)
+            if max_zone_pct >= 80:
+                flags.append(f"Score stuck in {max_zone_name} zone {max_zone_pct:.0f}% of last 60d")
+
+        if flags:
+            active_flags.extend([f"{mkt.upper()}: {f}" for f in flags])
+
+        if health in ("poor", "warning") and overall_health == "good":
+            overall_health = "warning" if health == "warning" else "poor"
+        if health == "poor":
+            overall_health = "poor"
+
+        markets_result[mkt] = {
+            "full_ic_20d": safe_round(full_ic, 4) if full_ic is not None else None,
+            "recent_ic_20d": safe_round(recent_ic, 4) if recent_ic is not None else None,
+            "ic_trend": ic_trend,
+            "ic_change_pct": safe_round(ic_change_pct, 1) if ic_change_pct is not None else None,
+            "score_mean_60d": score_mean_60d,
+            "score_std_60d": score_std_60d,
+            "zone_distribution_60d": zone_dist,
+            "health": health,
+            "flags": flags,
+        }
+        print(f"[SELF-IMPROVE] {mkt.upper()}: full_ic={full_ic}, recent_ic={recent_ic}, trend={ic_trend}, health={health}")
+
+    # Recommendation
+    if overall_health == "good":
+        recommendation = "All signals performing within expected range."
+    elif overall_health == "warning":
+        recommendation = "Some signals showing weakness. Monitor closely."
+    else:
+        recommendation = "Signal degradation detected. Consider recalibration."
+
+    result = {
+        "date": today,
+        "markets": markets_result,
+        "system_health": {
+            "overall": overall_health,
+            "active_flags": active_flags,
+            "last_calibration": today,
+            "recommendation": recommendation,
+        }
+    }
+
+    result = sanitize_for_json(result)
+    out_path = os.path.join(DATA_DIR, 'self_improve.json')
+    with open(out_path, 'w', encoding='utf-8') as f:
+        json.dump(result, f, indent=2, ensure_ascii=False)
+    print(f"[SELF-IMPROVE] Saved: {out_path}")
+
+
 def main():
     parser = argparse.ArgumentParser(description='Moodring Daily Update — US/TW/JP/KR/EU markets')
     parser.add_argument('--us', action='store_true', help='Update US only')
@@ -699,6 +1139,8 @@ def main():
     update_overlay_json(snapshot, jp_score_val, kr_score_val, eu_score_val)
     update_agent_results(snapshot, us_data, tw_data, tw_retail, jp_data, kr_data, eu_data, global_ctx)
     update_forward_outlook()
+    generate_memory_scene()
+    generate_self_improve()
 
     markets = []
     if args.us: markets.append('US')

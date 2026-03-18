@@ -441,7 +441,26 @@ body {
   </div>
 </div>
 
-<!-- 5. HISTORICAL PROOF -->
+<!-- 5. MEMORY SCENE -->
+<div class="section" id="memory-section">
+  <div class="section-title">Memory Scene</div>
+  <div style="background:#161b22;border:1px solid #30363d;border-radius:10px;padding:14px;">
+    <div style="font-size:0.82em;color:#8b949e;margin-bottom:10px;" id="memory-subtitle">Finding historical analogues...</div>
+    <div id="memory-analogues"></div>
+    <div id="memory-summary" style="margin-top:12px;"></div>
+    <div id="memory-cross" style="margin-top:12px;"></div>
+  </div>
+</div>
+
+<!-- 6. SELF-IMPROVE -->
+<div class="section" id="selfimprove-section">
+  <div class="section-title">System Health</div>
+  <div style="background:#161b22;border:1px solid #30363d;border-radius:10px;padding:14px;">
+    <div id="si-market-health"></div>
+    <div id="si-system-health" style="margin-top:12px;"></div>
+  </div>
+</div>
+
 <div class="section" id="quintile-section">
   <div class="section-title">Historical Proof</div>
   <div class="chart-wrap">
@@ -897,6 +916,154 @@ function buildOverlayChart(overlayData, rangeDays, mktKey) {
   });
 }
 
+// ── Memory Scene renderer ─────────────────────────────────────────────────────
+function renderMemoryScene(memData, mktKey) {
+  const section = document.getElementById('memory-section');
+  if (!memData) { section.classList.add('hidden'); return; }
+  section.classList.remove('hidden');
+
+  const cfg = MARKETS[mktKey];
+  const mkt = memData[mktKey];
+
+  if (!mkt || !mkt.analogues || mkt.analogues.length === 0) {
+    document.getElementById('memory-subtitle').textContent = 'No similar historical scenarios found for ' + cfg.labelLong + '.';
+    document.getElementById('memory-analogues').innerHTML = '';
+    document.getElementById('memory-summary').innerHTML = '';
+    document.getElementById('memory-cross').innerHTML = '';
+    return;
+  }
+
+  document.getElementById('memory-subtitle').textContent =
+    'Current ' + cfg.label + ' score: ' + mkt.current_score.toFixed(1) + ' — ' + mkt.summary.n_similar + ' similar days in history (±3 pts)';
+
+  // Analogues table
+  const rows = mkt.analogues.slice(0, 5).map(a => {
+    const f5 = a.fwd_5d != null ? fmtPct(a.fwd_5d, 1) : '--';
+    const f10 = a.fwd_10d != null ? fmtPct(a.fwd_10d, 1) : '--';
+    const f20 = a.fwd_20d != null ? fmtPct(a.fwd_20d, 1) : '--';
+    const f20clr = a.fwd_20d != null ? (a.fwd_20d >= 0 ? '#3fb950' : '#f85149') : '#8b949e';
+    return `<div style="display:grid;grid-template-columns:90px 50px 55px 55px 55px 1fr;gap:4px;padding:5px 0;border-top:1px solid #21262d;font-size:0.82em;">
+      <span style="color:#58a6ff;">${a.date}</span>
+      <span style="color:#8b949e;">${a.score.toFixed(1)}</span>
+      <span style="color:${a.fwd_5d >= 0 ? '#3fb950' : '#f85149'}">${f5}</span>
+      <span style="color:${a.fwd_10d >= 0 ? '#3fb950' : '#f85149'}">${f10}</span>
+      <span style="color:${f20clr};font-weight:600;">${f20}</span>
+      <span style="color:#6e7681;font-size:0.9em;">${a.context}</span>
+    </div>`;
+  }).join('');
+
+  document.getElementById('memory-analogues').innerHTML =
+    `<div style="display:grid;grid-template-columns:90px 50px 55px 55px 55px 1fr;gap:4px;font-size:0.72em;color:#6e7681;padding-bottom:4px;font-weight:600;">
+      <span>Date</span><span>Score</span><span>5d</span><span>10d</span><span>20d</span><span>Context</span>
+    </div>` + rows;
+
+  // Summary
+  const s = mkt.summary;
+  const avgClr = s.avg_fwd_20d >= 0 ? '#3fb950' : '#f85149';
+  const wrClr = s.win_rate_20d >= 60 ? '#3fb950' : s.win_rate_20d >= 50 ? '#e3b341' : '#f85149';
+  document.getElementById('memory-summary').innerHTML =
+    `<div style="display:flex;gap:16px;flex-wrap:wrap;font-size:0.82em;">
+      <div><span style="color:#8b949e;">Avg 20d return: </span><span style="color:${avgClr};font-weight:700;">${fmtPct(s.avg_fwd_20d, 1)}</span></div>
+      <div><span style="color:#8b949e;">Win rate: </span><span style="color:${wrClr};font-weight:700;">${s.win_rate_20d.toFixed(0)}%</span></div>
+      <div><span style="color:#8b949e;">Best: </span><span style="color:#3fb950;">${s.best_analogue}</span></div>
+      <div><span style="color:#8b949e;">Worst: </span><span style="color:#f85149;">${s.worst_analogue}</span></div>
+    </div>`;
+
+  // Cross-market
+  const cross = memData.cross_market;
+  if (cross && cross.n_occurrences > 0) {
+    document.getElementById('memory-cross').innerHTML =
+      `<div style="background:#0d1117;border-radius:6px;padding:10px;font-size:0.82em;margin-top:8px;">
+        <span style="color:#58a6ff;font-weight:700;">Cross-Market Pattern: </span>
+        <span style="color:#e6edf3;">${cross.pattern}</span>
+        <span style="color:#8b949e;"> — ${cross.n_occurrences} times in history</span>
+        <div style="margin-top:6px;display:flex;gap:16px;">
+          <span style="color:#8b949e;">US avg 20d: <span style="color:${cross.avg_fwd_20d_us >= 0 ? '#3fb950' : '#f85149'};font-weight:600;">${fmtPct(cross.avg_fwd_20d_us, 1)}</span></span>
+          <span style="color:#8b949e;">TW avg 20d: <span style="color:${cross.avg_fwd_20d_tw >= 0 ? '#3fb950' : '#f85149'};font-weight:600;">${fmtPct(cross.avg_fwd_20d_tw, 1)}</span></span>
+          <span style="color:#6e7681;">Last: ${cross.last_occurred}</span>
+        </div>
+      </div>`;
+  } else {
+    document.getElementById('memory-cross').innerHTML = '';
+  }
+}
+
+// ── Self-Improve renderer ─────────────────────────────────────────────────────
+function renderSelfImprove(siData, mktKey) {
+  const section = document.getElementById('selfimprove-section');
+  if (!siData) { section.classList.add('hidden'); return; }
+  section.classList.remove('hidden');
+
+  const cfg = MARKETS[mktKey];
+  const mkt = siData.markets && siData.markets[mktKey];
+  const sys = siData.system_health || {};
+
+  if (!mkt) {
+    document.getElementById('si-market-health').innerHTML = '<div class="coming-soon">Health data not available for ' + cfg.labelLong + '.</div>';
+    document.getElementById('si-system-health').innerHTML = '';
+    return;
+  }
+
+  // Health color
+  const hClr = mkt.health === 'good' ? '#3fb950' : mkt.health === 'warning' ? '#e3b341' : '#f85149';
+  const tClr = mkt.ic_trend === 'improving' ? '#3fb950' : mkt.ic_trend === 'stable' ? '#e3b341' : '#f85149';
+  const tArrow = mkt.ic_trend === 'improving' ? '↑' : mkt.ic_trend === 'stable' ? '→' : '↓';
+
+  // Zone distribution bar
+  const zd = mkt.zone_distribution_60d || {};
+  const total = Object.values(zd).reduce((a, b) => a + b, 0) || 1;
+  const zoneColors = { extreme_fear: '#22c55e', fear: '#2d8f4e', neutral: '#a08a20', greed: '#dc2626', extreme_greed: '#ef4444' };
+  const zoneBar = Object.entries(zd).map(([k, v]) => {
+    const pct = (v / total * 100).toFixed(1);
+    return pct > 0 ? `<div style="width:${pct}%;background:${zoneColors[k] || '#21262d'};height:8px;" title="${k}: ${v}d (${pct}%)"></div>` : '';
+  }).join('');
+
+  // Flags
+  const flagsHtml = (mkt.flags || []).map(f =>
+    `<div style="font-size:0.78em;color:#e3b341;padding:3px 0 3px 12px;position:relative;border-top:1px solid #21262d;">
+      <span style="position:absolute;left:0;color:#e3b341;">⚠</span>${f}
+    </div>`
+  ).join('');
+
+  document.getElementById('si-market-health').innerHTML =
+    `<div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+      <span style="font-size:1.1em;font-weight:800;color:${hClr};text-transform:uppercase;letter-spacing:1px;">${mkt.health}</span>
+      <span style="font-size:0.82em;color:#8b949e;">${cfg.labelLong} Signal Health</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px;">
+      <div style="text-align:center;">
+        <div style="font-size:0.68em;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;">Full IC</div>
+        <div style="font-size:1.1em;font-weight:700;color:#e6edf3;">${mkt.full_ic_20d.toFixed(3)}</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-size:0.68em;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;">Recent IC</div>
+        <div style="font-size:1.1em;font-weight:700;color:${hClr};">${mkt.recent_ic_20d.toFixed(3)}</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-size:0.68em;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;">Trend</div>
+        <div style="font-size:1.1em;font-weight:700;color:${tClr};">${tArrow} ${mkt.ic_trend}</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-size:0.68em;color:#8b949e;text-transform:uppercase;letter-spacing:0.5px;">60d Avg</div>
+        <div style="font-size:1.1em;font-weight:700;color:#e6edf3;">${mkt.score_mean_60d.toFixed(1)}</div>
+      </div>
+    </div>
+    <div style="font-size:0.72em;color:#8b949e;margin-bottom:4px;">Score Distribution (last 60 trading days)</div>
+    <div style="display:flex;height:8px;border-radius:4px;overflow:hidden;margin-bottom:8px;">${zoneBar}</div>
+    ${flagsHtml}`;
+
+  // System health
+  const sClr = sys.overall === 'good' ? '#3fb950' : sys.overall === 'warning' ? '#e3b341' : '#f85149';
+  document.getElementById('si-system-health').innerHTML =
+    `<div style="background:#0d1117;border-radius:6px;padding:10px;font-size:0.82em;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+        <span style="color:${sClr};font-weight:700;">Overall: ${sys.overall.toUpperCase()}</span>
+        <span style="color:#6e7681;">Last calibration: ${sys.last_calibration}</span>
+      </div>
+      <div style="color:#c9d1d9;">${sys.recommendation}</div>
+    </div>`;
+}
+
 // ── Market data (static, US/TW focused) ──────────────────────────────────────
 function renderMarketData(snap) {
   const us  = snap.us_market || {};
@@ -993,6 +1160,11 @@ function switchMarket(mktKey) {
   }
   renderAgentSection(effectiveAgentData, mktKey);
 
+  // Memory Scene
+  const { memoryData, selfImproveData } = _allData;
+  renderMemoryScene(memoryData, mktKey);
+  renderSelfImprove(selfImproveData, mktKey);
+
   // Quintile
   const qData = quintileData[mktKey] && quintileData[mktKey]['20d'] ? quintileData[mktKey]['20d'].returns : null;
   buildQuintileChart(qData, mktKey);
@@ -1023,7 +1195,7 @@ async function loadDashboard() {
       if (!r.ok) throw new Error(url + ' HTTP ' + r.status);
       return r.json();
     });
-    const [fwdData, agentData, quintileData, dashData, overlayData, zoneReturns, icData] = await Promise.all([
+    const [fwdData, agentData, quintileData, dashData, overlayData, zoneReturns, icData, memoryData, selfImproveData] = await Promise.all([
       fetchJSON('data/forward_outlook.json'),
       fetchJSON('data/phase2_agent_results.json'),
       fetchJSON('data/quintile_data.json'),
@@ -1031,9 +1203,11 @@ async function loadDashboard() {
       fetchJSON('data/overlay_data.json'),
       fetchJSON('data/zone_returns.json'),
       fetchJSON('data/ic_data.json'),
+      fetchJSON('data/memory_scene.json').catch(() => null),
+      fetchJSON('data/self_improve.json').catch(() => null),
     ]);
 
-    _allData = { fwdData, agentData, quintileData, dashData, overlayData, zoneReturns, icData };
+    _allData = { fwdData, agentData, quintileData, dashData, overlayData, zoneReturns, icData, memoryData, selfImproveData };
 
     // Render IC table (all markets, static)
     if (icData && icData.markets) {

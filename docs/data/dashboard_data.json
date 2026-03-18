@@ -8413,7 +8413,7 @@
       "NIKKEI_close": 55145.62,
       "NIKKEI_RSI14": 37.1,
       "NIKKEI_SMA20": 55864.91,
-      "NIKKEI_vs_52w_high_pct": NaN,
+      "NIKKEI_vs_52w_high_pct": null,
       "NIKKEI_5d_return_pct": 0.22,
       "NIKKEI_20d_return_pct": -2.51,
       "jp_moodring_score": 58.2
@@ -8422,7 +8422,7 @@
       "KOSPI_close": 5865.76,
       "KOSPI_RSI14": 46.5,
       "KOSPI_SMA20": 5700.95,
-      "KOSPI_vs_52w_high_pct": NaN,
+      "KOSPI_vs_52w_high_pct": null,
       "KOSPI_5d_return_pct": 4.56,
       "KOSPI_20d_return_pct": 6.22,
       "kr_moodring_score": 75.9
@@ -8431,7 +8431,7 @@
       "STOXX50_close": 5769.25,
       "STOXX50_RSI14": 30.0,
       "STOXX50_SMA20": 5921.06,
-      "STOXX50_vs_52w_high_pct": NaN,
+      "STOXX50_vs_52w_high_pct": null,
       "STOXX50_5d_return_pct": -1.16,
       "STOXX50_20d_return_pct": -4.19,
       "eu_moodring_score": 53.0

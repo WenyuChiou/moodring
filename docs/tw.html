@@ -854,14 +854,19 @@ document.querySelectorAll('.market-btn').forEach(btn => {
 // ── Main load ─────────────────────────────────────────────────────────────────
 async function loadDashboard() {
   try {
+    const cb = '?v=' + Date.now();
+    const fetchJSON = url => fetch(url + cb).then(r => {
+      if (!r.ok) throw new Error(url + ' HTTP ' + r.status);
+      return r.json();
+    });
     const [fwdData, agentData, quintileData, dashData, overlayData, zoneReturns, icData] = await Promise.all([
-      fetch('data/forward_outlook.json').then(r => r.json()),
-      fetch('data/phase2_agent_results.json').then(r => r.json()),
-      fetch('data/quintile_data.json').then(r => r.json()),
-      fetch('data/dashboard_data.json').then(r => r.json()),
-      fetch('data/overlay_data.json').then(r => r.json()),
-      fetch('data/zone_returns.json').then(r => r.json()),
-      fetch('data/ic_data.json').then(r => r.json()),
+      fetchJSON('data/forward_outlook.json'),
+      fetchJSON('data/phase2_agent_results.json'),
+      fetchJSON('data/quintile_data.json'),
+      fetchJSON('data/dashboard_data.json'),
+      fetchJSON('data/overlay_data.json'),
+      fetchJSON('data/zone_returns.json'),
+      fetchJSON('data/ic_data.json'),
     ]);
 
     _allData = { fwdData, agentData, quintileData, dashData, overlayData, zoneReturns, icData };

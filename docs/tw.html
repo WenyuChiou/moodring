@@ -613,11 +613,11 @@ let _overlayScores = null;
 let _currentMkt    = 'tw';
 let _currentRange  = 252;
 
-function timeUnit(n) {
-  if (n <= 90)  return 'week';
-  if (n <= 400) return 'month';
-  if (n <= 1000) return 'quarter';
-  return 'year';
+function timeConfig(n) {
+  if (n <= 90)   return { unit: 'week',    displayFormats: { week: 'MM/dd' } };
+  if (n <= 400)  return { unit: 'month',   displayFormats: { month: 'yyyy-MM' } };
+  if (n <= 1000) return { unit: 'quarter', displayFormats: { quarter: 'yyyy Q' } };
+  return                { unit: 'year',    displayFormats: { year: 'yyyy' } };
 }); };
   if (n <= 400) return d => d.substring(0, 7);
   return d => d.substring(0, 4);
@@ -645,7 +645,7 @@ function buildOverlayChart(overlayData, rangeDays, mktKey) {
 
   if (_overlayChart) { _overlayChart.destroy(); _overlayChart = null; }
   const ctx     = document.getElementById('overlayChart').getContext('2d');
-  const tUnit = timeUnit(n);
+  const tCfg = timeConfig(n);
 
   const nowDotPlugin = {
     id: 'nowDot',
@@ -713,7 +713,7 @@ function buildOverlayChart(overlayData, rangeDays, mktKey) {
         }}
       },
       scales: {
-        x: { type: 'time', time: { unit: tUnit, tooltipFormat: 'yyyy-MM-dd' }, ticks: { color: '#8b949e', font: { size: 9 }, maxTicksLimit: 8, maxRotation: 0 }, grid: { color: '#21262d' } },
+        x: { type: 'time', time: { unit: tCfg.unit, displayFormats: tCfg.displayFormats, tooltipFormat: 'yyyy-MM-dd' }, ticks: { color: '#8b949e', font: { size: 9 }, maxTicksLimit: 10, maxRotation: 0, autoSkip: true }, grid: { color: '#21262d' } },
         'y-score': { type: 'linear', position: 'left', min: 0, max: 100,
           ticks: { color: mcol, font: { size: 10 }, stepSize: 20 }, grid: { color: '#21262d' },
           title: { display: true, text: '分數', color: mcol, font: { size: 10 } } },

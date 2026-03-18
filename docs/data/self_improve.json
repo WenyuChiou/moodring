@@ -2,43 +2,43 @@
   "date": "2026-03-18",
   "markets": {
     "us": {
-      "full_ic_20d": -0.1721,
-      "recent_ic_20d": 0.028,
+      "full_ic_20d": -0.1713,
+      "recent_ic_20d": 0.0181,
       "ic_trend": "decaying",
-      "ic_change_pct": -83.7,
-      "score_mean_60d": 44.0,
+      "ic_change_pct": -89.4,
+      "score_mean_60d": 43.7,
       "score_std_60d": 5.1,
       "zone_distribution_60d": {
         "extreme_fear": 0,
-        "fear": 12,
-        "neutral": 48,
+        "fear": 14,
+        "neutral": 46,
         "greed": 0,
         "extreme_greed": 0
       },
       "health": "poor",
       "flags": [
-        "IC decaying: recent 0.028 vs historical -0.1721",
-        "Weak IC: 0.028",
-        "Score stuck in neutral zone 80% of last 60d"
+        "IC decaying: recent 0.0181 vs historical -0.1713",
+        "Weak IC: 0.0181"
       ]
     },
     "tw": {
       "full_ic_20d": -0.1272,
-      "recent_ic_20d": 0.0576,
+      "recent_ic_20d": 0.0401,
       "ic_trend": "decaying",
-      "ic_change_pct": -54.7,
-      "score_mean_60d": 41.4,
+      "ic_change_pct": -68.5,
+      "score_mean_60d": 41.1,
       "score_std_60d": 9.8,
       "zone_distribution_60d": {
         "extreme_fear": 7,
-        "fear": 14,
-        "neutral": 39,
+        "fear": 16,
+        "neutral": 37,
         "greed": 0,
         "extreme_greed": 0
       },
-      "health": "warning",
+      "health": "poor",
       "flags": [
-        "IC decaying: recent 0.0576 vs historical -0.1272"
+        "IC decaying: recent 0.0401 vs historical -0.1272",
+        "Weak IC: 0.0401"
       ]
     },
     "jp": {
@@ -104,10 +104,10 @@
   "system_health": {
     "overall": "poor",
     "active_flags": [
-      "US: IC decaying: recent 0.028 vs historical -0.1721",
-      "US: Weak IC: 0.028",
-      "US: Score stuck in neutral zone 80% of last 60d",
-      "TW: IC decaying: recent 0.0576 vs historical -0.1272",
+      "US: IC decaying: recent 0.0181 vs historical -0.1713",
+      "US: Weak IC: 0.0181",
+      "TW: IC decaying: recent 0.0401 vs historical -0.1272",
+      "TW: Weak IC: 0.0401",
       "JP: IC decaying: recent 0.0264 vs historical -0.0656",
       "JP: Weak IC: 0.0264",
       "JP: Score stuck in neutral zone 87% of last 60d",

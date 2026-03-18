@@ -492,8 +492,8 @@ function renderAgentSection(agentData, mktKey) {
     return;
   }
 
-  const raw     = summary.actionable_signal || summary.actionable_tw || '';
-  let sigWord   = 'HOLD';
+  const raw = summary.actionable_tw || summary.actionable_signal || '';
+  let sigWord = {'觀望':'HOLD','買入':'BUY','賣出':'SELL'}[summary.signal_tw] || 'HOLD';
   if (/BUY/i.test(raw))  sigWord = 'BUY';
   if (/SELL/i.test(raw)) sigWord = 'SELL';
   const sigDisplay = sigWord === 'BUY' ? '買入' : sigWord === 'SELL' ? '賣出' : '觀望';

@@ -645,8 +645,8 @@ function renderAgentSection(agentData, mktKey) {
     return;
   }
 
-  const raw     = summary.actionable_signal || summary.actionable_en || '';
-  let sigWord   = 'HOLD';
+  const raw = summary.actionable_en || summary.actionable_signal || '';
+  let sigWord = (summary.signal_en || 'HOLD').toUpperCase();
   if (/BUY/i.test(raw))  sigWord = 'BUY';
   if (/SELL/i.test(raw)) sigWord = 'SELL';
 

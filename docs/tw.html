@@ -458,7 +458,8 @@ function renderThermometer(prefix, score, pctile, zoneReturns, market) {
         const sign = avg >= 0 ? '+' : '';
         const retClr = avg >= 0 ? '#3fb950' : '#f85149';
         expectedEl.style.color = retClr;
-        expectedEl.textContent = '預期報酬: ' + sign + avg.toFixed(2) + '% / 20天 (勝率 ' + win.toFixed(0) + '%)';
+        const period = zoneReturns.period || '10yr';
+        expectedEl.textContent = '預期報酬: ' + sign + avg.toFixed(2) + '% / 20天 (勝率 ' + win.toFixed(0) + '%) — 基於近 ' + period + ' 數據';
       }
     }
   }

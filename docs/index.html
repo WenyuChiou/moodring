@@ -514,7 +514,8 @@ function renderThermometer(prefix, score, pctile, zoneReturns, market) {
         const sign = avg >= 0 ? '+' : '';
         const retClr = avg >= 0 ? '#3fb950' : '#f85149';
         expectedEl.style.color = retClr;
-        expectedEl.textContent = 'Expected: ' + sign + avg.toFixed(2) + '% / 20d (' + win.toFixed(0) + '% win)';
+        const period = zoneReturns.period || '10yr';
+        expectedEl.textContent = 'Expected: ' + sign + avg.toFixed(2) + '% / 20d (' + win.toFixed(0) + '% win) — based on ' + period;
       }
     }
   }

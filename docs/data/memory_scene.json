@@ -10,7 +10,7 @@
         "fwd_5d": -2.52,
         "fwd_10d": -13.73,
         "fwd_20d": -6.96,
-        "context": "Normal conditions"
+        "context": "Fear zone"
       },
       {
         "date": "2026-03-06",
@@ -19,7 +19,7 @@
         "fwd_5d": -1.5,
         "fwd_10d": null,
         "fwd_20d": null,
-        "context": "Normal conditions"
+        "context": "Fear zone"
       },
       {
         "date": "2018-04-04",
@@ -28,7 +28,7 @@
         "fwd_5d": 0.08,
         "fwd_10d": 2.59,
         "fwd_20d": -0.14,
-        "context": "Normal conditions"
+        "context": "Fear zone"
       },
       {
         "date": "2016-11-03",
@@ -37,7 +37,7 @@
         "fwd_5d": 3.9,
         "fwd_10d": 4.89,
         "fwd_20d": 5.22,
-        "context": "Normal conditions"
+        "context": "Fear zone"
       },
       {
         "date": "2016-02-02",
@@ -76,7 +76,7 @@
         "fwd_5d": -1.84,
         "fwd_10d": -8.77,
         "fwd_20d": -6.58,
-        "context": "Normal conditions"
+        "context": "Fear zone"
       },
       {
         "date": "2022-05-16",
@@ -94,7 +94,7 @@
         "fwd_5d": 2.36,
         "fwd_10d": 3.47,
         "fwd_20d": 3.28,
-        "context": "Normal conditions"
+        "context": "Fear zone"
       },
       {
         "date": "2018-12-12",
@@ -103,7 +103,7 @@
         "fwd_5d": -0.34,
         "fwd_10d": -3.44,
         "fwd_20d": -0.58,
-        "context": "Normal conditions"
+        "context": "Fear zone"
       }
     ],
     "summary": {
@@ -124,7 +124,7 @@
         "fwd_5d": -1.37,
         "fwd_10d": 3.1,
         "fwd_20d": 6.67,
-        "context": "Normal conditions"
+        "context": "Neutral zone"
       },
       {
         "date": "2022-11-22",
@@ -133,7 +133,7 @@
         "fwd_5d": -0.52,
         "fwd_10d": -1.53,
         "fwd_20d": -6.15,
-        "context": "Normal conditions"
+        "context": "Neutral zone"
       },
       {
         "date": "2021-11-04",
@@ -160,7 +160,7 @@
         "fwd_5d": -2.72,
         "fwd_10d": -3.27,
         "fwd_20d": -1.94,
-        "context": "Normal conditions"
+        "context": "Neutral zone"
       }
     ],
     "summary": {
@@ -229,7 +229,7 @@
         "fwd_5d": 3.69,
         "fwd_10d": 3.32,
         "fwd_20d": 4.1,
-        "context": "Normal conditions"
+        "context": "Neutral zone"
       },
       {
         "date": "2025-08-26",
@@ -238,7 +238,7 @@
         "fwd_5d": -1.72,
         "fwd_10d": -0.28,
         "fwd_20d": 1.65,
-        "context": "Normal conditions"
+        "context": "Neutral zone"
       },
       {
         "date": "2025-06-27",
@@ -247,7 +247,7 @@
         "fwd_5d": -0.69,
         "fwd_10d": 1.09,
         "fwd_20d": 0.5,
-        "context": "Normal conditions"
+        "context": "Neutral zone"
       },
       {
         "date": "2024-12-16",
@@ -256,7 +256,7 @@
         "fwd_5d": -1.9,
         "fwd_10d": 1.31,
         "fwd_20d": 4.43,
-        "context": "Normal conditions"
+        "context": "Neutral zone"
       },
       {
         "date": "2018-12-03",
@@ -265,7 +265,7 @@
         "fwd_5d": -6.16,
         "fwd_10d": -4.71,
         "fwd_20d": -4.98,
-        "context": "Normal conditions"
+        "context": "Neutral zone"
       }
     ],
     "summary": {

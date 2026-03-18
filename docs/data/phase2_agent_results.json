@@ -52,6 +52,39 @@
     "forward_outlook_en": "I want to believe but I've been hurt before. The smart move is probably to wait, but waiting means watching everyone else make money if it bounces. Peak retail dilemma.",
     "forward_outlook_tw": "我想相信但被傷過太多次。理性的做法是等，但等的代價是看著別人賺錢。散戶的終極困境。"
   },
+  "jp_agent": {
+    "adjusted_score_delta": -1,
+    "sentiment_level": "CAUTIOUS",
+    "conviction": "MEDIUM",
+    "narrative_en": "Nikkei is at 53,751 but feels shaky. USD/JPY at 158.9 is insane — every time the yen weakens this much, Bank of Japan does something and the market drops 5% in a day. Remember last July? I was up 20% for the year then BOJ hiked and I lost it all in a week. Now I'm just sitting in my Nomura account watching. 2ch is full of people saying 'this time is different' but they said that before Black Monday 1987 too...",
+    "narrative_tw": "日經在 53,751 但感覺很脆弱。USD/JPY 158.9 太誇張了——每次日圓這麼弱，日銀就會出手然後市場一天跌 5%。記得去年七月嗎？全年漲 20% 結果日銀升息一週全吐回去。現在就坐在野村帳戶前面看...",
+    "key_factors_en": ["USD/JPY 158.9 — BOJ intervention risk is the elephant in the room", "Nikkei near all-time highs but retail burned by July 2024 crash", "2ch sentiment: cautiously bullish but everyone has PTSD from BOJ surprises"],
+    "key_factors_tw": ["USD/JPY 158.9 — 日銀干預風險是最大隱憂", "日經接近歷史高點但散戶被 2024 年 7 月崩盤嚇到", "散戶心態：謹慎偏多但對日銀突襲有 PTSD"],
+    "watch_for_en": "Any BOJ meeting or yen intervention rumor. If USD/JPY breaks 160, expect panic selling in Nikkei.",
+    "watch_for_tw": "關注日銀會議或日圓干預傳聞。如果 USD/JPY 破 160，預期日經會出現恐慌賣壓。"
+  },
+  "kr_agent": {
+    "adjusted_score_delta": -2,
+    "sentiment_level": "CAUTIOUS",
+    "conviction": "MEDIUM",
+    "narrative_en": "KOSPI is stuck and I'm losing patience. Samsung is going nowhere, SK Hynix is the only thing keeping the index alive. Every Korean retail investor I know on KakaoTalk is talking about US stocks instead — 'why buy KOSPI when you can buy NVIDIA?' The government keeps announcing 'value-up programs' but nobody believes them anymore. My friend's mom even moved her retirement fund to S&P 500 ETF last month...",
+    "narrative_tw": "KOSPI 卡住不動了，我快沒耐心了。三星不漲，只靠 SK 海力士撐指數。KakaoTalk 群組裡的韓國散戶都在聊美股——「幹嘛買 KOSPI，買 NVIDIA 不好嗎？」政府一直喊 value-up 但沒人信了。我朋友的媽媽上個月把退休金全轉到 S&P 500 ETF 了...",
+    "key_factors_en": ["Korean retail exodus to US stocks — domestic FOMO is dead, replaced by 'KOSPI FOMO-out'", "Samsung stagnation is killing retail confidence", "Government value-up programs met with skepticism — retail has heard it before"],
+    "key_factors_tw": ["韓國散戶出走到美股——國內 FOMO 已死，變成「逃離 KOSPI」", "三星停滯不前打擊散戶信心", "政府 value-up 計劃被嗤之以鼻——散戶聽過太多次了"],
+    "watch_for_en": "Samsung earnings or any semiconductor cycle upturn signal. If Samsung breaks out, Korean retail will flood back overnight.",
+    "watch_for_tw": "關注三星財報或半導體週期回升信號。如果三星突破，韓國散戶會一夜之間湧回來。"
+  },
+  "eu_agent": {
+    "adjusted_score_delta": -1,
+    "sentiment_level": "CAUTIOUS",
+    "conviction": "LOW",
+    "narrative_en": "European stocks are actually doing well but nobody's excited about it. STOXX50 at 5,769 is near highs but European retail doesn't have the same YOLO culture as US or Asia. My trading app (Trade Republic) barely sends me notifications anymore because I haven't traded in weeks. ECB cut rates but everyone's still worried about the economy. Germany is a mess, France is a mess. I keep thinking 'maybe I should just buy US stocks like everyone else'...",
+    "narrative_tw": "歐股其實不差但沒人興奮。STOXX50 在 5,769 接近高點，但歐洲散戶不像美國或亞洲那麼瘋。我的 Trade Republic app 都不太推通知了因為我好幾週沒交易。ECB 降息但大家還是擔心經濟。德國爛、法國爛。我一直在想『要不要學大家去買美股算了』...",
+    "key_factors_en": ["European retail apathy — near highs but no excitement, classic 'wall of worry' rally", "ECB rate cuts not generating the FOMO that Fed cuts would", "Retail capital flowing to US markets — European FOMO is for American stocks, not European ones"],
+    "key_factors_tw": ["歐洲散戶冷淡——接近高點但沒有興奮感，典型的「擔憂之牆」反彈", "ECB 降息但沒產生像 Fed 那樣的 FOMO", "散戶資金流向美股——歐洲的 FOMO 是對美股的，不是對歐股的"],
+    "watch_for_en": "Any major fiscal stimulus from Germany or EU defense spending boost. That could wake up European retail.",
+    "watch_for_tw": "關注德國財政刺激或歐盟國防支出增加。這可能喚醒歐洲散戶。"
+  },
   "summary": {
     "us_final_score": 31.5,
     "tw_final_score": 44.2,

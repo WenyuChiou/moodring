@@ -464,8 +464,16 @@ body {
       <div style="color:#8b949e;font-weight:600;">60d IC</div>
     </div>
     <div id="ic-table" style="display:grid;grid-template-columns:auto repeat(4,1fr);gap:4px;font-size:0.85em;text-align:center;margin-top:6px;"></div>
-    <div style="font-size:0.78em;color:#8b949e;margin-top:10px;line-height:1.5;" id="ic-explanation">
-      IC (Information Coefficient) measures correlation between sentiment score and future returns. Negative IC = contrarian signal works. All p &lt; 0.0001.
+    <div style="font-size:0.82em;color:#c9d1d9;margin-top:12px;line-height:1.6;background:#0d1117;padding:12px;border-radius:8px;" id="ic-explanation">
+      <div style="color:#58a6ff;font-weight:700;margin-bottom:6px;">What is IC?</div>
+      <div style="margin-bottom:8px;">IC (Information Coefficient) measures how well this indicator predicts future returns. Range: -1 to +1.</div>
+      <div style="margin-bottom:8px;">Our IC is <span style="color:#3fb950;font-weight:700;">NEGATIVE</span> — this is <strong>good</strong> for a contrarian indicator. It means: <em>the more greedy retail investors are, the worse future returns tend to be.</em></div>
+      <div style="display:grid;grid-template-columns:auto 1fr;gap:4px 10px;font-size:0.88em;">
+        <span style="color:#3fb950;">|IC| &gt; 0.15</span><span>Strong signal — high confidence</span>
+        <span style="color:#e3b341;">|IC| 0.05-0.15</span><span>Moderate signal — useful</span>
+        <span style="color:#8b949e;">|IC| &lt; 0.05</span><span>Weak — may not be reliable</span>
+      </div>
+      <div style="color:#8b949e;margin-top:8px;font-size:0.82em;">All 5 markets significant at p &lt; 0.0001 (less than 0.01% chance this is random).</div>
     </div>
   </div>
 </div>

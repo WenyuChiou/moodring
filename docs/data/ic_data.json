@@ -52,6 +52,18 @@
       "significant": true
     }
   },
-  "explanation_en": "IC (Information Coefficient) measures the correlation between our sentiment score and future market returns. Negative IC confirms the contrarian signal: higher greed predicts lower returns. All markets significant at p < 0.0001.",
-  "explanation_tw": "IC（資訊係數）衡量情緒分數與未來市場報酬的相關性。負 IC 確認反向信號有效：散戶越貪婪，未來報酬越低。所有市場在 p < 0.0001 下顯著。"
+  "explanation_en": "IC (Information Coefficient) = how well this indicator predicts future returns. Range: -1 to +1. Our IC is NEGATIVE because it works as a contrarian signal — when retail is greedy (high score), markets tend to fall. IC of -0.175 means: the more greedy retail investors are, the worse future returns tend to be. All 5 markets statistically significant (p < 0.0001).",
+  "explanation_tw": "IC（資訊係數）= 這個指標預測未來報酬的能力。範圍 -1 到 +1。我們的 IC 是負數，因為這是反向指標——散戶越貪婪（分數越高），市場未來表現越差。IC = -0.175 代表：散戶越貪婪，未來報酬越低。5 個市場全部統計顯著（p < 0.0001）。",
+  "what_ic_means_en": {
+    "ic_above_neg_015": "Strong contrarian signal — high confidence the indicator works",
+    "ic_neg_005_to_neg_015": "Moderate signal — indicator has predictive value",
+    "ic_near_zero": "Weak or no signal — indicator may not be useful for this horizon",
+    "negative_ic": "Negative IC is GOOD for a contrarian indicator — it means high greed predicts low returns"
+  },
+  "what_ic_means_tw": {
+    "ic_above_neg_015": "強反向信號——高度信心指標有效",
+    "ic_neg_005_to_neg_015": "中等信號——指標有預測價值",
+    "ic_near_zero": "弱信號——此時間範圍可能無效",
+    "negative_ic": "負 IC 對反向指標是好事——代表散戶貪婪時未來報酬確實較低"
+  }
 }

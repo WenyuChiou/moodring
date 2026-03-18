@@ -313,7 +313,15 @@ body {
     </div>
     <div id="ic-table" style="display:grid;grid-template-columns:auto repeat(4,1fr);gap:4px;font-size:0.85em;text-align:center;margin-top:6px;"></div>
     <div style="font-size:0.78em;color:#8b949e;margin-top:10px;line-height:1.5;">
-      IC（資訊係數）衡量情緒分數與未來報酬的相關性。負 IC = 反向信號有效。所有市場 p &lt; 0.0001。
+      <div style="color:#58a6ff;font-weight:700;margin-bottom:6px;">什麼是 IC？</div>
+      <div style="margin-bottom:8px;">IC（資訊係數）衡量這個指標預測未來報酬的能力。範圍 -1 到 +1。</div>
+      <div style="margin-bottom:8px;">我們的 IC 是<span style="color:#3fb950;font-weight:700;">負數</span>——這對反向指標是<strong>好事</strong>。代表：<em>散戶越貪婪，未來報酬越低。</em></div>
+      <div style="display:grid;grid-template-columns:auto 1fr;gap:4px 10px;font-size:0.88em;">
+        <span style="color:#3fb950;">|IC| &gt; 0.15</span><span>強信號 — 高信心</span>
+        <span style="color:#e3b341;">|IC| 0.05-0.15</span><span>中等信號 — 有用</span>
+        <span style="color:#8b949e;">|IC| &lt; 0.05</span><span>弱信號 — 可能不可靠</span>
+      </div>
+      <div style="color:#8b949e;margin-top:8px;font-size:0.82em;">5 個市場全部統計顯著（p &lt; 0.0001，代表這不是隨機結果的機率 &gt; 99.99%）。</div>
     </div>
   </div>
 </div>

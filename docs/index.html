@@ -315,6 +315,20 @@ body {
 .clr-blue   { color: #58a6ff; }
 .clr-muted  { color: #8b949e; }
 
+/* Range buttons */
+.range-btn {
+  background: #21262d;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  padding: 5px 12px;
+  font-size: 0.72em;
+  color: #8b949e;
+  cursor: pointer;
+  font-weight: 600;
+}
+.range-btn:hover { border-color: #58a6ff; color: #58a6ff; }
+.range-btn.active { background: #0d419d; border-color: #58a6ff; color: #fff; }
+
 @media (max-width: 480px) {
   .score-grid       { grid-template-columns: 1fr 1fr; }
   .returns-grid     { grid-template-columns: 1fr; }
@@ -387,12 +401,19 @@ body {
 
 <!-- 4. Score vs Market Overlay -->
 <div class="section">
-  <div class="section-title">Sentiment vs Market Price (2010–2026)</div>
+  <div class="section-title">Sentiment vs Market Price</div>
+  <div style="display:flex;gap:6px;margin-bottom:10px;">
+    <button class="range-btn active" onclick="setRange(this,30)">30D</button>
+    <button class="range-btn" onclick="setRange(this,120)">6M</button>
+    <button class="range-btn" onclick="setRange(this,252)">1Y</button>
+    <button class="range-btn" onclick="setRange(this,0)">All</button>
+  </div>
   <div class="chart-wrap">
     <canvas id="overlayChart" height="220"></canvas>
   </div>
   <div style="font-size:0.68em; color:#8b949e; margin-top:8px; text-align:center;">
-    Low scores (green zones) preceded rallies &mdash; high scores (red zones) preceded declines
+    Green zones (score &lt;30) preceded rallies. Red zones (score &gt;70) preceded declines.<br>
+    Score calculated by GRISI engine (252-day rolling Z-score + behavioral adjustment).
   </div>
 </div>
 
@@ -569,129 +590,71 @@ function buildQuintileChart(usReturns, twReturns) {
 }
 
 // ── Overlay Chart (EN: US score + SPY) ───────────────────────────────────────
-function buildOverlayChart(overlayData) {
-  const ctx = document.getElementById('overlayChart').getContext('2d');
-  const dates    = overlayData.dates;
-  const usScores = overlayData.us_score;
-  const spyDates = overlayData.spy_dates;
-  const spyPx    = overlayData.spy;
+let _overlayChart = null;
+let _overlayData = null;
 
-  // Align SPY prices to score dates (use closest spy_date index)
+function setRange(btn, days) {
+  document.querySelectorAll('.range-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  if (_overlayData) buildOverlayChart(_overlayData, days);
+}
+
+function buildOverlayChart(overlayData, rangeDays) {
+  _overlayData = overlayData;
+  const allDates = overlayData.dates;
+  const allScores = overlayData.us_score;
   const spyMap = {};
-  spyDates.forEach((d, i) => { spyMap[d] = spyPx[i]; });
-  const alignedSpy = dates.map(d => spyMap[d] !== undefined ? spyMap[d] : null);
+  overlayData.spy_dates.forEach((d, i) => { spyMap[d] = overlayData.spy[i]; });
 
-  // Background zone annotations via plugin (custom draw)
-  const greenZonePlugin = {
+  const n = rangeDays > 0 ? Math.min(rangeDays, allDates.length) : allDates.length;
+  const dates = allDates.slice(-n);
+  const scores = allScores.slice(-n);
+  const prices = dates.map(d => spyMap[d] !== undefined ? spyMap[d] : null);
+
+  if (_overlayChart) { _overlayChart.destroy(); _overlayChart = null; }
+  const ctx = document.getElementById('overlayChart').getContext('2d');
+
+  const zonePlugin = {
     id: 'bgZones',
     beforeDraw(chart) {
-      const { ctx: c, chartArea: { left, right, top, bottom }, scales } = chart;
-      const yScore = scales['y-score'];
-      const yPrice = scales['y-price'];
-      if (!yScore) return;
-      c.save();
-      c.globalAlpha = 0.12;
-      for (let i = 0; i < dates.length - 1; i++) {
-        const s = usScores[i];
-        if (s === null || s === undefined) continue;
-        const x0 = scales.x.getPixelForValue(i);
-        const x1 = scales.x.getPixelForValue(i + 1);
-        if (s < 30) {
-          c.fillStyle = '#2ea043';
-          c.fillRect(x0, top, x1 - x0, bottom - top);
-        } else if (s > 70) {
-          c.fillStyle = '#da3633';
-          c.fillRect(x0, top, x1 - x0, bottom - top);
-        }
+      const { ctx: c, chartArea: { top, bottom }, scales } = chart;
+      if (!scales['y-score']) return;
+      c.save(); c.globalAlpha = 0.10;
+      for (let i = 0; i < scores.length - 1; i++) {
+        const s = scores[i]; if (s == null) continue;
+        const x0 = scales.x.getPixelForValue(i), x1 = scales.x.getPixelForValue(i + 1);
+        if (s < 30) { c.fillStyle = '#2ea043'; c.fillRect(x0, top, x1 - x0, bottom - top); }
+        else if (s > 70) { c.fillStyle = '#da3633'; c.fillRect(x0, top, x1 - x0, bottom - top); }
       }
       c.restore();
     }
   };
 
-  new Chart(ctx, {
-    type: 'line',
-    plugins: [greenZonePlugin],
+  const dateFmt = n <= 60 ? d => d.substring(5) : n <= 252 ? d => d.substring(2, 7) : d => d.substring(0, 7);
+
+  _overlayChart = new Chart(ctx, {
+    type: 'line', plugins: [zonePlugin],
     data: {
       labels: dates,
       datasets: [
-        {
-          label: 'US Sentiment Score',
-          data: usScores,
-          yAxisID: 'y-score',
-          borderColor: '#58a6ff',
-          backgroundColor: 'transparent',
-          borderWidth: 1.5,
-          pointRadius: 0,
-          tension: 0.3,
-          order: 1,
-        },
-        {
-          label: 'SPY Price',
-          data: alignedSpy,
-          yAxisID: 'y-price',
-          borderColor: 'rgba(88,166,255,0.5)',
-          backgroundColor: 'rgba(88,166,255,0.07)',
-          borderWidth: 1,
-          pointRadius: 0,
-          fill: true,
-          tension: 0.3,
-          order: 2,
-        }
+        { label: 'Sentiment Score', data: scores, yAxisID: 'y-score', borderColor: '#58a6ff', backgroundColor: 'transparent', borderWidth: 2, pointRadius: n <= 60 ? 2 : 0, tension: 0.2, order: 1 },
+        { label: 'SPY Price', data: prices, yAxisID: 'y-price', borderColor: 'rgba(88,166,255,0.3)', backgroundColor: 'rgba(88,166,255,0.05)', borderWidth: 1, pointRadius: 0, fill: true, tension: 0.2, order: 2 }
       ]
     },
     options: {
-      responsive: true,
-      maintainAspectRatio: true,
+      responsive: true, maintainAspectRatio: true,
       interaction: { mode: 'index', intersect: false },
       plugins: {
-        legend: {
-          labels: { color: '#8b949e', font: { size: 11 }, boxWidth: 12 }
-        },
-        tooltip: {
-          callbacks: {
-            title: items => items[0].label,
-            label: ctx => {
-              if (ctx.datasetIndex === 0)
-                return ` Score: ${ctx.parsed.y !== null ? ctx.parsed.y.toFixed(1) : 'N/A'}`;
-              return ` SPY: $${ctx.parsed.y !== null ? ctx.parsed.y.toFixed(2) : 'N/A'}`;
-            }
-          }
-        }
+        legend: { labels: { color: '#8b949e', font: { size: 10 }, boxWidth: 10 } },
+        tooltip: { callbacks: {
+          title: items => items[0].label,
+          label: c => c.datasetIndex === 0 ? ` Score: ${c.parsed.y?.toFixed(1)}` : ` SPY: $${c.parsed.y?.toFixed(2)}`
+        }}
       },
       scales: {
-        x: {
-          ticks: {
-            color: '#8b949e',
-            font: { size: 9 },
-            maxTicksLimit: 10,
-            callback: function(val, idx) {
-              const d = dates[idx];
-              return d ? d.substring(0, 4) : '';
-            },
-            maxRotation: 0,
-          },
-          grid: { color: '#21262d' }
-        },
-        'y-score': {
-          type: 'linear',
-          position: 'left',
-          min: 0,
-          max: 100,
-          ticks: { color: '#58a6ff', font: { size: 10 }, stepSize: 20 },
-          grid: { color: '#21262d' },
-          title: { display: true, text: 'Score', color: '#58a6ff', font: { size: 10 } }
-        },
-        'y-price': {
-          type: 'linear',
-          position: 'right',
-          ticks: {
-            color: '#8b949e',
-            font: { size: 10 },
-            callback: v => '$' + v.toFixed(0)
-          },
-          grid: { drawOnChartArea: false },
-          title: { display: true, text: 'SPY', color: '#8b949e', font: { size: 10 } }
-        }
+        x: { ticks: { color: '#8b949e', font: { size: 9 }, maxTicksLimit: 8, callback: (v, i) => dateFmt(dates[i] || ''), maxRotation: 0 }, grid: { color: '#21262d' } },
+        'y-score': { type: 'linear', position: 'left', min: 0, max: 100, ticks: { color: '#58a6ff', font: { size: 10 }, stepSize: 20 }, grid: { color: '#21262d' }, title: { display: true, text: 'Score', color: '#58a6ff', font: { size: 10 } } },
+        'y-price': { type: 'linear', position: 'right', ticks: { color: '#8b949e', font: { size: 10 }, callback: v => '$' + v.toFixed(0) }, grid: { drawOnChartArea: false }, title: { display: true, text: 'SPY', color: '#8b949e', font: { size: 10 } } }
       }
     }
   });
@@ -800,7 +763,7 @@ async function loadDashboard() {
       `Fear is the better entry.`;
 
     // 4. Overlay chart
-    buildOverlayChart(overlayData);
+    buildOverlayChart(overlayData, 30);
 
     // 5. Signal
     renderSignal(agentData.summary);

@@ -411,6 +411,76 @@ def update_dashboard_json(snapshot, jp_score=None, kr_score=None, eu_score=None)
     print("[SAVE] dashboard_data.json updated")
 
 
+def update_overlay_json(snapshot, jp_score=None, kr_score=None, eu_score=None):
+    """Append today's scores and prices to overlay_data.json (used by overlay chart)."""
+    ov_path = os.path.join(DATA_DIR, 'overlay_data.json')
+    if not os.path.exists(ov_path):
+        print("[SKIP] overlay_data.json not found")
+        return
+
+    with open(ov_path, 'r', encoding='utf-8') as f:
+        ov = json.load(f)
+
+    today = datetime.now().strftime('%Y-%m-%d')
+
+    # Avoid duplicate entries
+    existing_dates = ov.get('dates', [])
+    if existing_dates and existing_dates[-1] == today:
+        print("[SKIP] overlay_data.json already has today's data")
+        return
+
+    # US/TW scores from dashboard_data (latest appended value)
+    dd_path = os.path.join(DATA_DIR, 'dashboard_data.json')
+    with open(dd_path, 'r', encoding='utf-8') as f:
+        dd = json.load(f)
+
+    us_scores = dd.get('us_score', [])
+    tw_scores = dd.get('tw_score', [])
+    if us_scores:
+        ov.setdefault('dates', []).append(today)
+        ov.setdefault('us_score', []).append(us_scores[-1])
+    if tw_scores:
+        ov.setdefault('tw_score', []).append(tw_scores[-1])
+
+    # Prices from snapshot
+    us_mkt = snapshot.get('us_market', {})
+    tw_mkt = snapshot.get('tw_market', {})
+    jp_mkt = snapshot.get('jp_market', {})
+    kr_mkt = snapshot.get('kr_market', {})
+    eu_mkt = snapshot.get('eu_market', {})
+
+    def append_price(dates_key, price_key, value):
+        if value is not None:
+            existing = ov.get(dates_key, [])
+            if not existing or existing[-1] != today:
+                ov.setdefault(dates_key, []).append(today)
+                ov.setdefault(price_key, []).append(round(float(value), 2))
+
+    append_price('spy_dates', 'spy', us_mkt.get('SPY_close'))
+    append_price('twii_dates', 'twii', tw_mkt.get('TAIEX_close'))
+    append_price('nikkei_dates', 'nikkei', jp_mkt.get('NIKKEI_close'))
+    append_price('kospi_dates', 'kospi', kr_mkt.get('KOSPI_close'))
+    append_price('stoxx50_dates', 'stoxx50', eu_mkt.get('STOXX50_close'))
+
+    # JP/KR/EU scores
+    for mkt, score_val, d_key, s_key in [
+        ('jp', jp_score, 'jp_dates', 'jp_score'),
+        ('kr', kr_score, 'kr_dates', 'kr_score'),
+        ('eu', eu_score, 'eu_dates', 'eu_score'),
+    ]:
+        if score_val is not None:
+            existing = ov.get(d_key, [])
+            if not existing or existing[-1] != today:
+                ov.setdefault(d_key, []).append(today)
+                ov.setdefault(s_key, []).append(round(float(score_val), 1))
+
+    ov = sanitize_for_json(ov)
+    with open(ov_path, 'w', encoding='utf-8') as f:
+        json.dump(ov, f, ensure_ascii=False)
+
+    print("[SAVE] overlay_data.json updated")
+
+
 def update_agent_results(snapshot, us_data, tw_data, tw_retail, jp_data, kr_data, eu_data, global_ctx):
     """Update phase2_agent_results.json with today's date and scores."""
     path = os.path.join(DATA_DIR, 'phase2_agent_results.json')
@@ -528,6 +598,7 @@ def main():
     snapshot = update_snapshot(us_data, tw_data, tw_retail, global_ctx, usdtwd,
                               jp_data, kr_data, eu_data)
     update_dashboard_json(snapshot, jp_score_val, kr_score_val, eu_score_val)
+    update_overlay_json(snapshot, jp_score_val, kr_score_val, eu_score_val)
     update_agent_results(snapshot, us_data, tw_data, tw_retail, jp_data, kr_data, eu_data, global_ctx)
     update_forward_outlook()
 

@@ -8,7 +8,7 @@
     "scoring_method": "Rolling 252-day Z-score, equal-weighted 5 components per market",
     "behavioral_theory": "Prospect Theory (Kahneman & Tversky, 1979), Herding Model (Banerjee, 1992)"
   },
-  "us_base_score": 32.4,
+  "us_base_score": 33.2,
   "tw_base_score": 39.9,
   "us_agent": {
     "adjusted_score_delta": -1,

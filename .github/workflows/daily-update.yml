@@ -1,8 +1,10 @@
-name: GRISI Daily Update
+name: Moodring Daily Update
 
 on:
   schedule:
-    - cron: '0 14 * * 1-5'  # 22:00 Beijing/Taipei time (UTC+8)
+    # Run twice to handle GitHub Actions cron unreliability
+    - cron: '0 14 * * 1-5'   # 22:00 Taipei time (UTC+8) — after US close
+    - cron: '30 1 * * 1-5'   # 09:30 Taipei time — after TW/Asia open
   workflow_dispatch:
 
 permissions:
@@ -13,21 +15,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+
       - name: Install dependencies
         run: pip install yfinance pandas numpy scipy FinMind requests tqdm
-      - name: Run daily update
+
+      - name: Pull fresh market data
         run: python src/daily_update.py
+
+      - name: Rebuild dashboard JSON
+        run: python src/rebuild_dashboard_daily.py
+
       - name: Sync data to docs
         run: |
           mkdir -p docs/data
           cp data/*.json docs/data/
+
       - name: Commit and push
         run: |
-          git config user.name "GRISI Bot"
-          git config user.email "grisi-bot@users.noreply.github.com"
-          git add data/ docs/data/
-          git diff --staged --quiet || git commit -m "data: daily update $(date +%Y-%m-%d)"
+          git config user.name "Moodring Bot"
+          git config user.email "moodring-bot@users.noreply.github.com"
+          git add data/ docs/data/ src/
+          git diff --staged --quiet || git commit -m "daily: Moodring update $(date +%Y-%m-%d)"
           git push

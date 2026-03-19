@@ -14,7 +14,7 @@
     "adjusted_score_delta": -1,
     "sentiment_level": "FEARFUL",
     "conviction": "HIGH",
-    "narrative": "SPY at 658. RSI 29.3 (oversold). 5d return -1.1%. 20d return -3.8%. Moodring score 39.1 (fearful — contrarian opportunity building). VIX at 25.87 (elevated). Gold $4,628.",
+    "narrative": "SPY at 658. RSI 29.1 (oversold). 5d return -1.2%. 20d return -3.9%. Moodring score 39.1 (fearful — contrarian opportunity building). VIX at 25.48 (elevated). Gold $4,620.",
     "key_factors": [
       "RSI 29.2 跌破超賣門檻 30 — 技術性反彈區間",
       "SPY 低於 SMA20 ($678.95) 和 SMA60 ($685.49) — 下行趨勢未改",
@@ -23,7 +23,7 @@
     ],
     "what_quant_misses": "RSI 跌破 30 是系統性均值回歸策略常見的觸發點。VIX 期限結構和信用利差比 spot VIX 更能反映市場真實壓力。10Y 殖利率 4.26% 持穩，尚未出現信用恐慌。",
     "forward_outlook": "SPY 大概率出現超賣反彈。歷史上 Moodring ~39 區間 20 日正報酬機率 73.1%，中位數 +3.24%。反彈阻力：SMA20 $678.95。若 VIX 破 30 則恐慌可能加速後才反轉。",
-    "narrative_en": "SPY at 658. RSI 29.3 (oversold). 5d return -1.1%. 20d return -3.8%. Moodring score 39.1 (fearful — contrarian opportunity building). VIX at 25.87 (elevated). Gold $4,628."
+    "narrative_en": "SPY at 658. RSI 29.1 (oversold). 5d return -1.2%. 20d return -3.9%. Moodring score 39.1 (fearful — contrarian opportunity building). VIX at 25.48 (elevated). Gold $4,620."
   },
   "tw_agent": {
     "adjusted_score_delta": 2,
@@ -81,7 +81,7 @@
     "adjusted_score_delta": 0,
     "sentiment_level": "CAUTIOUS",
     "conviction": "LOW",
-    "narrative": "STOXX50 at 5,625. RSI 27.1 (oversold). 5d return -2.2%. 20d return -7.2%. Moodring score 47.1 (neutral — no strong directional signal).",
+    "narrative": "STOXX50 at 5,628. RSI 27.2 (oversold). 5d return -2.1%. 20d return -7.1%. Moodring score 47.2 (neutral — no strong directional signal).",
     "key_factors": [
       "RSI 27.1 已超賣 — 五市場中技術面最弱",
       "20 日跌 -7.15% — 跌幅居冠",
@@ -89,7 +89,7 @@
     ],
     "what_quant_misses": "ECB 利率路徑和烏克蘭局勢造成非對稱風險，純技術指標無法反映。",
     "forward_outlook": "RSI 超賣可能觸發技術反彈，但基本面偏弱。等 Moodring 跌破 40 再考慮逆勢操作，訊號會更明確。",
-    "narrative_en": "STOXX50 at 5,625. RSI 27.1 (oversold). 5d return -2.2%. 20d return -7.2%. Moodring score 47.1 (neutral — no strong directional signal)."
+    "narrative_en": "STOXX50 at 5,628. RSI 27.2 (oversold). 5d return -2.1%. 20d return -7.1%. Moodring score 47.2 (neutral — no strong directional signal)."
   },
   "global_narrative": "全球市場明顯分歧：US (39.1) 和 TW (38.7) 偏恐懼，EU (47.1) 中性偏弱，JP (49.9) 中性，唯獨 KR (71.5) 處於貪婪區。US RSI 29.2 和 EU RSI 27.1 雙雙超賣，但韓股逆勢走強。台股出現法人賣散戶接的格局——外資賣超 909 億，散戶估計買超 1,020 億，台積電融資月增 20%，散戶槓桿集中追買權值股需警戒。整體看：區域輪動而非全面風險趨避，最佳逆勢機會在 US (Moodring 39，歷史 20 日正報酬 73%)。"
 }

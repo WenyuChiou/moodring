@@ -6,12 +6,12 @@
       "recent_ic_20d": 0.0181,
       "ic_trend": "decaying",
       "ic_change_pct": -89.4,
-      "score_mean_60d": 43.6,
+      "score_mean_60d": 43.7,
       "score_std_60d": 5.2,
       "zone_distribution_60d": {
         "extreme_fear": 0,
-        "fear": 14,
-        "neutral": 46,
+        "fear": 13,
+        "neutral": 47,
         "greed": 0,
         "extreme_greed": 0
       },
@@ -22,23 +22,23 @@
       ]
     },
     "tw": {
-      "full_ic_20d": -0.1277,
-      "recent_ic_20d": 0.0469,
+      "full_ic_20d": -0.1276,
+      "recent_ic_20d": 0.0483,
       "ic_trend": "decaying",
-      "ic_change_pct": -63.3,
-      "score_mean_60d": 41.2,
-      "score_std_60d": 9.8,
+      "ic_change_pct": -62.1,
+      "score_mean_60d": 41.6,
+      "score_std_60d": 10.1,
       "zone_distribution_60d": {
         "extreme_fear": 7,
-        "fear": 16,
+        "fear": 15,
         "neutral": 37,
-        "greed": 0,
+        "greed": 1,
         "extreme_greed": 0
       },
       "health": "poor",
       "flags": [
-        "IC decaying: recent 0.0469 vs historical -0.1277",
-        "Weak IC: 0.0469"
+        "IC decaying: recent 0.0483 vs historical -0.1276",
+        "Weak IC: 0.0483"
       ]
     },
     "jp": {
@@ -64,11 +64,11 @@
     },
     "kr": {
       "full_ic_20d": -0.1046,
-      "recent_ic_20d": -0.0887,
+      "recent_ic_20d": -0.0888,
       "ic_trend": "stable",
-      "ic_change_pct": -15.2,
+      "ic_change_pct": -15.1,
       "score_mean_60d": 59.7,
-      "score_std_60d": 9.1,
+      "score_std_60d": 9.0,
       "zone_distribution_60d": {
         "extreme_fear": 0,
         "fear": 2,
@@ -104,8 +104,8 @@
     "active_flags": [
       "US: IC decaying: recent 0.0181 vs historical -0.1713",
       "US: Weak IC: 0.0181",
-      "TW: IC decaying: recent 0.0469 vs historical -0.1277",
-      "TW: Weak IC: 0.0469",
+      "TW: IC decaying: recent 0.0483 vs historical -0.1276",
+      "TW: Weak IC: 0.0483",
       "JP: IC decaying: recent 0.0008 vs historical -0.0659",
       "JP: Weak IC: 0.0008",
       "JP: Score stuck in neutral zone 87% of last 60d",

@@ -637,8 +637,16 @@ def update_agent_results(snapshot, us_data, tw_data, tw_retail, jp_data, kr_data
     print(f"[SAVE] phase2_agent_results.json updated (date={today})")
 
 
-def update_forward_outlook():
-    """Update forward_outlook.json current scores from dashboard_data."""
+def update_forward_outlook(compute_scores=None):
+    """Update forward_outlook.json current scores from dashboard_data.
+
+    Args:
+        compute_scores: dict mapping fwd_key → compute_score value
+                        用來執行 sanity check（差距 > 5 分時輸出警告）。
+                        例如: {'us_current_score': 39.6, 'tw_current_score': 55.0}
+    """
+    SANITY_THRESHOLD = 5.0  # 分數差距超過此值即發出警告
+
     fwd_path = os.path.join(DATA_DIR, 'forward_outlook.json')
     dd_path = os.path.join(DATA_DIR, 'dashboard_data.json')
     if not os.path.exists(fwd_path):
@@ -660,7 +668,18 @@ def update_forward_outlook():
     for fwd_key, dd_key in score_map.items():
         scores = dd.get(dd_key, [])
         if scores:
-            fwd[fwd_key] = scores[-1]
+            new_val = scores[-1]
+            # Sanity check：比對 compute_score 與 dashboard 最新值
+            if compute_scores and fwd_key in compute_scores:
+                computed = compute_scores[fwd_key]
+                gap = abs(computed - new_val) if (computed is not None and new_val is not None) else None
+                if gap is not None and gap > SANITY_THRESHOLD:
+                    print(
+                        f"[警告][SANITY] {fwd_key}: compute_score={computed} "
+                        f"vs dashboard={new_val}, 差距={gap:.1f} > {SANITY_THRESHOLD}，"
+                        f"請確認 historical_scores.csv 是否已正確更新"
+                    )
+            fwd[fwd_key] = new_val
 
     fwd = sanitize_for_json(fwd)
     with open(fwd_path, 'w', encoding='utf-8') as f:
@@ -1165,7 +1184,20 @@ def main():
     update_dashboard_json(snapshot, jp_score_val, kr_score_val, eu_score_val)
     update_overlay_json(snapshot, jp_score_val, kr_score_val, eu_score_val)
     update_agent_results(snapshot, us_data, tw_data, tw_retail, jp_data, kr_data, eu_data, global_ctx)
-    update_forward_outlook()
+
+    # 建立 compute_score 參考值供 sanity check 使用
+    live_compute_scores = {}
+    if us_data:
+        live_compute_scores['us_current_score'] = compute_score(us_data, 'SPY')
+    if tw_data:
+        live_compute_scores['tw_current_score'] = compute_score(tw_data, 'TAIEX')
+    if jp_data:
+        live_compute_scores['jp_current_score'] = jp_score_val
+    if kr_data:
+        live_compute_scores['kr_current_score'] = kr_score_val
+    if eu_data:
+        live_compute_scores['eu_current_score'] = eu_score_val
+    update_forward_outlook(compute_scores=live_compute_scores)
     generate_memory_scene()
     generate_self_improve()
 

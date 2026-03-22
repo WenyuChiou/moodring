@@ -753,7 +753,7 @@ function buildQuintileChart(returns, mktKey) {
 
   if (_quintileChart) { _quintileChart.destroy(); _quintileChart = null; }
 
-  const colors = ['#1f6335','#238636','#2ea043','#3fb950','#56d364'];
+  const colors = returns.map(v => v >= 0 ? '#2ea043' : '#f85149');
   _quintileChart = new Chart(ctx, {
     type: 'bar',
     data: {
@@ -779,11 +779,12 @@ function buildQuintileChart(returns, mktKey) {
     }
   });
 
-  const q1 = returns[0].toFixed(2);
-  const q5 = returns[4].toFixed(2);
+  const q1 = returns[0];
+  const q5 = returns[4];
+  const fmt = v => (v >= 0 ? '+' : '') + v.toFixed(2) + '%';
   document.getElementById('edge-text').textContent =
     'In the Extreme Fear zone (bottom 20% of all readings), ' + cfg.index +
-    ' returns +' + q1 + '% avg over 20 days vs +' + q5 + '% from Extreme Greed. Fear is the better entry point.';
+    ' returns ' + fmt(q1) + ' avg over 20 days vs ' + fmt(q5) + ' from Extreme Greed. Fear is the better entry point.';
 }
 
 // ── Hex color to rgba helper ──────────────────────────────────────────────────

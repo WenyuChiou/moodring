@@ -602,7 +602,7 @@ function buildQuintileChart(returns, mktKey) {
 
   if (_quintileChart) { _quintileChart.destroy(); _quintileChart = null; }
 
-  const colors = ['#1f6335','#238636','#2ea043','#3fb950','#56d364'];
+  const colors = returns.map(v => v >= 0 ? '#2ea043' : '#f85149');
   _quintileChart = new Chart(ctx, {
     type: 'bar',
     data: {
@@ -628,11 +628,12 @@ function buildQuintileChart(returns, mktKey) {
     }
   });
 
-  const q1 = returns[0].toFixed(2);
-  const q5 = returns[4].toFixed(2);
+  const q1 = returns[0];
+  const q5 = returns[4];
+  const fmt = v => (v >= 0 ? '+' : '') + v.toFixed(2) + '%';
   document.getElementById('edge-text').textContent =
-    '極度恐懼區間（歷史分布最底部20%）的20日平均報酬為 +' + q1 +
-    '%，遠高於極度貪婪區間的 +' + q5 + '%。恐懼是更好的進場時機。';
+    '極度恐懼區間（歷史分布最底部20%）的20日平均報酬為 ' + fmt(q1) +
+    '，遠高於極度貪婪區間的 ' + fmt(q5) + '。恐懼是更好的進場時機。';
 }
 
 // ── Hex color to rgba helper ──────────────────────────────────────────────────

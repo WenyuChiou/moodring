@@ -148,6 +148,8 @@ def fetch_tw_data():
         'TAIEX_RSI14': round(float(rsi(twii_c).iloc[-1]), 1),
         'TAIEX_SMA20': round(float(twii_c.rolling(20).mean().iloc[-1]), 0),
         'TAIEX_vs_52w_high_pct': round(float(twii_c.iloc[-1] / twii_c.rolling(252, min_periods=50).max().iloc[-1] * 100), 1),
+        'TAIEX_5d_return_pct': round(float((twii_c.iloc[-1] / twii_c.iloc[-6] - 1) * 100), 2),
+        'TAIEX_20d_return_pct': round(float((twii_c.iloc[-1] / twii_c.iloc[-21] - 1) * 100), 2),
         'TSMC_close': round(float(tsmc_c.iloc[-1]), 0),
         'TSMC_vs_52w_high_pct': round(float(tsmc_c.iloc[-1] / tsmc_c.rolling(252, min_periods=50).max().iloc[-1] * 100), 1),
     }
@@ -406,6 +408,57 @@ def update_snapshot(us_data=None, tw_data=None, tw_retail=None, global_ctx=None,
 
     print(f"[SAVE] Snapshot saved: {dated_path}")
     return snapshot
+
+
+def append_scores_to_csv(us_score=None, tw_score=None):
+    """Append today's US/TW scores to historical_scores.csv.
+
+    This is required so that rebuild_dashboard_daily.py picks up the latest
+    scores when it rebuilds dashboard_data.json from the CSV.
+    """
+    import csv
+
+    csv_path = os.path.join(DATA_DIR, 'historical_scores.csv')
+    today = datetime.now().strftime('%Y-%m-%d')
+
+    # Read existing rows to check for duplicate and get current data
+    rows = []
+    if os.path.exists(csv_path):
+        with open(csv_path, 'r', encoding='utf-8', newline='') as f:
+            reader = csv.DictReader(f)
+            fieldnames = reader.fieldnames or ['date', 'us_score', 'tw_score', 'divergence']
+            rows = list(reader)
+
+    # Check if today already exists
+    if rows and rows[-1].get('date') == today:
+        print(f"[CSV] historical_scores.csv already has entry for {today}, updating in place")
+        last = rows[-1]
+        if us_score is not None:
+            last['us_score'] = round(us_score, 1)
+        if tw_score is not None:
+            last['tw_score'] = round(tw_score, 1)
+        us_val = float(last.get('us_score', 0) or 0)
+        tw_val = float(last.get('tw_score', 0) or 0)
+        last['divergence'] = round(abs(us_val - tw_val), 1)
+    else:
+        # Fill missing score from last row if not provided
+        last_us = float(rows[-1].get('us_score', 50) or 50) if rows else 50
+        last_tw = float(rows[-1].get('tw_score', 50) or 50) if rows else 50
+        us_val = us_score if us_score is not None else last_us
+        tw_val = tw_score if tw_score is not None else last_tw
+        new_row = {
+            'date': today,
+            'us_score': round(us_val, 1),
+            'tw_score': round(tw_val, 1),
+            'divergence': round(abs(us_val - tw_val), 1),
+        }
+        rows.append(new_row)
+        print(f"[CSV] Appended to historical_scores.csv: {today} us={round(us_val,1)} tw={round(tw_val,1)}")
+
+    with open(csv_path, 'w', encoding='utf-8', newline='') as f:
+        writer = csv.DictWriter(f, fieldnames=['date', 'us_score', 'tw_score', 'divergence'])
+        writer.writeheader()
+        writer.writerows(rows)
 
 
 def update_dashboard_json(snapshot, jp_score=None, kr_score=None, eu_score=None):
@@ -1179,6 +1232,16 @@ def main():
         eu_data['eu_moodring_score'] = eu_score_val
         print(f"[EU] Moodring score: {eu_score_val}")
 
+    # Compute US/TW scores and persist to historical_scores.csv
+    us_score_val = compute_score(us_data, 'SPY') if us_data else None
+    tw_score_val = compute_score(tw_data, 'TAIEX') if tw_data else None
+    if us_score_val is not None:
+        print(f"[US] Moodring score: {us_score_val}")
+    if tw_score_val is not None:
+        print(f"[TW] Moodring score: {tw_score_val}")
+    if us_score_val is not None or tw_score_val is not None:
+        append_scores_to_csv(us_score=us_score_val, tw_score=tw_score_val)
+
     snapshot = update_snapshot(us_data, tw_data, tw_retail, global_ctx, usdtwd,
                               jp_data, kr_data, eu_data)
     update_dashboard_json(snapshot, jp_score_val, kr_score_val, eu_score_val)
@@ -1187,10 +1250,10 @@ def main():
 
     # 建立 compute_score 參考值供 sanity check 使用
     live_compute_scores = {}
-    if us_data:
-        live_compute_scores['us_current_score'] = compute_score(us_data, 'SPY')
-    if tw_data:
-        live_compute_scores['tw_current_score'] = compute_score(tw_data, 'TAIEX')
+    if us_score_val is not None:
+        live_compute_scores['us_current_score'] = us_score_val
+    if tw_score_val is not None:
+        live_compute_scores['tw_current_score'] = tw_score_val
     if jp_data:
         live_compute_scores['jp_current_score'] = jp_score_val
     if kr_data:

@@ -144,6 +144,27 @@ def main():
     print(f"  agents preserved: {'agents' in verify}")
     print(f"  spy points: {len(verify.get('spy', []))}")
 
+    # ── Sync to docs/data/ for GitHub Pages live dashboard ──
+    docs_data_dir = os.path.join(DATA_DIR, '..', 'docs', 'data')
+    docs_data_dir = os.path.normpath(docs_data_dir)
+    if os.path.isdir(docs_data_dir):
+        import shutil
+        sync_files = [
+            'dashboard_data.json',
+            'historical_scores.csv',
+            'forward_outlook.json',
+            'overlay_data.json',
+            'phase2_agent_results.json',
+            'memory_scene.json',
+            'self_improve.json',
+        ]
+        for fname in sync_files:
+            src = os.path.join(DATA_DIR, fname)
+            dst = os.path.join(docs_data_dir, fname)
+            if os.path.exists(src):
+                shutil.copy2(src, dst)
+        print(f"Synced {len(sync_files)} files → docs/data/")
+
     print("\nDone!")
 
 

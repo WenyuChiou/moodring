@@ -1273,6 +1273,27 @@ def main():
     print(f"\n[DONE] Markets updated: {', '.join(markets)}")
     print("  Run: /market-analyst to generate full report")
 
+    # ── Sync data files to docs/data/ for GitHub Pages ──
+    import shutil
+    docs_data_dir = os.path.normpath(os.path.join(DATA_DIR, '..', 'docs', 'data'))
+    if os.path.isdir(docs_data_dir):
+        sync_files = [
+            'dashboard_data.json', 'historical_scores.csv', 'forward_outlook.json',
+            'overlay_data.json', 'phase2_agent_results.json', 'memory_scene.json',
+            'self_improve.json',
+        ]
+        for fname in sync_files:
+            src = os.path.join(DATA_DIR, fname)
+            dst = os.path.join(docs_data_dir, fname)
+            if os.path.exists(src):
+                shutil.copy2(src, dst)
+        # Sync today's snapshot
+        today_snap = os.path.join(DATA_DIR, f"snapshot_{today.replace('-', '')}.json")
+        if os.path.exists(today_snap):
+            shutil.copy2(today_snap, os.path.join(docs_data_dir, f"snapshot_{today.replace('-', '')}.json"))
+            shutil.copy2(today_snap, os.path.join(docs_data_dir, 'snapshot_latest.json'))
+        print("[SYNC] docs/data/ updated")
+
 
 if __name__ == '__main__':
     main()

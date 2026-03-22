@@ -1,5 +1,5 @@
 {
-  "date": "2026-03-21",
+  "date": "2026-03-22",
   "data_sources": {
     "market_prices": "Yahoo Finance (yfinance)",
     "tw_margin": "FinMind API (TWSE OpenData)",
@@ -23,6 +23,8 @@
     "TAIEX_RSI14": 41.6,
     "TAIEX_SMA20": 33858.0,
     "TAIEX_vs_52w_high_pct": 94.7,
+    "TAIEX_5d_return_pct": 0.43,
+    "TAIEX_20d_return_pct": 1.42,
     "TSMC_close": 1840.0,
     "TSMC_vs_52w_high_pct": 91.6
   },
@@ -36,7 +38,7 @@
     "foreign_consecutive_days": 2,
     "foreign_consecutive_direction": "sell",
     "TSMC_margin_balance": 26115,
-    "TSMC_margin_30d_change_pct": 17.24
+    "TSMC_margin_30d_change_pct": 12.95
   },
   "jp_market": {
     "NIKKEI_close": 53372.53,

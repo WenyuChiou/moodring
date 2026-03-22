@@ -47,35 +47,35 @@ const serif = { fontFamily: "'Lora', Georgia, serif" };
 
 // ─── Default Data (fallback if JSON fails to load) ────────────────────────────
 const DEFAULT_DATA = {
-  date: "2026-03-19",
-  market: { spy: 659, qqq: 593, vix: 26.78, wti: 96.14, brent: 108.65, rate10y: 3.625 },
+  date: "2026-03-20",
+  market: { spy: 645, qqq: 581.5, iwm: 243, vix: 26, wti: 96.20, brent: 110, rate10y: 4.34 },
   scenarios: [
-    { id: "S1", name: "Quick deal + pause",                  prob: 5,  spy: 685, nash: "Not EQ",  duration: "<4 wks" },
-    { id: "S2", name: "SOF + partial deal",                  prob: 20, spy: 630, nash: "Weak",    duration: "4-8 wks" },
-    { id: "S3", name: "Protracted standoff + stagflation",   prob: 42, spy: 575, nash: "Strong",  duration: "3-6 mo" },
-    { id: "S4", name: "Ground escalation + recession",       prob: 33, spy: 510, nash: "Unstable",duration: "6+ mo" },
+    { id: "S1", name: "Quick Deal",                        prob: 3,  spy: 685, nash: "Not EQ",  duration: "<4 wks" },
+    { id: "S2", name: "Partial Deal + SOF",                prob: 17, spy: 630, nash: "Weak",    duration: "4-8 wks" },
+    { id: "S3", name: "Protracted Standoff + Stagflation", prob: 42, spy: 575, nash: "Strong",  duration: "2-6 mo" },
+    { id: "S4", name: "Ground War + Recession",            prob: 38, spy: 510, nash: "Unstable",duration: "6mo+" },
   ],
   positions: [
     { id: "P1", ticker: "QQQ", type: "Bear Put", buyStrike: 595, sellStrike: 575, expiry: "Apr 17", cost: 5.16, qty: 2, status: "ITM" },
-    { id: "P2", ticker: "SPY", type: "Bear Put", buyStrike: 655, sellStrike: 630, cost: 7.00,  qty: 2, expiry: "May 15", status: "Near ITM" },
-    { id: "P3", ticker: "SPY", type: "Bear Put", buyStrike: 600, sellStrike: 570, cost: 3.87,  qty: 1, expiry: "Jun 19", status: "OTM (B1/3)" },
+    { id: "P2", ticker: "SPY", type: "Bear Put", buyStrike: 655, sellStrike: 630, cost: 7.05,  qty: 2, expiry: "May 15", status: "Near ITM" },
+    { id: "P3", ticker: "SPY", type: "Bear Put", buyStrike: 600, sellStrike: 570, cost: 3.87,  qty: 1, expiry: "Jun 18", status: "OTM" },
   ],
   hypotheses: [
-    { id: 1, text: "美伊戰爭 4-6 週結束",       status: "BROKEN" },
-    { id: 2, text: "Fed 2026 降息 1 次",         status: "BROKEN" },
-    { id: 3, text: "AI capex → 營收變現",        status: "SPLIT" },
-    { id: 4, text: "油價 Q3 回到 $75",           status: "BROKEN" },
-    { id: 5, text: "2026 美國不衰退",            status: "CHALLENGED" },
+    { id: 1, text: "美伊戰爭 4-6 週結束",  status: "BROKEN" },
+    { id: 2, text: "Fed 2026 降息 1 次",    status: "BROKEN" },
+    { id: 3, text: "AI capex → 營收變現",  status: "SPLIT" },
+    { id: 4, text: "油價 Q3 回到 $75",     status: "BROKEN" },
+    { id: 5, text: "2026 美國不衰退",       status: "CHALLENGED" },
   ],
-  capital: { poolA: 20, poolB: 15, poolC: 50, cash: 48, deployed: 37 },
+  capital: { poolA: 9, poolB: 5, poolC: 4, cash: 16, deployed: 18 },
 };
 
 // Extra narrative fields per scenario (not in JSON — kept hardcoded)
 const SC_EXTRA = {
-  S1: { war: "Quick deal",   ai: "Capex 持續",   job: "穩定 4.4%",    gdp: "1-1.5%",   fed: "1 cut" },
-  S2: { war: "Partial+SOF",  ai: "質疑加劇",      job: "惡化 4.5%",    gdp: "0.5-1%",   fed: "0 cuts" },
-  S3: { war: "持久對峙",      ai: "延後信號",      job: "4.6-4.8%",    gdp: "0-0.5%",   fed: "0 + hike talk" },
-  S4: { war: "地面升級",      ai: "公開縮減",      job: ">5%",          gdp: "負值",     fed: "Stagflation" },
+  S1: { war: "停火談判",      ai: "Capex 持續",  job: "穩定 4.4%",  gdp: "1-1.5%",   fed: "1 cut" },
+  S2: { war: "Partial+SOF",  ai: "質疑加劇",    job: "惡化 4.5%",  gdp: "0.5-1%",   fed: "0 cuts" },
+  S3: { war: "Hormuz 封鎖",  ai: "延後信號",    job: "4.6-4.8%",   gdp: "0-0.5%",   fed: "0 + hike talk" },
+  S4: { war: "Marines 登陸", ai: "公開縮減",    job: ">5%",         gdp: "負值",     fed: "Stagflation" },
 };
 
 // Normalize Nash equilibrium tag
@@ -774,7 +774,7 @@ function App() {
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 18, flexWrap: "wrap", gap: 8 }}>
         <div style={{ display: "flex", alignItems: "baseline", gap: 10, flexWrap: "wrap" }}>
           <span style={{ ...serif, fontSize: 18, fontWeight: 600, color: C.text }}>Interactive War Room</span>
-          <Tag color={C.red}>DAY 20</Tag>
+          <Tag color={C.red}>DAY 21</Tag>
           <span style={{ ...mono, fontSize: 11, color: C.text3 }}>{date} ｜ Multi-Axis Model</span>
           {dataSource === "live"    && <span style={{ ...mono, fontSize: 10, color: C.green }}>● live data</span>}
           {dataSource === "default" && <span style={{ ...mono, fontSize: 10, color: C.text4 }}>○ defaults</span>}
@@ -784,6 +784,7 @@ function App() {
           SPY ${market.spy} ｜ QQQ ${market.qqq} ｜ VIX {market.vix}
           {market.rate10y && <span> ｜ 10Y {market.rate10y}%</span>}
           {market.wti     && <span> ｜ WTI ${market.wti}</span>}
+          {market.brent   && <span> ｜ Brent ${market.brent}</span>}
         </div>
       </div>
 

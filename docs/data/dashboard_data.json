@@ -4019,7 +4019,8 @@
     "2026-03-18",
     "2026-03-19",
     "2026-03-20",
-    "2026-03-22"
+    "2026-03-22",
+    "2026-03-23"
   ],
   "us_score": [
     75.9,
@@ -8041,7 +8042,8 @@
     48.2,
     44.2,
     39.6,
-    38.3
+    38.3,
+    50.3
   ],
   "tw_score": [
     84.1,
@@ -12063,7 +12065,8 @@
     73.1,
     62.1,
     57.4,
-    57.4
+    57.4,
+    46.8
   ],
   "divergence": [
     8.3,
@@ -16085,7 +16088,8 @@
     24.9,
     17.9,
     17.8,
-    19.1
+    19.1,
+    3.5
   ],
   "spy_dates": [
     "2009-01-02",
@@ -21930,7 +21934,7 @@
     172.85,
     171.92,
     170.22,
-    170.12,
+    170.13,
     167.05,
     165.48,
     167.54,
@@ -22190,7 +22194,7 @@
     162.38,
     163.69,
     159.6,
-    162.23,
+    162.22,
     158.74,
     158.95,
     156.92,
@@ -22453,7 +22457,7 @@
     198.0,
     197.69,
     196.46,
-    196.44,
+    196.45,
     196.52,
     196.65,
     198.01,
@@ -22932,7 +22936,7 @@
     220.4,
     215.88,
     210.18,
-    220.8,
+    220.79,
     222.49,
     222.2,
     224.15,
@@ -23534,7 +23538,7 @@
     383.19,
     389.08,
     388.09,
-    384.75,
+    384.74,
     383.74,
     387.86,
     387.55,
@@ -23965,7 +23969,7 @@
     384.02,
     389.67,
     393.81,
-    399.55,
+    399.54,
     395.3,
     392.88,
     398.02,
@@ -24489,7 +24493,7 @@
     568.61,
     574.72,
     564.52,
-    567.68,
+    567.69,
     552.56,
     547.97,
     550.88,
@@ -39402,7 +39406,7 @@
     152.15,
     151.36,
     151.76,
-    152.94,
+    152.93,
     150.58,
     150.58,
     148.61,
@@ -39423,7 +39427,7 @@
     150.97,
     150.18,
     151.76,
-    152.94,
+    152.93,
     154.51,
     155.69,
     155.69,
@@ -39706,14 +39710,14 @@
     184.03,
     184.85,
     183.58,
-    180.64,
+    180.63,
     179.37,
     178.53,
     182.32,
     180.21,
-    180.64,
+    180.63,
     181.9,
-    180.64,
+    180.63,
     182.74,
     186.53,
     186.95,
@@ -40365,7 +40369,7 @@
     540.37,
     542.19,
     553.08,
-    557.62,
+    557.63,
     554.9,
     556.72,
     550.79,
@@ -40920,7 +40924,7 @@
     561.94,
     556.21,
     556.21,
-    554.31,
+    554.3,
     547.63,
     545.72,
     547.63,
@@ -40937,8 +40941,8 @@
     558.12,
     563.85,
     563.85,
-    554.31,
-    554.31,
+    554.3,
+    554.3,
     552.4,
     534.27,
     532.36,
@@ -67124,7 +67128,7 @@
     5501.28
   ],
   "snapshot": {
-    "date": "2026-03-18",
+    "date": "2026-03-23",
     "data_sources": {
       "market_prices": "Yahoo Finance (yfinance)",
       "tw_margin": "FinMind API (TWSE OpenData)",
@@ -67133,67 +67137,69 @@
       "behavioral_params": "Kahneman & Tversky (1979), Banerjee (1992)"
     },
     "us_market": {
-      "SPY_close": 666.03,
-      "SPY_RSI14": 31.4,
-      "SPY_SMA20": 679.18,
-      "SPY_SMA60": 685.57,
-      "SPY_vs_52w_high_pct": 95.8,
-      "SPY_5d_return_pct": -1.52,
-      "SPY_20d_return_pct": -2.95,
-      "VIX": 23.57,
-      "US_10Y_yield": 4.23
+      "SPY_close": 660.71,
+      "SPY_RSI14": 38.9,
+      "SPY_SMA20": 672.93,
+      "SPY_SMA60": 682.28,
+      "SPY_vs_52w_high_pct": 95.3,
+      "SPY_5d_return_pct": -0.97,
+      "SPY_20d_return_pct": -2.91,
+      "VIX": 24.57,
+      "US_10Y_yield": 4.34
     },
     "tw_market": {
-      "TAIEX_close": 34349.0,
-      "TAIEX_RSI14": 43.9,
-      "TAIEX_SMA20": 33771.0,
-      "TAIEX_vs_52w_high_pct": 97.0,
-      "TSMC_close": 1905.0,
-      "TSMC_vs_52w_high_pct": 94.8
+      "TAIEX_close": 32722.0,
+      "TAIEX_RSI14": 41.4,
+      "TAIEX_SMA20": 33814.0,
+      "TAIEX_vs_52w_high_pct": 92.4,
+      "TAIEX_5d_return_pct": -1.86,
+      "TAIEX_20d_return_pct": -2.63,
+      "TSMC_close": 1810.0,
+      "TSMC_vs_52w_high_pct": 90.1
     },
     "tw_retail_indicators": {
-      "margin_balance": 8109024,
-      "margin_5d_change_pct": 1.15,
-      "margin_5d_trend": "INCREASING",
-      "institutional_net_TWD": 187.0,
-      "retail_net_est_TWD": -187.0,
-      "foreign_net_TWD": 90.2,
-      "foreign_consecutive_days": 2,
-      "foreign_consecutive_direction": "buy",
-      "TSMC_margin_balance": 25038,
-      "TSMC_margin_30d_change_pct": 20.51
+      "margin_balance": 8060128,
+      "margin_5d_change_pct": -0.18,
+      "margin_5d_trend": "FLAT",
+      "institutional_net_TWD": -1045.0,
+      "retail_net_est_TWD": 1045.0,
+      "foreign_net_TWD": -839.2,
+      "foreign_consecutive_days": 3,
+      "foreign_consecutive_direction": "sell",
+      "TSMC_margin_balance": 26222,
+      "TSMC_margin_30d_change_pct": 14.32
     },
     "jp_market": {
-      "NIKKEI_close": 55239.4,
-      "NIKKEI_RSI14": 37.6,
-      "NIKKEI_SMA20": 55869.6,
-      "NIKKEI_vs_52w_high_pct": null,
-      "NIKKEI_5d_return_pct": 0.39,
-      "NIKKEI_20d_return_pct": -2.35,
-      "jp_moodring_score": 58.6
+      "NIKKEI_close": 51515.49,
+      "NIKKEI_RSI14": 30.7,
+      "NIKKEI_SMA20": 55383.42,
+      "NIKKEI_vs_52w_high_pct": 87.5,
+      "NIKKEI_5d_return_pct": -4.28,
+      "NIKKEI_20d_return_pct": -10.36,
+      "jp_moodring_score": 22.7
     },
     "kr_market": {
-      "KOSPI_close": 5925.03,
-      "KOSPI_RSI14": 47.5,
-      "KOSPI_SMA20": 5703.91,
-      "KOSPI_vs_52w_high_pct": null,
-      "KOSPI_5d_return_pct": 5.62,
-      "KOSPI_20d_return_pct": 7.29,
-      "kr_moodring_score": 78.0
+      "KOSPI_close": 5405.75,
+      "KOSPI_RSI14": 43.6,
+      "KOSPI_SMA20": 5701.78,
+      "KOSPI_vs_52w_high_pct": 85.7,
+      "KOSPI_5d_return_pct": -2.6,
+      "KOSPI_20d_return_pct": -6.93,
+      "kr_moodring_score": 29.2
     },
     "eu_market": {
-      "STOXX50_close": 5723.83,
-      "STOXX50_RSI14": 29.1,
-      "STOXX50_SMA20": 5902.09,
-      "STOXX50_vs_52w_high_pct": null,
-      "STOXX50_5d_return_pct": -1.22,
-      "STOXX50_20d_return_pct": -6.22,
-      "eu_moodring_score": 49.3
+      "STOXX50_close": 5637.33,
+      "STOXX50_RSI14": 43.4,
+      "STOXX50_SMA20": 5825.12,
+      "STOXX50_vs_52w_high_pct": 91.3,
+      "STOXX50_5d_return_pct": -1.77,
+      "STOXX50_20d_return_pct": -7.8,
+      "eu_moodring_score": 37.0
     },
     "global_context": {
-      "Gold": 4864.0,
-      "USDJPY": 159.51,
-      "USDTWD": 31.92
+      "Gold": 4486.0,
+      "USDJPY": 158.5,
+      "USDTWD": 31.81
     }
   },
   "agents": {
@@ -71378,7 +71384,8 @@
     29.2,
     28.0,
     31.3,
-    32.2
+    32.2,
+    22.7
   ],
   "jp_dates": [
     "2009-04-01",
@@ -79704,7 +79711,8 @@
     45.5,
     40.8,
     44.7,
-    47.2
+    47.2,
+    29.2
   ],
   "kr_dates": [
     "2009-03-30",
@@ -88141,7 +88149,8 @@
     31.8,
     31.5,
     34.8,
-    36.4
+    36.4,
+    37.0
   ],
   "eu_dates": [
     "2009-03-30",

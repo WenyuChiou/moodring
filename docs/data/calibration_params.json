@@ -1,0 +1,40 @@
+{
+  "us": {
+    "rsi_weight": 0.2,
+    "vs_high_weight": 0.6,
+    "momentum_weight": 0.2,
+    "vs_high_floor": 85.0,
+    "vs_high_range": 15.0,
+    "momentum_range": 30.0,
+    "calibration_date": "2026-03-25",
+    "ic_at_calibration": -0.0997,
+    "ic_estimated_post": -0.2469,
+    "reason": "Auto-recalibrated: IC -0.0997 → -0.2469 | weights rsi=0.20 high=0.60 mom=0.20 | floor=85.0 h_range=15.0 m_range=30.0"
+  },
+  "tw": {
+    "rsi_weight": 0.6,
+    "vs_high_weight": 0.2,
+    "momentum_weight": 0.2,
+    "vs_high_floor": 85.0,
+    "vs_high_range": 30.0,
+    "momentum_range": 10.0,
+    "calibration_date": "2026-03-25",
+    "ic_at_calibration": 0.0795,
+    "ic_estimated_post": 0.1188,
+    "reason": "Auto-recalibrated: IC 0.0795 → 0.1188 | weights rsi=0.60 high=0.20 mom=0.20 | floor=85.0 h_range=30.0 m_range=10.0"
+  },
+  "jp": {
+    "rsi_weight": 0.6,
+    "vs_high_weight": 0.2,
+    "momentum_weight": 0.2,
+    "vs_high_floor": 85.0,
+    "vs_high_range": 20.0,
+    "momentum_range": 10.0,
+    "calibration_date": "2026-03-25",
+    "ic_at_calibration": 0.0506,
+    "ic_estimated_post": 0.0859,
+    "reason": "Auto-recalibrated: IC 0.0506 → 0.0859 | weights rsi=0.60 high=0.20 mom=0.20 | floor=85.0 h_range=20.0 m_range=10.0"
+  },
+  "kr": {},
+  "eu": {}
+}

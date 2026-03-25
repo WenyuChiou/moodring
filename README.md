@@ -83,8 +83,68 @@ GitHub Pages 靜態儀表板
 |------|----------------|------|
 | 美股更新 | 每日 22:00 | 美股收盤後（美東 10:00 AM）拉取當日數據 |
 | 台股更新 | 每日 09:30 | 亞股開盤後確認前日收盤數據完整性 |
+| **信號重新校準** | **每週六 14:00** | 自動偵測 IC 衰退並重新最佳化信號權重 |
 
 排程定義於 `.github/workflows/` 內的 GitHub Actions YAML 檔。
+
+---
+
+## 自動重新校準機制（Auto-Recalibration）
+
+### 什麼是 IC 衰退？
+
+MoodRing 使用**信息係數（IC, Information Coefficient）**衡量情緒分數與未來 20 日報酬的 Spearman 相關性。當市場進入不同的走勢形態（如趨勢市轉震盪市），原有信號權重的預測力會下降，稱為 IC 衰退。
+
+### 重新校準策略
+
+情緒分數由三個子信號加權合成：
+
+| 子信號 | 預設權重 | 說明 |
+|--------|---------|------|
+| RSI-14 | 33% | 超買超賣（直接 0-100） |
+| vs 52 週高點 | 33% | 距歷史高點距離（對比指標） |
+| 20 日動能 | 33% | 近期趨勢動能 |
+
+當某市場 IC 低於閾值（`|IC| < 0.05` = 訊號差、`< 0.08` = 訊號弱），系統會：
+
+1. **拉取 2 年歷史價格**（yfinance）
+2. **重新計算**每日三個子信號值
+3. **格點搜尋**最佳化權重組合（10 種權重比例 × 4 種映射範圍 = 160 組候選）
+4. 若新參數 IC 提升超過 10%，**自動採用**並寫入 `data/calibration_params.json`
+5. **記錄事件**至 `data/recalibration_log.json`
+6. 下次 `daily_update.py` 執行時**自動套用**新權重
+
+### 校準狀態
+
+儀表板的 **Signal Health** 區塊會顯示：
+- 當前信號健康度（Good / Warning / Poor）
+- 若已重新校準：套用日期、新權重比例、IC 改善幅度
+- 系統整體健康度 + 最後重新校準時間
+
+### 手動觸發
+
+```bash
+# 對所有健康狀況差的市場執行重新校準
+python src/recalibrate.py
+
+# 指定市場
+python src/recalibrate.py --markets us tw jp
+
+# 強制重新校準（忽略健康狀態）
+python src/recalibrate.py --force
+
+# 查看當前校準狀態
+python src/recalibrate.py --status
+```
+
+### 相關檔案
+
+| 檔案 | 說明 |
+|------|------|
+| `src/recalibrate.py` | 重新校準引擎主程式 |
+| `data/calibration_params.json` | 各市場當前最佳化參數 |
+| `data/recalibration_log.json` | 歷次校準事件紀錄 |
+| `.github/workflows/weekly-recalibrate.yml` | 每週六自動觸發排程 |
 
 ---
 
@@ -100,13 +160,19 @@ GitHub Pages 靜態儀表板
 
 ```bash
 # 安裝相依套件
-pip install -r requirements.txt
+pip install yfinance pandas numpy scipy FinMind requests tqdm
 
-# 執行美股數據更新
-python update_us.py
+# 執行全市場數據更新（US / TW / JP / KR / EU）
+python src/daily_update.py
 
-# 執行台股數據更新
-python update_tw.py
+# 僅更新特定市場
+python src/daily_update.py --us --tw
+
+# 重建儀表板 JSON
+python src/rebuild_dashboard_daily.py
+
+# 執行信號重新校準（自動偵測 IC 衰退）
+python src/recalibrate.py
 
 # 本地預覽儀表板（開啟 docs/index.html）
 ```

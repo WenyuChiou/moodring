@@ -1,0 +1,509 @@
+"""
+MoodRing Auto-Recalibration System
+====================================
+Monitors prediction accuracy (IC, hit rate) over rolling windows and
+automatically recalibrates signal weights when performance degrades.
+
+Recalibration strategy
+----------------------
+The composite score is built from three sub-signals:
+  1. RSI-14  (0-100)
+  2. vs_52w_high  mapped via  (vs_high - floor) * (100 / h_range)
+  3. 20d momentum mapped via  (mom + m_range/2) * (100 / m_range)
+
+When IC decays below the "poor" threshold (|IC| < 0.05), this module:
+  1. Fetches 2 years of price history per market (yfinance)
+  2. Recomputes the three sub-signals historically
+  3. Grid-searches weight combinations and mapping ranges to maximise |IC|
+  4. Stores the best parameters in  data/calibration_params.json
+  5. Logs the event to             data/recalibration_log.json
+
+The next run of daily_update.py reads calibration_params.json and
+applies the updated weights automatically via compute_score().
+
+Usage
+-----
+  python recalibrate.py                      # auto-recalibrate all poor markets
+  python recalibrate.py --markets us tw      # specific markets
+  python recalibrate.py --force              # recalibrate even if healthy
+  python recalibrate.py --status             # print current calibration status
+"""
+
+import sys
+import os
+import json
+import math
+from datetime import datetime, timedelta
+
+os.environ['PYTHONUTF8'] = '1'
+
+DATA_DIR        = os.path.join(os.path.dirname(__file__), '..', 'data')
+RECAL_LOG_PATH  = os.path.join(DATA_DIR, 'recalibration_log.json')
+PARAMS_PATH     = os.path.join(DATA_DIR, 'calibration_params.json')
+
+# IC health thresholds (absolute value)
+IC_POOR_THRESH  = 0.05   # below this → poor
+IC_WARN_THRESH  = 0.08   # below this → warning
+
+# Minimum aligned pairs required for optimisation
+MIN_PAIRS = 40
+
+# Default signal parameters (match the hardcoded values in daily_update.py)
+DEFAULT_PARAMS = {
+    "rsi_weight":        1 / 3,
+    "vs_high_weight":    1 / 3,
+    "momentum_weight":   1 / 3,
+    "vs_high_floor":     80.0,   # lower bound of vs_52w_high range
+    "vs_high_range":     20.0,   # width of the vs_52w_high mapping (80-100 = 20)
+    "momentum_range":    20.0,   # full range of momentum (±10 % → range = 20)
+}
+
+TICKER_MAP = {
+    'us': 'SPY',
+    'tw': '^TWII',
+    'jp': '^N225',
+    'kr': '^KS11',
+    'eu': '^STOXX50E',
+}
+
+
+# ── helpers ───────────────────────────────────────────────────────────────────
+
+def _load(path, default):
+    if os.path.exists(path):
+        with open(path, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    return default
+
+
+def _save(path, data):
+    with open(path, 'w', encoding='utf-8') as f:
+        json.dump(data, f, indent=2, ensure_ascii=False)
+
+
+def _spearman(x, y):
+    from scipy.stats import spearmanr
+    if len(x) < 10:
+        return None
+    ic, _ = spearmanr(x, y)
+    return None if math.isnan(ic) else round(float(ic), 4)
+
+
+def _compute_rsi14(prices):
+    """Wilder-smoothed RSI-14 from a list of closing prices."""
+    result = [None] * min(14, len(prices))
+    if len(prices) < 15:
+        return result
+
+    deltas = [prices[i] - prices[i - 1] for i in range(1, len(prices))]
+    gains  = [max(d, 0.0) for d in deltas[:14]]
+    losses = [max(-d, 0.0) for d in deltas[:14]]
+    avg_g  = sum(gains)  / 14
+    avg_l  = sum(losses) / 14
+
+    for d in deltas[14:]:
+        g = max(d, 0.0)
+        l = max(-d, 0.0)
+        avg_g = (avg_g * 13 + g) / 14
+        avg_l = (avg_l * 13 + l) / 14
+        if avg_l == 0:
+            result.append(100.0)
+        else:
+            rs = avg_g / avg_l
+            result.append(round(100.0 - 100.0 / (1.0 + rs), 2))
+
+    return result
+
+
+def _fetch_prices(ticker, start, end):
+    """Download adjusted close prices from yfinance. Returns (dates, prices)."""
+    import yfinance as yf
+    import pandas as pd
+    try:
+        raw = yf.download(ticker, start=start, end=end, progress=False, auto_adjust=True)
+        if raw is None or raw.empty:
+            return [], []
+        close = raw['Close']
+        if isinstance(close, pd.DataFrame):
+            close = close.iloc[:, 0]
+        close = close.dropna()
+        if hasattr(close.index, 'tz') and close.index.tz is not None:
+            close.index = close.index.tz_localize(None)
+        dates  = [d.strftime('%Y-%m-%d') for d in close.index]
+        prices = [float(v) for v in close.values]
+        return dates, prices
+    except Exception as exc:
+        print(f"[RECAL] yfinance error for {ticker}: {exc}")
+        return [], []
+
+
+def _score_with_params(rsi, vs_high, mom, p):
+    """Compute composite score from sub-signals using parameter dict p."""
+    w_rsi  = p.get('rsi_weight',      1 / 3)
+    w_high = p.get('vs_high_weight',  1 / 3)
+    w_mom  = p.get('momentum_weight', 1 / 3)
+    floor  = p.get('vs_high_floor',   80.0)
+    h_rng  = p.get('vs_high_range',   20.0)
+    m_rng  = p.get('momentum_range',  20.0)
+
+    rsi_s  = max(0.0, min(100.0, float(rsi)))
+    high_s = max(0.0, min(100.0, (vs_high - floor) * (100.0 / max(h_rng, 1))))
+    mom_s  = max(0.0, min(100.0, (mom + m_rng / 2)  * (100.0 / max(m_rng, 1))))
+
+    total_w = w_rsi + w_high + w_mom
+    if total_w == 0:
+        return 50.0
+    return round((w_rsi * rsi_s + w_high * high_s + w_mom * mom_s) / total_w, 1)
+
+
+# ── historical sub-signal builder ─────────────────────────────────────────────
+
+def _build_history(market, lookback_years=2):
+    """
+    Fetch price history and compute daily RSI-14, vs_52w_high, 20d-momentum,
+    and forward 20d return for each day.
+
+    Returns a list of dicts: {date, rsi, vs_high, mom, fwd_20d}
+    """
+    ticker = TICKER_MAP.get(market)
+    if not ticker:
+        return []
+
+    end_dt   = datetime.now()
+    # Extra buffer: 252 warmup + 30 padding
+    start_dt = end_dt - timedelta(days=lookback_years * 365 + 282)
+
+    print(f"[RECAL] {market.upper()}: downloading {ticker} price history ({start_dt.date()} → {end_dt.date()})...")
+    dates, prices = _fetch_prices(ticker, start_dt.strftime('%Y-%m-%d'), end_dt.strftime('%Y-%m-%d'))
+
+    if len(prices) < 300:
+        print(f"[RECAL] {market.upper()}: insufficient price data ({len(prices)} bars)")
+        return []
+
+    rsi_vals = _compute_rsi14(prices)
+
+    rows = []
+    for i in range(252, len(prices) - 20):
+        if rsi_vals[i] is None:
+            continue
+        p_now      = prices[i]
+        p_fwd      = prices[i + 20]
+        p_20d_ago  = prices[i - 20] if i >= 20 else p_now
+        high_252d  = max(prices[i - 252:i + 1])
+
+        vs_high = (p_now / high_252d * 100.0) if high_252d > 0 else 90.0
+        mom     = (p_now / p_20d_ago - 1.0) * 100.0 if p_20d_ago > 0 else 0.0
+        fwd_20d = (p_fwd / p_now - 1.0) * 100.0     if p_now > 0 else None
+
+        if fwd_20d is None:
+            continue
+        rows.append({
+            'date':    dates[i],
+            'rsi':     rsi_vals[i],
+            'vs_high': vs_high,
+            'mom':     mom,
+            'fwd_20d': fwd_20d,
+        })
+
+    print(f"[RECAL] {market.upper()}: {len(rows)} usable data points")
+    return rows
+
+
+# ── parameter grid search ─────────────────────────────────────────────────────
+
+def _grid_search(rows):
+    """
+    Search over weight combinations and mapping ranges to find parameters
+    that maximise |Spearman IC| between composite score and forward 20d returns.
+
+    Returns (best_params_dict, best_ic) or (None, None) if insufficient data.
+    """
+    if len(rows) < MIN_PAIRS:
+        return None, None
+
+    fwd = [r['fwd_20d'] for r in rows]
+
+    # Weight triplets that sum to 1.0
+    weight_combos = [
+        (1/3,  1/3,  1/3),
+        (0.50, 0.25, 0.25),
+        (0.25, 0.50, 0.25),
+        (0.25, 0.25, 0.50),
+        (0.60, 0.20, 0.20),
+        (0.20, 0.60, 0.20),
+        (0.20, 0.20, 0.60),
+        (0.40, 0.40, 0.20),
+        (0.40, 0.20, 0.40),
+        (0.20, 0.40, 0.40),
+    ]
+
+    floor_opts   = [70.0, 75.0, 80.0, 85.0]
+    h_range_opts = [15.0, 20.0, 25.0, 30.0]
+    m_range_opts = [10.0, 15.0, 20.0, 30.0]   # full range: ±5 %, ±7.5 %, ±10 %, ±15 %
+
+    best_ic     = None
+    best_params = dict(DEFAULT_PARAMS)
+
+    for w_rsi, w_high, w_mom in weight_combos:
+        for floor in floor_opts:
+            for h_rng in h_range_opts:
+                for m_rng in m_range_opts:
+                    p = {
+                        'rsi_weight':      w_rsi,
+                        'vs_high_weight':  w_high,
+                        'momentum_weight': w_mom,
+                        'vs_high_floor':   floor,
+                        'vs_high_range':   h_rng,
+                        'momentum_range':  m_rng,
+                    }
+                    scores = [_score_with_params(r['rsi'], r['vs_high'], r['mom'], p) for r in rows]
+                    ic = _spearman(scores, fwd)
+                    if ic is not None and (best_ic is None or abs(ic) > abs(best_ic)):
+                        best_ic     = ic
+                        best_params = dict(p)
+
+    return best_params, best_ic
+
+
+# ── per-market recalibration ───────────────────────────────────────────────────
+
+def recalibrate_market(market, current_ic, current_params, force=False):
+    """
+    Run recalibration for a single market.
+
+    Args:
+        market:        market code ('us', 'tw', 'jp', 'kr', 'eu')
+        current_ic:    most-recent IC from self_improve.json
+        current_params: existing calibration params dict for this market
+        force:         if True, apply even with marginal improvement
+
+    Returns:
+        new_params dict if improvement found, else None.
+    """
+    rows = _build_history(market, lookback_years=2)
+    if not rows:
+        return None
+
+    fwd = [r['fwd_20d'] for r in rows]
+
+    # IC with current params
+    cur_scores = [
+        _score_with_params(r['rsi'], r['vs_high'], r['mom'],
+                           {**DEFAULT_PARAMS, **current_params})
+        for r in rows
+    ]
+    ic_now = _spearman(cur_scores, fwd)
+
+    # Grid search for better params
+    best_params, best_ic = _grid_search(rows)
+
+    print(f"[RECAL] {market.upper()}: current IC={ic_now}, best IC found={best_ic}")
+
+    if best_params is None:
+        print(f"[RECAL] {market.upper()}: grid search failed (insufficient data)")
+        return None
+
+    # Apply only if improvement > 10 % relative (or force)
+    threshold = abs(ic_now or 0) * 1.10
+    if not force and (best_ic is None or abs(best_ic) <= threshold):
+        print(f"[RECAL] {market.upper()}: best IC ({best_ic}) ≤ improvement threshold — no change")
+        return None
+
+    best_params['calibration_date']   = datetime.now().strftime('%Y-%m-%d')
+    best_params['ic_at_calibration']  = ic_now
+    best_params['ic_estimated_post']  = best_ic
+    best_params['reason'] = (
+        f"Auto-recalibrated: IC {ic_now} → {best_ic} | "
+        f"weights rsi={best_params['rsi_weight']:.2f} "
+        f"high={best_params['vs_high_weight']:.2f} "
+        f"mom={best_params['momentum_weight']:.2f} | "
+        f"floor={best_params['vs_high_floor']} "
+        f"h_range={best_params['vs_high_range']} "
+        f"m_range={best_params['momentum_range']}"
+    )
+
+    # Append to recalibration log
+    log = _load(RECAL_LOG_PATH, [])
+    log.append({
+        "timestamp":          datetime.now().isoformat(),
+        "date":               datetime.now().strftime('%Y-%m-%d'),
+        "market":             market,
+        "trigger":            "manual_force" if force else "auto_ic_decay",
+        "ic_before":          ic_now,
+        "ic_estimated_post":  best_ic,
+        "old_params":         current_params,
+        "new_params":         best_params,
+    })
+    _save(RECAL_LOG_PATH, log)
+    print(f"[RECAL] {market.upper()}: recalibration event logged")
+
+    return best_params
+
+
+# ── main entry point ───────────────────────────────────────────────────────────
+
+def run_recalibration(markets=None, force=False):
+    """
+    Auto-recalibration entry point.
+
+    For each target market with poor IC health, fetches price history,
+    grid-searches for better signal parameters, and saves them to
+    data/calibration_params.json.  The next daily_update.py run picks
+    up the new weights automatically via compute_score().
+
+    Args:
+        markets: list of market codes or None (→ all five markets)
+        force:   recalibrate regardless of current health status
+
+    Returns:
+        dict mapping market → updated params
+    """
+    si_path = os.path.join(DATA_DIR, 'self_improve.json')
+    if not os.path.exists(si_path):
+        print("[RECAL] data/self_improve.json not found. Run daily_update.py first.")
+        return {}
+
+    with open(si_path, 'r', encoding='utf-8') as f:
+        si = json.load(f)
+
+    all_params   = _load(PARAMS_PATH, {})
+    targets      = markets or ['us', 'tw', 'jp', 'kr', 'eu']
+    updated      = {}
+    recalibrated = []
+
+    for market in targets:
+        mkt_si    = si.get('markets', {}).get(market, {})
+        health    = mkt_si.get('health', 'unknown')
+        recent_ic = mkt_si.get('recent_ic_20d')
+
+        needs_recal = (
+            force or
+            health == 'poor' or
+            (health == 'warning' and recent_ic is not None and abs(recent_ic) < 0.03)
+        )
+
+        cur_mkt_params = all_params.get(market, {})
+
+        if not needs_recal:
+            print(f"[RECAL] {market.upper()}: health={health} IC={recent_ic} — healthy, skipping")
+            updated[market] = cur_mkt_params
+            continue
+
+        print(f"\n[RECAL] {market.upper()}: health={health} IC={recent_ic} — triggering recalibration ...")
+        new_params = recalibrate_market(market, recent_ic or 0.0, cur_mkt_params, force=force)
+
+        if new_params:
+            updated[market] = new_params
+            recalibrated.append(market)
+        else:
+            cur_mkt_params['last_checked']    = datetime.now().strftime('%Y-%m-%d')
+            cur_mkt_params['health_at_check'] = health
+            updated[market] = cur_mkt_params
+
+    _save(PARAMS_PATH, updated)
+    print(f"\n[RECAL] calibration_params.json saved → {PARAMS_PATH}")
+
+    # Patch self_improve.json with recalibration metadata
+    if recalibrated:
+        if 'system_health' not in si:
+            si['system_health'] = {}
+        si['system_health']['last_recalibration'] = {
+            "date":     datetime.now().strftime('%Y-%m-%d'),
+            "markets":  recalibrated,
+            "trigger":  "manual" if force else "auto",
+        }
+        _save(si_path, si)
+
+    # Sync updated files to docs/data/ for GitHub Pages
+    import shutil
+    docs_data = os.path.normpath(os.path.join(DATA_DIR, '..', 'docs', 'data'))
+    for fname in ('calibration_params.json', 'recalibration_log.json', 'self_improve.json'):
+        src = os.path.join(DATA_DIR, fname)
+        dst = os.path.join(docs_data, fname)
+        if os.path.exists(src):
+            shutil.copy2(src, dst)
+    print("[RECAL] docs/data/ synced")
+
+    if recalibrated:
+        print(f"\n✓ Recalibrated: {', '.join(m.upper() for m in recalibrated)}")
+        print("  Re-run daily_update.py to apply new weights to today's scores.")
+    else:
+        print("\n✓ Done — no parameter changes (no improvement found or all markets healthy)")
+
+    return updated
+
+
+# ── status reporter ────────────────────────────────────────────────────────────
+
+def get_calibration_status():
+    """Return a JSON-serialisable dict summarising calibration state for all markets."""
+    params = _load(PARAMS_PATH, {})
+    log    = _load(RECAL_LOG_PATH, [])
+
+    status = {
+        "generated":           datetime.now().strftime('%Y-%m-%d %H:%M'),
+        "total_recalibrations": len(log),
+        "recent_events":       log[-3:] if log else [],
+        "markets":             {},
+    }
+
+    for mkt in ['us', 'tw', 'jp', 'kr', 'eu']:
+        p  = params.get(mkt, {})
+        is_recal = (
+            abs(p.get('rsi_weight',      1/3) - 1/3)  > 0.001 or
+            abs(p.get('vs_high_weight',  1/3) - 1/3)  > 0.001 or
+            abs(p.get('momentum_weight', 1/3) - 1/3)  > 0.001 or
+            p.get('vs_high_floor',   80.0) != 80.0    or
+            p.get('vs_high_range',   20.0) != 20.0    or
+            p.get('momentum_range',  20.0) != 20.0
+        )
+        status["markets"][mkt] = {
+            "is_recalibrated":     is_recal,
+            "calibration_date":    p.get('calibration_date', 'never'),
+            "ic_at_calibration":   p.get('ic_at_calibration'),
+            "ic_estimated_post":   p.get('ic_estimated_post'),
+            "active_weights": {
+                "rsi":     round(p.get('rsi_weight',      1/3), 3),
+                "vs_high": round(p.get('vs_high_weight',  1/3), 3),
+                "momentum":round(p.get('momentum_weight', 1/3), 3),
+            } if is_recal else "default (equal)",
+        }
+
+    return status
+
+
+# ── apply helper (used by daily_update.py's compute_score) ────────────────────
+
+def load_calibration_params():
+    """Load calibration_params.json if it exists; returns {} otherwise."""
+    return _load(PARAMS_PATH, {})
+
+
+# ── CLI ────────────────────────────────────────────────────────────────────────
+
+if __name__ == '__main__':
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        description='MoodRing Auto-Recalibration — optimises signal weights to restore IC'
+    )
+    parser.add_argument(
+        '--markets', nargs='+', choices=['us', 'tw', 'jp', 'kr', 'eu'],
+        help='Markets to recalibrate (default: all poor-health markets)'
+    )
+    parser.add_argument(
+        '--force', action='store_true',
+        help='Recalibrate even if current health is OK'
+    )
+    parser.add_argument(
+        '--status', action='store_true',
+        help='Print current calibration status and exit'
+    )
+
+    args = parser.parse_args()
+
+    if args.status:
+        status = get_calibration_status()
+        print(json.dumps(status, indent=2, ensure_ascii=False))
+    else:
+        run_recalibration(markets=args.markets, force=args.force)

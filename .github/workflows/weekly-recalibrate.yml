@@ -1,0 +1,61 @@
+name: Moodring Weekly Recalibration
+
+on:
+  schedule:
+    # Every Saturday at 06:00 UTC (14:00 Taipei) — after US Friday close
+    - cron: '0 6 * * 6'
+  workflow_dispatch:
+    inputs:
+      markets:
+        description: 'Markets to recalibrate (space-separated: us tw jp kr eu)'
+        required: false
+        default: ''
+      force:
+        description: 'Force recalibration even if healthy (true/false)'
+        required: false
+        default: 'false'
+
+permissions:
+  contents: write
+
+jobs:
+  recalibrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install yfinance pandas numpy scipy FinMind requests tqdm
+
+      - name: Run recalibration
+        run: |
+          if [ -n "${{ github.event.inputs.markets }}" ]; then
+            MARKETS="--markets ${{ github.event.inputs.markets }}"
+          else
+            MARKETS=""
+          fi
+          FORCE=""
+          if [ "${{ github.event.inputs.force }}" = "true" ]; then
+            FORCE="--force"
+          fi
+          python src/recalibrate.py $MARKETS $FORCE
+
+      - name: Sync recalibration data to docs
+        run: |
+          mkdir -p docs/data
+          for f in calibration_params.json recalibration_log.json self_improve.json; do
+            [ -f "data/$f" ] && cp "data/$f" "docs/data/$f" || true
+          done
+
+      - name: Commit and push
+        run: |
+          git config user.name "Moodring Bot"
+          git config user.email "moodring-bot@users.noreply.github.com"
+          git add data/calibration_params.json data/recalibration_log.json \
+                  data/self_improve.json docs/data/ || true
+          git diff --staged --quiet || git commit -m "recalibrate: weekly signal weight optimisation $(date +%Y-%m-%d)"
+          git push

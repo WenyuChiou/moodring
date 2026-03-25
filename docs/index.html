@@ -995,7 +995,7 @@ function renderMemoryScene(memData, mktKey) {
 }
 
 // ── Self-Improve renderer ─────────────────────────────────────────────────────
-function renderSelfImprove(siData, mktKey) {
+function renderSelfImprove(siData, mktKey, calData) {
   const section = document.getElementById('selfimprove-section');
   if (!siData) { section.classList.add('hidden'); return; }
   section.classList.remove('hidden');
@@ -1058,16 +1058,57 @@ function renderSelfImprove(siData, mktKey) {
     <div style="display:flex;height:8px;border-radius:4px;overflow:hidden;margin-bottom:8px;">${zoneBar}</div>
     ${flagsHtml}`;
 
-  // System health
-  const sClr = sys.overall === 'good' ? '#3fb950' : sys.overall === 'warning' ? '#e3b341' : '#f85149';
+  // ── Calibration status indicator ─────────────────────────────────────────────
+  const calMkt = calData && calData[mktKey];
+  let calHtml = '';
+  if (calMkt && calMkt.calibration_date && calMkt.calibration_date !== 'never') {
+    const icBefore = calMkt.ic_at_calibration;
+    const icAfter  = calMkt.ic_estimated_post;
+    const icBeforeAbs = Math.abs(icBefore || 0);
+    const icAfterAbs  = Math.abs(icAfter  || 0);
+    const icImproved  = icAfter != null && icBefore != null && icAfterAbs > icBeforeAbs;
+    const icColor     = icImproved ? '#3fb950' : '#e3b341';
+    const wRsi  = calMkt.rsi_weight        != null ? (calMkt.rsi_weight * 100).toFixed(0)        : null;
+    const wHigh = calMkt.vs_high_weight    != null ? (calMkt.vs_high_weight * 100).toFixed(0)    : null;
+    const wMom  = calMkt.momentum_weight   != null ? (calMkt.momentum_weight * 100).toFixed(0)   : null;
+    const weightsStr = (wRsi != null)
+      ? `RSI ${wRsi}% · 52wH ${wHigh}% · Mom ${wMom}%`
+      : 'default weights';
+    calHtml = `
+      <div style="margin-top:8px;background:#0d1117;border:1px solid #21262d;border-radius:6px;padding:8px 10px;font-size:0.78em;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
+          <span style="color:#58a6ff;font-weight:700;font-size:0.9em;text-transform:uppercase;letter-spacing:0.8px;">⚙ Calibration Active</span>
+          <span style="color:#6e7681;">${calMkt.calibration_date}</span>
+        </div>
+        <div style="display:flex;gap:16px;flex-wrap:wrap;">
+          <span style="color:#8b949e;">Weights: <span style="color:#c9d1d9;font-weight:600;">${weightsStr}</span></span>
+          ${icBefore != null ? `<span style="color:#8b949e;">IC: <span style="color:#8b949e;">${icBefore.toFixed(3)}</span> → <span style="color:${icColor};font-weight:700;">${icAfter != null ? icAfter.toFixed(3) : '--'}</span></span>` : ''}
+        </div>
+      </div>`;
+  } else if (mkt.health === 'poor' || mkt.health === 'warning') {
+    calHtml = `
+      <div style="margin-top:8px;background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:8px 10px;font-size:0.78em;">
+        <span style="color:#e3b341;">⚙ Default weights in use — run recalibrate.py to optimise</span>
+      </div>`;
+  }
+
+  // System health + calibration
+  const sClr  = sys.overall === 'good' ? '#3fb950' : sys.overall === 'warning' ? '#e3b341' : '#f85149';
+  const lastRecal = sys.last_recalibration;
+  const recalBadge = lastRecal
+    ? `<span style="background:#1f2937;border:1px solid #30363d;border-radius:4px;padding:1px 6px;font-size:0.82em;color:#58a6ff;margin-left:6px;">⚙ recalibrated ${lastRecal.date || ''} (${(lastRecal.markets || []).join(', ').toUpperCase()})</span>`
+    : '';
+
   document.getElementById('si-system-health').innerHTML =
     `<div style="background:#0d1117;border-radius:6px;padding:10px;font-size:0.82em;">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap;">
         <span style="color:${sClr};font-weight:700;">Overall: ${(sys.overall || 'unknown').toUpperCase()}</span>
-        <span style="color:#6e7681;">Last calibration: ${sys.last_calibration}</span>
+        ${recalBadge}
+        <span style="color:#6e7681;margin-left:auto;">Last calibration: ${sys.last_calibration || '--'}</span>
       </div>
-      <div style="color:#c9d1d9;">${sys.recommendation}</div>
-    </div>`;
+      <div style="color:#c9d1d9;">${sys.recommendation || ''}</div>
+    </div>
+    ${calHtml}`;
 }
 
 // ── Market data (static, US/TW focused) ──────────────────────────────────────
@@ -1168,9 +1209,9 @@ function switchMarket(mktKey) {
   renderAgentSection(effectiveAgentData, mktKey);
 
   // Memory Scene
-  const { memoryData, selfImproveData } = _allData;
+  const { memoryData, selfImproveData, calibrationData } = _allData;
   renderMemoryScene(memoryData, mktKey);
-  renderSelfImprove(selfImproveData, mktKey);
+  renderSelfImprove(selfImproveData, mktKey, calibrationData);
 
   // Quintile
   const qData = quintileData[mktKey] && quintileData[mktKey]['20d'] ? quintileData[mktKey]['20d'].returns : null;
@@ -1197,14 +1238,14 @@ document.querySelectorAll('.market-btn').forEach(btn => {
 // ── Main load ─────────────────────────────────────────────────────────────────
 async function loadDashboard() {
   // Step 1: Fetch — red error only for network / HTTP / JSON failures
-  let fwdData, agentData, quintileData, dashData, overlayData, zoneReturns, icData, memoryData, selfImproveData;
+  let fwdData, agentData, quintileData, dashData, overlayData, zoneReturns, icData, memoryData, selfImproveData, calibrationData;
   try {
     const cb = '?v=' + Date.now();
     const fetchJSON = url => fetch(url + cb).then(r => {
       if (!r.ok) throw new Error(url + ' HTTP ' + r.status);
       return r.json();
     });
-    [fwdData, agentData, quintileData, dashData, overlayData, zoneReturns, icData, memoryData, selfImproveData] = await Promise.all([
+    [fwdData, agentData, quintileData, dashData, overlayData, zoneReturns, icData, memoryData, selfImproveData, calibrationData] = await Promise.all([
       fetchJSON('data/forward_outlook.json'),
       fetchJSON('data/phase2_agent_results.json'),
       fetchJSON('data/quintile_data.json'),
@@ -1214,6 +1255,7 @@ async function loadDashboard() {
       fetchJSON('data/ic_data.json'),
       fetchJSON('data/memory_scene.json').catch(() => null),
       fetchJSON('data/self_improve.json').catch(() => null),
+      fetchJSON('data/calibration_params.json').catch(() => null),
     ]);
   } catch (err) {
     console.error('Fetch error:', err);
@@ -1225,7 +1267,7 @@ async function loadDashboard() {
   }
 
   // Step 2: Render — each block independently guarded; render errors never show red banner
-  _allData = { fwdData, agentData, quintileData, dashData, overlayData, zoneReturns, icData, memoryData, selfImproveData };
+  _allData = { fwdData, agentData, quintileData, dashData, overlayData, zoneReturns, icData, memoryData, selfImproveData, calibrationData };
 
   try {
     if (icData && icData.markets) {

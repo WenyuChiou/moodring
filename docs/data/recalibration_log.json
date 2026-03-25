@@ -61,5 +61,102 @@
       "ic_estimated_post": 0.0859,
       "reason": "Auto-recalibrated: IC 0.0506 → 0.0859 | weights rsi=0.60 high=0.20 mom=0.20 | floor=85.0 h_range=20.0 m_range=10.0"
     }
+  },
+  {
+    "timestamp": "2026-03-25T16:52:46.112257",
+    "date": "2026-03-25",
+    "market": "us",
+    "trigger": "manual_force",
+    "ic_before": -0.2594,
+    "ic_insample": -0.3292,
+    "ic_oos": -0.123,
+    "ic_estimated_post": -0.123,
+    "old_params": {
+      "rsi_weight": 0.2,
+      "vs_high_weight": 0.6,
+      "momentum_weight": 0.2,
+      "vs_high_floor": 85.0,
+      "vs_high_range": 15.0,
+      "momentum_range": 30.0,
+      "calibration_date": "2026-03-25",
+      "ic_at_calibration": -0.0997,
+      "ic_estimated_post": -0.2469,
+      "reason": "Auto-recalibrated: IC -0.0997 → -0.2469 | weights rsi=0.20 high=0.60 mom=0.20 | floor=85.0 h_range=15.0 m_range=30.0"
+    },
+    "new_params": {
+      "rsi_weight": 0.2,
+      "vs_high_weight": 0.6,
+      "momentum_weight": 0.2,
+      "vs_high_floor": 85.0,
+      "vs_high_range": 15.0,
+      "momentum_range": 30.0,
+      "calibration_date": "2026-03-25",
+      "ic_at_calibration": -0.2594,
+      "ic_insample": -0.3292,
+      "ic_oos": -0.123,
+      "ic_estimated_post": -0.123,
+      "reason": "Auto-recalibrated: IC -0.2594 → OOS -0.123 (in-sample -0.3292) | weights rsi=0.20 high=0.60 mom=0.20 | floor=85.0 h_range=15.0 m_range=30.0"
+    }
+  },
+  {
+    "timestamp": "2026-03-25T16:52:46.503909",
+    "date": "2026-03-25",
+    "market": "tw",
+    "trigger": "manual_force",
+    "ic_before": 0.0912,
+    "ic_insample": -0.2464,
+    "ic_oos": -0.0273,
+    "ic_estimated_post": -0.0273,
+    "old_params": {
+      "rsi_weight": 0.6,
+      "vs_high_weight": 0.2,
+      "momentum_weight": 0.2,
+      "vs_high_floor": 85.0,
+      "vs_high_range": 30.0,
+      "momentum_range": 10.0,
+      "calibration_date": "2026-03-25",
+      "ic_at_calibration": 0.0795,
+      "ic_estimated_post": 0.1188,
+      "reason": "Auto-recalibrated: IC 0.0795 → 0.1188 | weights rsi=0.60 high=0.20 mom=0.20 | floor=85.0 h_range=30.0 m_range=10.0"
+    },
+    "new_params": {
+      "rsi_weight": 0.2,
+      "vs_high_weight": 0.6,
+      "momentum_weight": 0.2,
+      "vs_high_floor": 80.0,
+      "vs_high_range": 15.0,
+      "momentum_range": 30.0,
+      "calibration_date": "2026-03-25",
+      "ic_at_calibration": 0.0912,
+      "ic_insample": -0.2464,
+      "ic_oos": -0.0273,
+      "ic_estimated_post": -0.0273,
+      "reason": "Auto-recalibrated: IC 0.0912 → OOS -0.0273 (in-sample -0.2464) | weights rsi=0.20 high=0.60 mom=0.20 | floor=80.0 h_range=15.0 m_range=30.0"
+    }
+  },
+  {
+    "timestamp": "2026-03-25T16:53:39.632710",
+    "date": "2026-03-25",
+    "market": "jp",
+    "trigger": "manual_force",
+    "ic_before": 0.0184,
+    "ic_insample": -0.1261,
+    "ic_oos": -0.1313,
+    "ic_estimated_post": -0.1313,
+    "old_params": {},
+    "new_params": {
+      "rsi_weight": 0.2,
+      "vs_high_weight": 0.6,
+      "momentum_weight": 0.2,
+      "vs_high_floor": 80.0,
+      "vs_high_range": 15.0,
+      "momentum_range": 30.0,
+      "calibration_date": "2026-03-25",
+      "ic_at_calibration": 0.0184,
+      "ic_insample": -0.1261,
+      "ic_oos": -0.1313,
+      "ic_estimated_post": -0.1313,
+      "reason": "Auto-recalibrated: IC 0.0184 → OOS -0.1313 (in-sample -0.1261) | weights rsi=0.20 high=0.60 mom=0.20 | floor=80.0 h_range=15.0 m_range=30.0"
+    }
   }
 ]

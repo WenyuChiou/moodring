@@ -2281,12 +2281,13 @@ def generate_self_improve():
             ic_change_pct = None
             ic_trend = "insufficient_data"
 
-        # Health based on absolute recent IC
+        # Health based on absolute recent IC.
+        # Thresholds match recalibrate.py — SE for n=60 ≈ 0.132, so use 0.10 / 0.15.
         if recent_ic is not None:
             abs_ic = abs(recent_ic)
-            if abs_ic > 0.08:
+            if abs_ic > 0.15:
                 health = "good"
-            elif abs_ic >= 0.05:
+            elif abs_ic >= 0.10:
                 health = "warning"
             else:
                 health = "poor"
@@ -2337,6 +2338,40 @@ def generate_self_improve():
         }
         print(f"[SELF-IMPROVE] {mkt.upper()}: full_ic={full_ic}, recent_ic={recent_ic}, trend={ic_trend}, health={health}")
 
+    # Calibration staleness check (P1.4)
+    cal_params_path = os.path.join(DATA_DIR, 'calibration_params.json')
+    cal_params = {}
+    last_calibration_date = None
+    if os.path.exists(cal_params_path):
+        try:
+            with open(cal_params_path, 'r', encoding='utf-8') as _f:
+                cal_params = json.load(_f)
+        except Exception:
+            cal_params = {}
+
+    # Derive the most recent calibration date across all markets
+    stale_days_threshold = 30
+    for mkt in list(markets_result.keys()):
+        p = cal_params.get(mkt, {})
+        cal_date_str = p.get('calibration_date')
+        if cal_date_str and cal_date_str != 'never':
+            try:
+                cal_dt = datetime.strptime(cal_date_str, '%Y-%m-%d')
+                days_ago = (datetime.now() - cal_dt).days
+                if last_calibration_date is None or cal_date_str > last_calibration_date:
+                    last_calibration_date = cal_date_str
+                if days_ago > stale_days_threshold:
+                    markets_result[mkt]['calibration_stale'] = True
+                    markets_result[mkt]['calibration_days_ago'] = days_ago
+                    flag_msg = f"Calibration stale: {cal_date_str} ({days_ago}d ago)"
+                    markets_result[mkt].setdefault('flags', []).append(flag_msg)
+                    active_flags.append(f"{mkt.upper()}: {flag_msg}")
+                else:
+                    markets_result[mkt]['calibration_stale'] = False
+                    markets_result[mkt]['calibration_days_ago'] = days_ago
+            except ValueError:
+                pass
+
     # Recommendation
     if overall_health == "good":
         recommendation = "All signals performing within expected range."
@@ -2351,7 +2386,7 @@ def generate_self_improve():
         "system_health": {
             "overall": overall_health,
             "active_flags": active_flags,
-            "last_calibration": today,
+            "last_calibration": last_calibration_date or today,
             "recommendation": recommendation,
         }
     }

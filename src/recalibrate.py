@@ -41,9 +41,14 @@ DATA_DIR        = os.path.join(os.path.dirname(__file__), '..', 'data')
 RECAL_LOG_PATH  = os.path.join(DATA_DIR, 'recalibration_log.json')
 PARAMS_PATH     = os.path.join(DATA_DIR, 'calibration_params.json')
 
-# IC health thresholds (absolute value)
-IC_POOR_THRESH  = 0.05   # below this → poor
-IC_WARN_THRESH  = 0.08   # below this → warning
+# IC health thresholds (absolute value).
+# SE for Spearman IC with n=60 is ~1/sqrt(57) ≈ 0.132, so thresholds below that are
+# statistically meaningless.  Use 0.10 / 0.15 as actionable floors.
+IC_POOR_THRESH  = 0.10   # below this → poor
+IC_WARN_THRESH  = 0.15   # below this → warning
+
+# Walk-forward OOS split: first TRAIN_FRAC of rows are training data
+TRAIN_FRAC      = 0.75   # ≈ 18 months train / 6 months validation out of 2 years
 
 # Minimum aligned pairs required for optimisation
 MIN_PAIRS = 40
@@ -90,29 +95,19 @@ def _spearman(x, y):
 
 
 def _compute_rsi14(prices):
-    """Wilder-smoothed RSI-14 from a list of closing prices."""
-    result = [None] * min(14, len(prices))
-    if len(prices) < 15:
-        return result
+    """SMA-based RSI-14 matching daily_update.py's pandas rolling-mean computation.
 
-    deltas = [prices[i] - prices[i - 1] for i in range(1, len(prices))]
-    gains  = [max(d, 0.0) for d in deltas[:14]]
-    losses = [max(-d, 0.0) for d in deltas[:14]]
-    avg_g  = sum(gains)  / 14
-    avg_l  = sum(losses) / 14
-
-    for d in deltas[14:]:
-        g = max(d, 0.0)
-        l = max(-d, 0.0)
-        avg_g = (avg_g * 13 + g) / 14
-        avg_l = (avg_l * 13 + l) / 14
-        if avg_l == 0:
-            result.append(100.0)
-        else:
-            rs = avg_g / avg_l
-            result.append(round(100.0 - 100.0 / (1.0 + rs), 2))
-
-    return result
+    Uses simple 14-period rolling average of gains and losses (not Wilder's EMA)
+    so that the sub-signal values here are identical to what compute_score() sees
+    in the live pipeline.
+    """
+    import pandas as pd
+    s = pd.Series(prices, dtype=float)
+    d = s.diff()
+    gains  = d.where(d > 0, 0.0).rolling(14).mean()
+    losses = (-d.where(d < 0, 0.0)).rolling(14).mean()
+    rsi    = 100.0 - 100.0 / (1.0 + gains / losses)
+    return [None if pd.isna(v) else round(float(v), 2) for v in rsi]
 
 
 def _fetch_prices(ticker, start, end):
@@ -213,15 +208,27 @@ def _build_history(market, lookback_years=2):
 
 def _grid_search(rows):
     """
-    Search over weight combinations and mapping ranges to find parameters
-    that maximise |Spearman IC| between composite score and forward 20d returns.
+    Walk-forward OOS grid search.
 
-    Returns (best_params_dict, best_ic) or (None, None) if insufficient data.
+    Splits rows into train (first TRAIN_FRAC) and validation (remaining).
+    Grid-searches on train only to avoid in-sample bias.  Evaluates the winner
+    on the held-out validation set to produce an honest OOS IC estimate.
+
+    Returns (best_params_dict, ic_insample, ic_oos) or (None, None, None) if
+    insufficient data.  ic_insample is the best IC on the training split;
+    ic_oos is that same parameter set evaluated on the validation split.
     """
     if len(rows) < MIN_PAIRS:
-        return None, None
+        return None, None, None
 
-    fwd = [r['fwd_20d'] for r in rows]
+    split = max(MIN_PAIRS, int(len(rows) * TRAIN_FRAC))
+    train_rows = rows[:split]
+    val_rows   = rows[split:]
+
+    if len(train_rows) < MIN_PAIRS:
+        return None, None, None
+
+    fwd_train = [r['fwd_20d'] for r in train_rows]
 
     # Weight triplets that sum to 1.0
     weight_combos = [
@@ -241,8 +248,8 @@ def _grid_search(rows):
     h_range_opts = [15.0, 20.0, 25.0, 30.0]
     m_range_opts = [10.0, 15.0, 20.0, 30.0]   # full range: ±5 %, ±7.5 %, ±10 %, ±15 %
 
-    best_ic     = None
-    best_params = dict(DEFAULT_PARAMS)
+    best_ic_train = None
+    best_params   = dict(DEFAULT_PARAMS)
 
     for w_rsi, w_high, w_mom in weight_combos:
         for floor in floor_opts:
@@ -256,13 +263,29 @@ def _grid_search(rows):
                         'vs_high_range':   h_rng,
                         'momentum_range':  m_rng,
                     }
-                    scores = [_score_with_params(r['rsi'], r['vs_high'], r['mom'], p) for r in rows]
-                    ic = _spearman(scores, fwd)
-                    if ic is not None and (best_ic is None or abs(ic) > abs(best_ic)):
-                        best_ic     = ic
-                        best_params = dict(p)
+                    scores_train = [_score_with_params(r['rsi'], r['vs_high'], r['mom'], p)
+                                    for r in train_rows]
+                    ic_train = _spearman(scores_train, fwd_train)
+                    if ic_train is not None and (best_ic_train is None or abs(ic_train) > abs(best_ic_train)):
+                        best_ic_train = ic_train
+                        best_params   = dict(p)
 
-    return best_params, best_ic
+    if best_params is None or best_ic_train is None:
+        return None, None, None
+
+    # OOS evaluation on validation rows
+    ic_oos = None
+    if len(val_rows) >= MIN_PAIRS:
+        fwd_val    = [r['fwd_20d'] for r in val_rows]
+        scores_val = [_score_with_params(r['rsi'], r['vs_high'], r['mom'], best_params)
+                      for r in val_rows]
+        ic_oos = _spearman(scores_val, fwd_val)
+        print(f"[RECAL] OOS validation: train IC={best_ic_train}, val IC={ic_oos} "
+              f"(train={len(train_rows)} rows, val={len(val_rows)} rows)")
+    else:
+        print(f"[RECAL] Skipping OOS eval — val set too small ({len(val_rows)} < {MIN_PAIRS})")
+
+    return best_params, best_ic_train, ic_oos
 
 
 # ── per-market recalibration ───────────────────────────────────────────────────
@@ -284,36 +307,54 @@ def recalibrate_market(market, current_ic, current_params, force=False):
     if not rows:
         return None
 
-    fwd = [r['fwd_20d'] for r in rows]
+    split = max(MIN_PAIRS, int(len(rows) * TRAIN_FRAC))
+    train_rows = rows[:split]
+    val_rows   = rows[split:]
 
-    # IC with current params
-    cur_scores = [
-        _score_with_params(r['rsi'], r['vs_high'], r['mom'],
-                           {**DEFAULT_PARAMS, **current_params})
-        for r in rows
-    ]
-    ic_now = _spearman(cur_scores, fwd)
+    # Current-params baseline — measure on same splits for apples-to-apples OOS comparison
+    merged_params = {**DEFAULT_PARAMS, **current_params}
+    cur_scores_val = [_score_with_params(r['rsi'], r['vs_high'], r['mom'], merged_params)
+                      for r in val_rows]
+    fwd_val        = [r['fwd_20d'] for r in val_rows]
+    baseline_oos_ic = _spearman(cur_scores_val, fwd_val) if len(val_rows) >= MIN_PAIRS else None
 
-    # Grid search for better params
-    best_params, best_ic = _grid_search(rows)
+    # In-sample IC with current params (for logging)
+    cur_scores_all = [_score_with_params(r['rsi'], r['vs_high'], r['mom'], merged_params)
+                      for r in rows]
+    ic_now = _spearman(cur_scores_all, [r['fwd_20d'] for r in rows])
 
-    print(f"[RECAL] {market.upper()}: current IC={ic_now}, best IC found={best_ic}")
+    # Walk-forward grid search (trains on first TRAIN_FRAC, evaluates on remainder)
+    best_params, best_ic_insample, best_ic_oos = _grid_search(rows)
+
+    print(f"[RECAL] {market.upper()}: current IC={ic_now} (baseline OOS={baseline_oos_ic}), "
+          f"best in-sample IC={best_ic_insample}, best OOS IC={best_ic_oos}")
 
     if best_params is None:
         print(f"[RECAL] {market.upper()}: grid search failed (insufficient data)")
         return None
 
-    # Apply only if improvement > 10 % relative (or force)
-    threshold = abs(ic_now or 0) * 1.10
-    if not force and (best_ic is None or abs(best_ic) <= threshold):
-        print(f"[RECAL] {market.upper()}: best IC ({best_ic}) ≤ improvement threshold — no change")
+    # Accept new params ONLY if OOS IC improves over baseline OOS IC.
+    # Fall back to in-sample comparison if val set was too small for OOS eval.
+    if best_ic_oos is not None and baseline_oos_ic is not None:
+        improvement = abs(best_ic_oos) > abs(baseline_oos_ic)
+        comparison_label = f"OOS {best_ic_oos} vs baseline OOS {baseline_oos_ic}"
+    else:
+        # Fallback: require 10% relative improvement in-sample
+        improvement = best_ic_insample is not None and abs(best_ic_insample) > abs(ic_now or 0) * 1.10
+        comparison_label = f"in-sample {best_ic_insample} vs {ic_now} (OOS not available)"
+
+    if not force and not improvement:
+        print(f"[RECAL] {market.upper()}: no OOS improvement ({comparison_label}) — no change")
         return None
 
-    best_params['calibration_date']   = datetime.now().strftime('%Y-%m-%d')
-    best_params['ic_at_calibration']  = ic_now
-    best_params['ic_estimated_post']  = best_ic
+    best_params['calibration_date']  = datetime.now().strftime('%Y-%m-%d')
+    best_params['ic_at_calibration'] = ic_now
+    best_params['ic_insample']       = best_ic_insample
+    best_params['ic_oos']            = best_ic_oos
+    # Keep legacy field for backward-compat with any consumers that still read it
+    best_params['ic_estimated_post'] = best_ic_oos if best_ic_oos is not None else best_ic_insample
     best_params['reason'] = (
-        f"Auto-recalibrated: IC {ic_now} → {best_ic} | "
+        f"Auto-recalibrated: IC {ic_now} → OOS {best_ic_oos} (in-sample {best_ic_insample}) | "
         f"weights rsi={best_params['rsi_weight']:.2f} "
         f"high={best_params['vs_high_weight']:.2f} "
         f"mom={best_params['momentum_weight']:.2f} | "
@@ -325,14 +366,16 @@ def recalibrate_market(market, current_ic, current_params, force=False):
     # Append to recalibration log
     log = _load(RECAL_LOG_PATH, [])
     log.append({
-        "timestamp":          datetime.now().isoformat(),
-        "date":               datetime.now().strftime('%Y-%m-%d'),
-        "market":             market,
-        "trigger":            "manual_force" if force else "auto_ic_decay",
-        "ic_before":          ic_now,
-        "ic_estimated_post":  best_ic,
-        "old_params":         current_params,
-        "new_params":         best_params,
+        "timestamp":         datetime.now().isoformat(),
+        "date":              datetime.now().strftime('%Y-%m-%d'),
+        "market":            market,
+        "trigger":           "manual_force" if force else "auto_ic_decay",
+        "ic_before":         ic_now,
+        "ic_insample":       best_ic_insample,
+        "ic_oos":            best_ic_oos,
+        "ic_estimated_post": best_params['ic_estimated_post'],   # backward-compat
+        "old_params":        current_params,
+        "new_params":        best_params,
     })
     _save(RECAL_LOG_PATH, log)
     print(f"[RECAL] {market.upper()}: recalibration event logged")
@@ -368,7 +411,8 @@ def run_recalibration(markets=None, force=False):
 
     all_params   = _load(PARAMS_PATH, {})
     targets      = markets or ['us', 'tw', 'jp', 'kr', 'eu']
-    updated      = {}
+    # Start from existing params so markets NOT in targets are preserved unchanged
+    updated      = dict(all_params)
     recalibrated = []
 
     for market in targets:
@@ -425,10 +469,10 @@ def run_recalibration(markets=None, force=False):
     print("[RECAL] docs/data/ synced")
 
     if recalibrated:
-        print(f"\n✓ Recalibrated: {', '.join(m.upper() for m in recalibrated)}")
+        print(f"\n[OK] Recalibrated: {', '.join(m.upper() for m in recalibrated)}")
         print("  Re-run daily_update.py to apply new weights to today's scores.")
     else:
-        print("\n✓ Done — no parameter changes (no improvement found or all markets healthy)")
+        print("\n[OK] Done — no parameter changes (no improvement found or all markets healthy)")
 
     return updated
 
@@ -461,7 +505,9 @@ def get_calibration_status():
             "is_recalibrated":     is_recal,
             "calibration_date":    p.get('calibration_date', 'never'),
             "ic_at_calibration":   p.get('ic_at_calibration'),
-            "ic_estimated_post":   p.get('ic_estimated_post'),
+            "ic_insample":         p.get('ic_insample', p.get('ic_estimated_post')),
+            "ic_oos":              p.get('ic_oos'),
+            "ic_estimated_post":   p.get('ic_estimated_post'),   # backward-compat
             "active_weights": {
                 "rsi":     round(p.get('rsi_weight',      1/3), 3),
                 "vs_high": round(p.get('vs_high_weight',  1/3), 3),

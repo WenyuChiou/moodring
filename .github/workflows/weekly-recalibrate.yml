@@ -1,9 +1,9 @@
-name: Moodring Weekly Recalibration
+name: Moodring Monthly Recalibration
 
 on:
   schedule:
-    # Every Saturday at 06:00 UTC (14:00 Taipei) — after US Friday close
-    - cron: '0 6 * * 6'
+    # First day of each month at 06:00 UTC (14:00 Taipei)
+    - cron: '0 6 1 * *'
   workflow_dispatch:
     inputs:
       markets:
@@ -57,5 +57,5 @@ jobs:
           git config user.email "moodring-bot@users.noreply.github.com"
           git add data/calibration_params.json data/recalibration_log.json \
                   data/self_improve.json docs/data/ || true
-          git diff --staged --quiet || git commit -m "recalibrate: weekly signal weight optimisation $(date +%Y-%m-%d)"
+          git diff --staged --quiet || git commit -m "recalibrate: monthly signal weight optimisation $(date +%Y-%m-%d)"
           git push

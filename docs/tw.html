@@ -777,6 +777,7 @@ function buildOverlayChart(overlayData, rangeDays, mktKey) {
 
 // ── Market data (static, US/TW focused) ──────────────────────────────────────
 function renderMarketData(snap) {
+  if (!snap) return;
   const us  = snap.us_market || {};
   const tw  = snap.tw_market || {};
   const ret = snap.tw_retail_indicators || {};
@@ -895,7 +896,7 @@ function renderMemoryScene(memData, mktKey) {
     return;
   }
   document.getElementById('memory-subtitle').textContent =
-    cfg.label + ' 目前分數：' + mkt.current_score.toFixed(1) + ' — 歷史上有 ' + mkt.summary.n_similar + ' 天類似（±3分）';
+    cfg.label + ' 目前分數：' + (mkt.current_score != null ? mkt.current_score.toFixed(1) : '--') + ' — 歷史上有 ' + (mkt.summary.n_similar || 0) + ' 天類似（±3分）';
   const rows = mkt.analogues.slice(0, 5).map(a => {
     const f5 = a.fwd_5d != null ? fmtPct(a.fwd_5d, 1) : '--';
     const f10 = a.fwd_10d != null ? fmtPct(a.fwd_10d, 1) : '--';
@@ -981,19 +982,19 @@ function renderSelfImprove(siData, mktKey) {
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px;">
       <div style="text-align:center;">
         <div style="font-size:0.68em;color:#8b949e;">全期IC</div>
-        <div style="font-size:1.1em;font-weight:700;color:#e6edf3;">${mkt.full_ic_20d.toFixed(3)}</div>
+        <div style="font-size:1.1em;font-weight:700;color:#e6edf3;">${mkt.full_ic_20d != null ? mkt.full_ic_20d.toFixed(3) : '--'}</div>
       </div>
       <div style="text-align:center;">
         <div style="font-size:0.68em;color:#8b949e;">近期IC</div>
-        <div style="font-size:1.1em;font-weight:700;color:${hClr};">${mkt.recent_ic_20d.toFixed(3)}</div>
+        <div style="font-size:1.1em;font-weight:700;color:${hClr};">${mkt.recent_ic_20d != null ? mkt.recent_ic_20d.toFixed(3) : '--'}</div>
       </div>
       <div style="text-align:center;">
         <div style="font-size:0.68em;color:#8b949e;">趨勢</div>
-        <div style="font-size:1.1em;font-weight:700;color:${tClr};">${tArrow} ${trendLabel[mkt.ic_trend] || mkt.ic_trend}</div>
+        <div style="font-size:1.1em;font-weight:700;color:${tClr};">${tArrow} ${trendLabel[mkt.ic_trend] || mkt.ic_trend || '--'}</div>
       </div>
       <div style="text-align:center;">
         <div style="font-size:0.68em;color:#8b949e;">60天均值</div>
-        <div style="font-size:1.1em;font-weight:700;color:#e6edf3;">${mkt.score_mean_60d.toFixed(1)}</div>
+        <div style="font-size:1.1em;font-weight:700;color:#e6edf3;">${mkt.score_mean_60d != null ? mkt.score_mean_60d.toFixed(1) : '--'}</div>
       </div>
     </div>
     <div style="font-size:0.72em;color:#8b949e;margin-bottom:4px;">分數分佈（近60個交易日）</div>
@@ -1030,13 +1031,15 @@ document.querySelectorAll('.market-btn').forEach(btn => {
 
 // ── Main load ─────────────────────────────────────────────────────────────────
 async function loadDashboard() {
+  // Step 1: Fetch — red error only for network / HTTP / JSON failures
+  let fwdData, agentData, quintileData, dashData, overlayData, zoneReturns, icData, memoryData, selfImproveData;
   try {
     const cb = '?v=' + Date.now();
     const fetchJSON = url => fetch(url + cb).then(r => {
       if (!r.ok) throw new Error(url + ' HTTP ' + r.status);
       return r.json();
     });
-    const [fwdData, agentData, quintileData, dashData, overlayData, zoneReturns, icData, memoryData, selfImproveData] = await Promise.all([
+    [fwdData, agentData, quintileData, dashData, overlayData, zoneReturns, icData, memoryData, selfImproveData] = await Promise.all([
       fetchJSON('data/forward_outlook.json'),
       fetchJSON('data/phase2_agent_results.json'),
       fetchJSON('data/quintile_data.json'),
@@ -1047,35 +1050,38 @@ async function loadDashboard() {
       fetchJSON('data/memory_scene.json').catch(() => null),
       fetchJSON('data/self_improve.json').catch(() => null),
     ]);
-
-    _allData = { fwdData, agentData, quintileData, dashData, overlayData, zoneReturns, icData, memoryData, selfImproveData };
-
-    if (icData && icData.markets) {
-      const tbl = document.getElementById('ic-table');
-      tbl.innerHTML = Object.entries(icData.markets).map(([k, m]) => {
-        const fmt = v => '<span style="color:' + (v < -0.10 ? '#3fb950' : v < -0.05 ? '#e3b341' : '#8b949e') + ';font-weight:600;">' + v.toFixed(3) + '</span>';
-        return '<div style="text-align:left;color:#e6edf3;font-weight:600;">' + m.name_tw + '</div>' +
-          '<div>' + fmt(m.ic_5d) + '</div><div>' + fmt(m.ic_10d) + '</div><div>' + fmt(m.ic_20d) + '</div><div>' + fmt(m.ic_60d) + '</div>';
-      }).join('');
-    }
-
-    const date = agentData.date || dashData.snapshot?.date || '--';
-    document.getElementById('header-date').textContent = '資料日期：' + date;
-    document.getElementById('footer-date').textContent = date;
-
-    // Market data (always shown)
-    renderMarketData(dashData.snapshot);
-
-    // Default: TW
-    switchMarket('tw');
-
   } catch (err) {
-    console.error(err);
+    console.error('Fetch error:', err);
     const d = document.createElement('div');
     d.className   = 'error-state';
     d.textContent = '資料載入失敗：' + err.message;
     document.body.insertBefore(d, document.body.children[1]);
+    return;
   }
+
+  // Step 2: Render — each block independently guarded; render errors never show red banner
+  _allData = { fwdData, agentData, quintileData, dashData, overlayData, zoneReturns, icData, memoryData, selfImproveData };
+
+  try {
+    if (icData && icData.markets) {
+      const tbl = document.getElementById('ic-table');
+      tbl.innerHTML = Object.entries(icData.markets).map(([k, m]) => {
+        const fmt = v => '<span style="color:' + (v < -0.10 ? '#3fb950' : v < -0.05 ? '#e3b341' : '#8b949e') + ';font-weight:600;">' + (v != null ? v.toFixed(3) : '--') + '</span>';
+        return '<div style="text-align:left;color:#e6edf3;font-weight:600;">' + (m.name_tw || m.name || k) + '</div>' +
+          '<div>' + fmt(m.ic_5d) + '</div><div>' + fmt(m.ic_10d) + '</div><div>' + fmt(m.ic_20d) + '</div><div>' + fmt(m.ic_60d) + '</div>';
+      }).join('');
+    }
+  } catch(e) { console.error('IC render error:', e); }
+
+  try {
+    const date = (agentData && agentData.date) || dashData.snapshot?.date || '--';
+    document.getElementById('header-date').textContent = '資料日期：' + date;
+    document.getElementById('footer-date').textContent = date;
+  } catch(e) { console.error('Date render error:', e); }
+
+  try { renderMarketData(dashData.snapshot); } catch(e) { console.error('renderMarketData error:', e); }
+
+  try { switchMarket('tw'); } catch(e) { console.error('switchMarket error:', e); }
 }
 
 loadDashboard();

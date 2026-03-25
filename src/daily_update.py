@@ -1690,8 +1690,14 @@ def build_agent_cross_market_summary(agent_key, snapshot, us_final, tw_final, jp
     return ""
 
 
-def update_agent_results(snapshot, us_data, tw_data, tw_retail, jp_data, kr_data, eu_data, global_ctx):
-    """Update phase2_agent_results.json with today's date, scores, and narratives."""
+def update_agent_results(snapshot, us_data, tw_data, tw_retail, jp_data, kr_data, eu_data, global_ctx,
+                         us_score_live=None, tw_score_live=None):
+    """Update phase2_agent_results.json with today's date, scores, and narratives.
+
+    us_score_live / tw_score_live: freshly calibrated scores from compute_score().
+    When provided these take precedence over dashboard_data.json, which may still
+    reflect the pre-calibration score because rebuild_dashboard_daily.py hasn't run yet.
+    """
     path = os.path.join(DATA_DIR, 'phase2_agent_results.json')
     if not os.path.exists(path):
         print("[SKIP] phase2_agent_results.json not found")
@@ -1713,8 +1719,9 @@ def update_agent_results(snapshot, us_data, tw_data, tw_retail, jp_data, kr_data
     jp_scores = dd.get('jp_score', [])
     kr_scores = dd.get('kr_score', [])
     eu_scores = dd.get('eu_score', [])
-    us_base = us_scores[-1] if us_scores else None
-    tw_base = tw_scores[-1] if tw_scores else None
+    # Prefer live calibrated scores; dashboard_data.json may be stale (rebuild hasn't run yet)
+    us_base = us_score_live if us_score_live is not None else (us_scores[-1] if us_scores else None)
+    tw_base = tw_score_live if tw_score_live is not None else (tw_scores[-1] if tw_scores else None)
     jp_score = jp_scores[-1] if jp_scores else None
     kr_score = kr_scores[-1] if kr_scores else None
     eu_score = eu_scores[-1] if eu_scores else None
@@ -2506,7 +2513,8 @@ def main():
     update_overlay_json(snapshot, jp_score_val, kr_score_val, eu_score_val,
                         us_open=us_open, tw_open=tw_open, jp_open=jp_open,
                         kr_open=kr_open, eu_open=eu_open)
-    update_agent_results(snapshot, us_data, tw_data, tw_retail, jp_data, kr_data, eu_data, global_ctx)
+    update_agent_results(snapshot, us_data, tw_data, tw_retail, jp_data, kr_data, eu_data, global_ctx,
+                         us_score_live=us_score_val, tw_score_live=tw_score_val)
 
     # 建立 compute_score 參考值供 sanity check 使用
     live_compute_scores = {}

@@ -417,7 +417,7 @@ body {
         <span style="color:#e3b341;">|IC| 0.05-0.15</span><span>中等信號 — 有用</span>
         <span style="color:#8b949e;">|IC| &lt; 0.05</span><span>弱信號 — 可能不可靠</span>
       </div>
-      <div style="color:#8b949e;margin-top:8px;font-size:0.82em;">5 個市場全部統計顯著（p &lt; 0.0001，代表這不是隨機結果的機率 &gt; 99.99%）。</div>
+      <div id="ic-pval-note" style="color:#8b949e;margin-top:8px;font-size:0.82em;">5 個市場全部統計顯著（p &lt; 0.0001，代表這不是隨機結果的機率 &gt; 99.99%）。</div>
     </div>
   </div>
   </div>
@@ -948,9 +948,9 @@ function switchMarket(mktKey) {
   renderAgentSection(effectiveAgentData, mktKey);
 
   // Memory Scene + Self-Improve
-  const { memoryData, selfImproveData } = _allData;
+  const { memoryData, selfImproveData, calibrationData } = _allData;
   renderMemoryScene(memoryData, mktKey);
-  renderSelfImprove(selfImproveData, mktKey);
+  renderSelfImprove(selfImproveData, calibrationData, mktKey);
 
   // Quintile
   const qData = quintileData[mktKey] && quintileData[mktKey]['20d'] ? quintileData[mktKey]['20d'].returns : null;
@@ -1021,7 +1021,7 @@ function renderMemoryScene(memData, mktKey) {
 }
 
 // ── Self-Improve renderer ─────────────────────────────────────────────────────
-function renderSelfImprove(siData, mktKey) {
+function renderSelfImprove(siData, calData, mktKey) {
   const section = document.getElementById('selfimprove-section');
   if (!siData) { section.classList.add('hidden'); return; }
   section.classList.remove('hidden');
@@ -1076,6 +1076,48 @@ function renderSelfImprove(siData, mktKey) {
     <div style="font-size:0.72em;color:#8b949e;margin-bottom:4px;">分數分佈（近60個交易日）</div>
     <div style="display:flex;height:8px;border-radius:4px;overflow:hidden;margin-bottom:8px;">${zoneBar}</div>
     ${flagsHtml}`;
+  // ── Calibration status indicator ─────────────────────────────────────────────
+  const calMkt = calData && calData[mktKey];
+  let calHtml = '';
+  if (calMkt && calMkt.calibration_date && calMkt.calibration_date !== 'never') {
+    const icBefore   = calMkt.ic_at_calibration;
+    // Prefer ic_oos (honest OOS estimate); fall back to ic_estimated_post for old records
+    const icAfterOOS = calMkt.ic_oos != null ? calMkt.ic_oos : calMkt.ic_estimated_post;
+    const icAfterIS  = calMkt.ic_insample != null ? calMkt.ic_insample : calMkt.ic_estimated_post;
+    const icBeforeAbs = Math.abs(icBefore || 0);
+    const icOOSAbs    = Math.abs(icAfterOOS || 0);
+    const icImproved  = icAfterOOS != null && icBefore != null && icOOSAbs > icBeforeAbs;
+    const icColor     = icImproved ? '#3fb950' : '#e3b341';
+    const wRsi  = calMkt.rsi_weight      != null ? (calMkt.rsi_weight * 100).toFixed(0)      : null;
+    const wHigh = calMkt.vs_high_weight  != null ? (calMkt.vs_high_weight * 100).toFixed(0)  : null;
+    const wMom  = calMkt.momentum_weight != null ? (calMkt.momentum_weight * 100).toFixed(0) : null;
+    const weightsStr = wRsi != null
+      ? `RSI ${wRsi}% · 52wH ${wHigh}% · 動能 ${wMom}%`
+      : '預設權重';
+    const stale    = mkt.calibration_stale === true;
+    const daysAgo  = mkt.calibration_days_ago;
+    const staleHtml = stale
+      ? `<div style="margin-top:4px;color:#e3b341;font-size:0.85em;">⚠ 校準已過期（${daysAgo}天前）— 請執行 recalibrate.py</div>`
+      : '';
+    calHtml = `
+      <div style="margin-top:8px;background:#0d1117;border:1px solid ${stale ? '#e3b341' : '#21262d'};border-radius:6px;padding:8px 10px;font-size:0.78em;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
+          <span style="color:#58a6ff;font-weight:700;font-size:0.9em;text-transform:uppercase;letter-spacing:0.8px;">⚙ 校準已啟用</span>
+          <span style="color:#6e7681;">${calMkt.calibration_date}</span>
+        </div>
+        <div style="display:flex;gap:16px;flex-wrap:wrap;">
+          <span style="color:#8b949e;">權重：<span style="color:#c9d1d9;font-weight:600;">${weightsStr}</span></span>
+          ${icBefore != null ? `<span style="color:#8b949e;">IC：<span style="color:#8b949e;">${icBefore.toFixed(3)}</span> → OOS <span style="color:${icColor};font-weight:700;">${icAfterOOS != null ? icAfterOOS.toFixed(3) : '--'}</span>${icAfterIS != null && icAfterOOS !== icAfterIS ? ` <span style="color:#6e7681;">（樣本內 ${icAfterIS.toFixed(3)}）</span>` : ''}</span>` : ''}
+        </div>
+        ${staleHtml}
+      </div>`;
+  } else if (mkt.health === 'poor' || mkt.health === 'warning') {
+    calHtml = `
+      <div style="margin-top:8px;background:#0d1117;border:1px solid #30363d;border-radius:6px;padding:8px 10px;font-size:0.78em;">
+        <span style="color:#e3b341;">⚙ 使用預設權重 — 請執行 recalibrate.py 進行最佳化</span>
+      </div>`;
+  }
+
   const sClr = sys.overall === 'good' ? '#3fb950' : sys.overall === 'warning' ? '#e3b341' : '#f85149';
   const overallLabel = { good: '良好', warning: '注意', poor: '不佳' };
   document.getElementById('si-system-health').innerHTML =
@@ -1085,7 +1127,8 @@ function renderSelfImprove(siData, mktKey) {
         <span style="color:#6e7681;">上次校準：${sys.last_calibration}</span>
       </div>
       <div style="color:#c9d1d9;">${sys.recommendation}</div>
-    </div>`;
+    </div>
+    ${calHtml}`;
 }
 
 // ── Range buttons ─────────────────────────────────────────────────────────────
@@ -1108,14 +1151,14 @@ document.querySelectorAll('.market-btn').forEach(btn => {
 // ── Main load ─────────────────────────────────────────────────────────────────
 async function loadDashboard() {
   // Step 1: Fetch — red error only for network / HTTP / JSON failures
-  let fwdData, agentData, quintileData, dashData, overlayData, zoneReturns, icData, memoryData, selfImproveData;
+  let fwdData, agentData, quintileData, dashData, overlayData, zoneReturns, icData, memoryData, selfImproveData, calibrationData;
   try {
     const cb = '?v=' + Date.now();
     const fetchJSON = url => fetch(url + cb).then(r => {
       if (!r.ok) throw new Error(url + ' HTTP ' + r.status);
       return r.json();
     });
-    [fwdData, agentData, quintileData, dashData, overlayData, zoneReturns, icData, memoryData, selfImproveData] = await Promise.all([
+    [fwdData, agentData, quintileData, dashData, overlayData, zoneReturns, icData, memoryData, selfImproveData, calibrationData] = await Promise.all([
       fetchJSON('data/forward_outlook.json'),
       fetchJSON('data/phase2_agent_results.json'),
       fetchJSON('data/quintile_data.json'),
@@ -1125,6 +1168,7 @@ async function loadDashboard() {
       fetchJSON('data/ic_data.json'),
       fetchJSON('data/memory_scene.json').catch(() => null),
       fetchJSON('data/self_improve.json').catch(() => null),
+      fetchJSON('data/calibration_params.json').catch(() => null),
     ]);
   } catch (err) {
     console.error('Fetch error:', err);
@@ -1136,7 +1180,7 @@ async function loadDashboard() {
   }
 
   // Step 2: Render — each block independently guarded; render errors never show red banner
-  _allData = { fwdData, agentData, quintileData, dashData, overlayData, zoneReturns, icData, memoryData, selfImproveData };
+  _allData = { fwdData, agentData, quintileData, dashData, overlayData, zoneReturns, icData, memoryData, selfImproveData, calibrationData };
 
   try {
     if (icData && icData.markets) {
@@ -1146,6 +1190,26 @@ async function loadDashboard() {
         return '<div style="text-align:left;color:#e6edf3;font-weight:600;">' + (m.name_tw || m.name || k) + '</div>' +
           '<div>' + fmt(m.ic_5d) + '</div><div>' + fmt(m.ic_10d) + '</div><div>' + fmt(m.ic_20d) + '</div><div>' + fmt(m.ic_60d) + '</div>';
       }).join('');
+
+      // Dynamic p-value note
+      const pNote = document.getElementById('ic-pval-note');
+      if (pNote) {
+        const sigMarkets = Object.entries(icData.markets)
+          .filter(([, m]) => m.significant)
+          .map(([, m]) => {
+            const pv = m.pval_20d;
+            return pv != null ? (pv < 0.0001 ? 'p < 0.0001' : 'p = ' + pv.toFixed(4)) : null;
+          })
+          .filter(Boolean);
+        if (sigMarkets.length > 0) {
+          const total = Object.keys(icData.markets).length;
+          const allSig = sigMarkets.length === total;
+          const pStr = [...new Set(sigMarkets)].join('、');
+          pNote.textContent = allSig
+            ? sigMarkets.length + ' 個市場全部統計顯著（' + pStr + '）。'
+            : sigMarkets.length + ' 個市場統計顯著（共 ' + total + ' 個）。p 值：' + pStr + '。';
+        }
+      }
     }
   } catch(e) { console.error('IC render error:', e); }
 

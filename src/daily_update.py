@@ -1816,11 +1816,14 @@ def update_agent_results(snapshot, us_data, tw_data, tw_retail, jp_data, kr_data
 
 
 def update_forward_outlook(compute_scores=None):
-    """Update forward_outlook.json current scores from dashboard_data.
+    """Update forward_outlook.json current scores.
+
+    Prefers compute_scores (live values from this run) over dashboard_data.json,
+    because rebuild_dashboard_daily.py may not have run yet when this is called,
+    making dashboard_data.json arrays potentially one day behind.
 
     Args:
-        compute_scores: dict mapping fwd_key → compute_score value
-                        用來執行 sanity check（差距 > 5 分時輸出警告）。
+        compute_scores: dict mapping fwd_key → compute_score value (preferred source)
                         例如: {'us_current_score': 39.6, 'tw_current_score': 55.0}
     """
     SANITY_THRESHOLD = 5.0  # 分數差距超過此值即發出警告
@@ -1844,20 +1847,26 @@ def update_forward_outlook(compute_scores=None):
         'eu_current_score': 'eu_score',
     }
     for fwd_key, dd_key in score_map.items():
-        scores = dd.get(dd_key, [])
-        if scores:
-            new_val = scores[-1]
-            # Sanity check：比對 compute_score 與 dashboard 最新值
-            if compute_scores and fwd_key in compute_scores:
-                computed = compute_scores[fwd_key]
-                gap = abs(computed - new_val) if (computed is not None and new_val is not None) else None
+        # Prefer live compute_scores; fall back to dashboard_data.json (may be 1 day behind)
+        if compute_scores and fwd_key in compute_scores and compute_scores[fwd_key] is not None:
+            new_val = compute_scores[fwd_key]
+            # Sanity check against dashboard_data to flag rebuild inconsistencies
+            dd_scores = dd.get(dd_key, [])
+            if dd_scores:
+                dd_val = dd_scores[-1]
+                gap = abs(new_val - dd_val) if (new_val is not None and dd_val is not None) else None
                 if gap is not None and gap > SANITY_THRESHOLD:
                     print(
-                        f"[警告][SANITY] {fwd_key}: compute_score={computed} "
-                        f"vs dashboard={new_val}, 差距={gap:.1f} > {SANITY_THRESHOLD}，"
+                        f"[警告][SANITY] {fwd_key}: compute_score={new_val} "
+                        f"vs dashboard={dd_val}, 差距={gap:.1f} > {SANITY_THRESHOLD}，"
                         f"請確認 historical_scores.csv 是否已正確更新"
                     )
-            fwd[fwd_key] = new_val
+        else:
+            scores = dd.get(dd_key, [])
+            if not scores:
+                continue
+            new_val = scores[-1]
+        fwd[fwd_key] = new_val
 
     fwd = sanitize_for_json(fwd)
     with open(fwd_path, 'w', encoding='utf-8') as f:

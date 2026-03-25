@@ -46,10 +46,19 @@ body {
 .market-selector {
   display: flex;
   gap: 8px;
-  padding: 12px 16px;
+  padding: 10px 16px;
   border-bottom: 1px solid #21262d;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #0d1117;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
+.market-selector::-webkit-scrollbar { display: none; }
 .market-btn {
   background: #21262d;
   border: 1px solid #30363d;
@@ -60,13 +69,20 @@ body {
   font-size: 1.05em;
   cursor: pointer;
   transition: all 0.18s;
-  flex: 1;
+  flex-shrink: 0;
   min-width: 52px;
+  min-height: 48px;
   text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 .market-btn:hover { border-color: #58a6ff; color: #e6edf3; }
 .market-btn.active {
   color: #fff;
+  border-color: var(--mkt-color, #58a6ff);
+  background: rgba(88, 166, 255, 0.15);
+  border-bottom: 2px solid var(--mkt-color, #58a6ff);
 }
 
 .section { padding: 14px 16px; border-bottom: 1px solid #21262d; }
@@ -84,9 +100,12 @@ body {
 .thermo-card {
   background: #161b22;
   border: 1px solid #30363d;
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  transition: transform 0.15s;
 }
+.thermo-card:hover { transform: translateY(-1px); }
 .thermo-card .market-label {
   font-size: 0.92em;
   color: #8b949e;
@@ -113,7 +132,7 @@ body {
 .thermo-zone { height: 100%; position: relative; }
 .thermo-labels { display: flex; margin-top: 4px; }
 .thermo-zone-name {
-  font-size: 0.48em;
+  font-size: 9px;
   color: #6e7681;
   text-align: center;
   line-height: 1.2;
@@ -141,8 +160,9 @@ body {
 .returns-card {
   background: #161b22;
   border: 1px solid #30363d;
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
 }
 .returns-card .ticker {
   font-size: 0.90em; color: #8b949e; font-weight: 700;
@@ -159,8 +179,8 @@ body {
   margin-bottom: 4px; font-weight: 700;
 }
 .rbar-track-wrap { display: flex; align-items: center; gap: 5px; }
-.rbar-p25 { font-size: 0.58em; color: #8b949e; white-space: nowrap; min-width: 34px; text-align: right; }
-.rbar-p75 { font-size: 0.58em; color: #8b949e; white-space: nowrap; min-width: 34px; text-align: left; }
+.rbar-p25 { font-size: 11px; color: #8b949e; white-space: nowrap; min-width: 34px; text-align: right; }
+.rbar-p75 { font-size: 11px; color: #8b949e; white-space: nowrap; min-width: 34px; text-align: left; }
 .rbar-track {
   flex: 1; height: 8px; border-radius: 4px;
   position: relative; overflow: visible;
@@ -185,7 +205,7 @@ body {
   border: 1.5px solid #0d1117;
   z-index: 3;
 }
-.rbar-meta { font-size: 1.0em; color: #8b949e; margin-top: 3px; text-align: center; }
+.rbar-meta { font-size: 0.82em; color: #8b949e; margin-top: 3px; text-align: center; }
 .rbar-avg { font-weight: 700; color: #e6edf3; }
 .rbar-wr-green  { color: #3fb950; }
 .rbar-wr-yellow { color: #e3b341; }
@@ -195,8 +215,9 @@ body {
 .signal-block {
   background: #161b22;
   border: 1px solid #30363d;
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
 }
 .signal-top {
   display: flex;
@@ -208,6 +229,9 @@ body {
   font-size: 1.1em; font-weight: 800;
   padding: 8px 16px; border-radius: 8px;
   letter-spacing: 2px; flex-shrink: 0;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
 }
 .badge-hold { background: #2d2a00; color: #e3b341; border: 1px solid #9e6a03; }
 .badge-buy  { background: #0d2818; color: #3fb950; border: 1px solid #1f6335; }
@@ -216,7 +240,7 @@ body {
 
 .agent-divider { border: none; border-top: 1px solid #30363d; margin: 14px 0 12px; }
 .agent-section-label {
-  font-size: 0.64em; color: #58a6ff;
+  font-size: 11px; color: #58a6ff;
   text-transform: uppercase; letter-spacing: 1.5px;
   font-weight: 700; margin-bottom: 8px;
 }
@@ -230,7 +254,7 @@ body {
 }
 .agent-factors li::before { content: '›'; position: absolute; left: 0; color: #58a6ff; }
 .watch-for-label {
-  font-size: 0.64em; color: #e3b341;
+  font-size: 11px; color: #e3b341;
   text-transform: uppercase; letter-spacing: 1px;
   font-weight: 700; margin-bottom: 4px;
 }
@@ -240,12 +264,12 @@ body {
   border-radius: 6px; padding: 8px 10px; margin-bottom: 10px;
 }
 .outlook-label {
-  font-size: 0.64em; color: #3fb950;
+  font-size: 11px; color: #3fb950;
   text-transform: uppercase; letter-spacing: 1px;
   font-weight: 700; margin-top: 14px; margin-bottom: 6px;
 }
 .outlook-text {
-  font-size: 0.76em; color: #7ee787; line-height: 1.6;
+  font-size: 0.85em; color: #7ee787; line-height: 1.6;
   background: #0d2818; border: 1px solid #1f6335;
   border-radius: 6px; padding: 10px 12px;
 }
@@ -258,9 +282,10 @@ body {
 .chart-wrap {
   background: #161b22;
   border: 1px solid #30363d;
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 14px;
   margin-bottom: 2px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
 }
 .chart-wrap canvas { width: 100% !important; }
 
@@ -281,7 +306,7 @@ body {
 }
 .mkt-item .mkt-label { font-size: 1.0em; color: #8b949e; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
 .mkt-item .mkt-value { font-size: 1.0em; font-weight: 700; color: #e6edf3; }
-.mkt-item .mkt-sub   { font-size: 0.58em; color: #6e7681; margin-top: 2px; }
+.mkt-item .mkt-sub   { font-size: 11px; color: #6e7681; margin-top: 2px; }
 
 /* ── ERROR ── */
 .error-state {
@@ -312,9 +337,28 @@ body {
   font-size: 1.05em; color: #8b949e;
   cursor: pointer; font-weight: 600;
   transition: all 0.2s;
+  min-height: 40px;
+  flex: 1;
 }
 .range-btn:hover  { border-color: #58a6ff; color: #58a6ff; }
 .range-btn.active { background: #0d419d; border-color: #58a6ff; color: #fff; }
+
+/* ── COLLAPSIBLE SECTIONS ── */
+.section-title.collapsible {
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+  padding: 4px 0;
+}
+.section-title.collapsible:hover { color: #79c0ff; }
+.collapse-icon {
+  font-size: 0.7em;
+  opacity: 0.7;
+  transition: transform 0.2s;
+  margin-left: 8px;
+}
 
 .hidden { display: none !important; }
 
@@ -332,21 +376,26 @@ body {
 /* Desktop: wider layout, side-by-side sections */
 @media (min-width: 769px) {
   .section { padding: 18px 24px; }
-  .market-selector { gap: 10px; }
-  .market-btn { padding: 10px 20px; font-size: 0.9em; }
+  .market-selector { gap: 10px; flex-wrap: wrap; overflow-x: visible; position: static; }
+  .market-btn { padding: 10px 20px; font-size: 0.9em; flex-shrink: 1; }
   .thermo-card { padding: 24px; }
   .thermo-card .thermo-score { font-size: 4em; }
   .rbar-row { padding: 6px 0; }
   .rbar-label { font-size: 0.92em; min-width: 70px; }
   .rbar-p25, .rbar-p75 { font-size: 1.05em; min-width: 55px; }
   .rbar-meta { font-size: 0.90em; }
+  .thermo-zone-name { font-size: 0.72em; }
+  .agent-section-label { font-size: 0.72em; }
+  .watch-for-label { font-size: 0.72em; }
+  .outlook-label { font-size: 0.72em; }
   .chart-wrap { padding: 20px; }
   .chart-wrap canvas { max-height: 350px; }
   .signal-block { padding: 20px; }
   .mkt-grid { grid-template-columns: repeat(4, 1fr); gap: 10px; }
   .mkt-item { padding: 14px 10px; }
-  .range-btn { padding: 7px 16px; font-size: 0.8em; }
+  .range-btn { padding: 7px 16px; font-size: 0.8em; flex: none; }
   .header h1 { font-size: 1.8em; }
+  .section-content { display: block !important; }
 }
 
 /* Tablet */
@@ -355,8 +404,14 @@ body {
 }
 
 /* Mobile: compact single column */
+@media (max-width: 768px) {
+  .mkt-grid { grid-template-columns: repeat(2, 1fr); }
+  .section { padding: 12px; }
+}
+
 @media (max-width: 480px) {
-  .mkt-grid { grid-template-columns: repeat(4, 1fr); }
+  body { padding-bottom: 60px; }
+  .mkt-grid { grid-template-columns: repeat(2, 1fr); }
   .header h1 { font-size: 1.2em; }
   .lang-switch { font-size: 0.92em; padding: 4px 8px; }
   .signal-top { flex-wrap: wrap; }
@@ -419,7 +474,7 @@ body {
 <!-- 3. SENTIMENT VS MARKET -->
 <div class="section">
   <div class="section-title">Sentiment vs Market</div>
-  <div style="display:flex;gap:6px;margin-bottom:10px;">
+  <div style="display:flex;gap:6px;margin-bottom:10px;width:100%;">
     <button class="range-btn" data-days="63">3M</button>
     <button class="range-btn active" data-days="252">1Y</button>
     <button class="range-btn" data-days="756">3Y</button>
@@ -428,7 +483,7 @@ body {
   <div class="chart-wrap">
     <canvas id="overlayChart" height="220"></canvas>
   </div>
-  <div style="font-size:0.68em; color:#8b949e; margin-top:8px; text-align:center;">
+  <div style="font-size:0.8em; color:#8b949e; margin-top:8px; text-align:center;">
     Score by MoodRing engine: 252-day rolling Z-score + behavioral adjustment.
   </div>
 </div>
@@ -443,38 +498,45 @@ body {
 
 <!-- 5. MEMORY SCENE -->
 <div class="section" id="memory-section">
-  <div class="section-title">Memory Scene</div>
-  <div style="background:#161b22;border:1px solid #30363d;border-radius:10px;padding:14px;">
-    <div style="font-size:0.82em;color:#8b949e;margin-bottom:10px;" id="memory-subtitle">Finding historical analogues...</div>
-    <div id="memory-analogues"></div>
-    <div id="memory-summary" style="margin-top:12px;"></div>
-    <div id="memory-cross" style="margin-top:12px;"></div>
+  <div class="section-title collapsible" onclick="toggleSection(this)">Memory Scene <span class="collapse-icon">&#9654;</span></div>
+  <div class="section-content" style="display:none;">
+    <div style="background:#161b22;border:1px solid #30363d;border-radius:10px;padding:14px;">
+      <div style="font-size:0.82em;color:#8b949e;margin-bottom:10px;" id="memory-subtitle">Finding historical analogues...</div>
+      <div id="memory-analogues"></div>
+      <div id="memory-summary" style="margin-top:12px;"></div>
+      <div id="memory-cross" style="margin-top:12px;"></div>
+    </div>
   </div>
 </div>
 
 <!-- 6. SELF-IMPROVE -->
 <div class="section" id="selfimprove-section">
-  <div class="section-title">System Health</div>
-  <div style="background:#161b22;border:1px solid #30363d;border-radius:10px;padding:14px;">
-    <div id="si-market-health"></div>
-    <div id="si-system-health" style="margin-top:12px;"></div>
+  <div class="section-title collapsible" onclick="toggleSection(this)">System Health <span class="collapse-icon">&#9654;</span></div>
+  <div class="section-content" style="display:none;">
+    <div style="background:#161b22;border:1px solid #30363d;border-radius:10px;padding:14px;">
+      <div id="si-market-health"></div>
+      <div id="si-system-health" style="margin-top:12px;"></div>
+    </div>
   </div>
 </div>
 
 <div class="section" id="quintile-section">
-  <div class="section-title">Historical Proof</div>
-  <div class="chart-wrap">
-    <canvas id="quintileChart" height="200"></canvas>
-  </div>
-  <div class="edge-box">
-    <div class="edge-title">Buy in Fear, Not in Greed</div>
-    <div class="edge-text" id="edge-text">Loading...</div>
+  <div class="section-title collapsible" onclick="toggleSection(this)">Historical Proof <span class="collapse-icon">&#9654;</span></div>
+  <div class="section-content" style="display:none;">
+    <div class="chart-wrap">
+      <canvas id="quintileChart" height="200"></canvas>
+    </div>
+    <div class="edge-box">
+      <div class="edge-title">Buy in Fear, Not in Greed</div>
+      <div class="edge-text" id="edge-text">Loading...</div>
+    </div>
   </div>
 </div>
 
 <!-- 6. IC BACKTEST VALIDATION -->
 <div class="section" id="ic-section">
-  <div class="section-title">Backtest Validation (IC)</div>
+  <div class="section-title collapsible" onclick="toggleSection(this)">Backtest Validation (IC) <span class="collapse-icon">&#9654;</span></div>
+  <div class="section-content" style="display:none;">
   <div style="background:#161b22;border:1px solid #30363d;border-radius:10px;padding:14px;">
     <div style="display:grid;grid-template-columns:auto repeat(4,1fr);gap:4px;font-size:0.85em;text-align:center;">
       <div style="color:#8b949e;text-align:left;font-weight:700;">Market</div>
@@ -495,6 +557,7 @@ body {
       </div>
       <div id="ic-pval-note" style="color:#8b949e;margin-top:8px;font-size:0.82em;">All 5 markets statistically significant (p-values shown from 16-year backtest).</div>
     </div>
+  </div>
   </div>
 </div>
 
@@ -1318,6 +1381,21 @@ async function loadDashboard() {
 }
 
 loadDashboard();
+
+// ── Collapsible section toggle ────────────────────────────────────────────────
+function toggleSection(titleEl) {
+  const content = titleEl.nextElementSibling;
+  const icon = titleEl.querySelector('.collapse-icon');
+  const isCollapsed = content.style.display === 'none';
+  content.style.display = isCollapsed ? 'block' : 'none';
+  icon.textContent = isCollapsed ? '\u25BC' : '\u25BA';
+}
+
+// Expand all collapsible sections on desktop
+if (window.innerWidth >= 769) {
+  document.querySelectorAll('.section-content').forEach(el => el.style.display = 'block');
+  document.querySelectorAll('.collapse-icon').forEach(el => el.textContent = '\u25BC');
+}
 </script>
 </body>
 </html>

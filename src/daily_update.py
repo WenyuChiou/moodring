@@ -799,19 +799,23 @@ def update_dashboard_json(snapshot, jp_score=None, kr_score=None, eu_score=None)
 
     dd['snapshot'] = snapshot
 
-    # Append new market scores
-    if jp_score is not None:
-        if 'jp_score' not in dd:
-            dd['jp_score'] = []
-        dd['jp_score'].append(jp_score)
-    if kr_score is not None:
-        if 'kr_score' not in dd:
-            dd['kr_score'] = []
-        dd['kr_score'].append(kr_score)
-    if eu_score is not None:
-        if 'eu_score' not in dd:
-            dd['eu_score'] = []
-        dd['eu_score'].append(eu_score)
+    today = datetime.now().strftime('%Y-%m-%d')
+
+    # Append new market scores AND corresponding dates (keep arrays in sync)
+    for score_val, score_key, dates_key in [
+        (jp_score, 'jp_score', 'jp_dates'),
+        (kr_score, 'kr_score', 'kr_dates'),
+        (eu_score, 'eu_score', 'eu_dates'),
+    ]:
+        if score_val is not None:
+            scores = dd.setdefault(score_key, [])
+            dates = dd.setdefault(dates_key, [])
+            # Avoid duplicate entry for today
+            if dates and dates[-1] == today:
+                scores[-1] = score_val  # overwrite today's score if re-run
+            else:
+                scores.append(score_val)
+                dates.append(today)
 
     dd = sanitize_for_json(dd)
     with open(dd_path, 'w', encoding='utf-8') as f:
@@ -977,6 +981,374 @@ def generate_narrative(mkt_data, mkt_name, retail=None, global_ctx=None, score=N
     return narrative
 
 
+def score_to_sentiment_level(score):
+    """Map a Moodring score to a sentiment level string."""
+    if score is None:
+        return None
+    if score < 25:
+        return 'EXTREME_FEAR'
+    if score < 40:
+        return 'FEARFUL'
+    if score < 55:
+        return 'NEUTRAL'
+    if score < 75:
+        return 'BULLISH'
+    return 'EXTREME_GREED'
+
+
+def generate_narrative_tw(mkt_data, mkt_name, retail=None, score=None):
+    """Generate emotional first-person retail investor monologue in Traditional Chinese.
+    Simulates retail psychology — irrational, fearful or greedy — based on current sentiment.
+    """
+    if not mkt_data or score is None:
+        return None
+
+    if score < 25:
+        level = 'extreme_fear'
+    elif score < 40:
+        level = 'fearful'
+    elif score < 55:
+        level = 'neutral'
+    elif score < 75:
+        level = 'bullish'
+    else:
+        level = 'extreme_greed'
+
+    if mkt_name == 'US':
+        r5d = mkt_data.get('SPY_5d_return_pct')
+        vix = mkt_data.get('VIX')
+        close = mkt_data.get('SPY_close')
+        if level == 'extreme_fear':
+            vix_str = f"，VIX 衝到 {vix:.0f}" if vix else ""
+            return (f"完了完了！SPY 一路跌{vix_str}，這是要崩盤嗎？"
+                    f"朋友都在喊要出場，我的帳面已經虧了一大塊，再不跑就來不及了。"
+                    f"但萬一跑了就反彈怎麼辦？腦子一團亂，根本睡不著。")
+        if level == 'fearful':
+            r5d_str = f"又跌了 {r5d:+.1f}%" if r5d is not None else "持續走弱"
+            vix_str = f"VIX {vix:.1f}，" if vix else ""
+            return (f"這週 SPY {r5d_str}，{vix_str}帳面損失越來越大，心裡很煎熬。"
+                    f"身邊的人說繼續 hold，但我越來越懷疑，這次是不是真的跌很深？"
+                    f"要不要先出一些保命？等反彈再說？好難決定，一直盯盤也沒用。")
+        if level == 'neutral':
+            spy_str = f"美股 SPY {close:.0f}" if close else "美股"
+            vix_str = f"VIX {vix:.1f}，" if vix else ""
+            r5d_str = f"近 5 日 {r5d:+.1f}%，" if r5d is not None else ""
+            return (f"最近{spy_str}漲漲跌跌，{vix_str}{r5d_str}看不出明確方向..."
+                    "每天開盤看一下，也沒什麼特別感覺。要加碼嗎？感覺時機還沒到；"
+                    "要減倉嗎？也沒那麼糟。就繼續觀望吧，等明確訊號再說。")
+        if level == 'bullish':
+            return ("感覺最近盤面有點強勢耶，SPY 站上來了！"
+                    "朋友說 AI 概念股要爆發，我手上有一點部位...要加碼嗎？又怕追高。"
+                    "但再不上車會不會錯過這波？再等等看好了。")
+        # extreme_greed
+        return ("這波漲太猛了！我已經全倉，朋友說還要繼續漲。"
+                "每天看帳戶數字越來越好看，好爽！要不要再借點錢加碼？"
+                "現在不上車以後肯定後悔！")
+
+    if mkt_name == 'TW':
+        consec = (retail or {}).get('foreign_consecutive_days', 0)
+        direction = (retail or {}).get('foreign_consecutive_direction', '')
+        taiex = mkt_data.get('TAIEX_close')
+        tw_r5d = mkt_data.get('TAIEX_5d_return_pct')
+        tsmc = mkt_data.get('TSMC_close')
+        if level == 'extreme_fear':
+            fw_str = f"外資連賣 {consec} 天" if direction == 'sell' else "法人大賣"
+            taiex_str = f"台股 {taiex:.0f}" if taiex else "台股"
+            return (f"慘了！{taiex_str} 一直跌，{fw_str}，感覺主力都在跑..."
+                    f"台積電也撐不住了嗎？我的持股每天都在縮水，"
+                    f"朋友說要停損，但我還是在等解套。再這樣下去真的撐不住了。")
+        if level == 'fearful':
+            fw_str = f"外資已經連賣 {consec} 天" if direction == 'sell' else "法人偏賣"
+            r5d_str = f"，這週 {tw_r5d:+.1f}%" if tw_r5d is not None else ""
+            return (f"台股最近軟軟的{r5d_str}，{fw_str}...我在想要不要先減一點倉。"
+                    f"台積電融資還在增加，感覺散戶還在接，但法人不捧場讓我很擔心。"
+                    f"再等等看，但心裡越來越不安。")
+        if level == 'neutral':
+            taiex_str = f"台股 {taiex:.0f}" if taiex else "台股"
+            r5d_str = f"，這週 {tw_r5d:+.1f}%" if tw_r5d is not None else ""
+            tsmc_str = f"台積電 {tsmc:.0f} 也沒什麼大動作" if tsmc else "台積電也沒什麼大動作"
+            fw_str = f"外資連{'買' if direction=='buy' else '賣'} {consec} 天" if consec > 0 else "外資進出不穩定"
+            return (f"{taiex_str}{r5d_str}，不上不下，有點難受。{fw_str}，{tsmc_str}..."
+                    "這種盤最讓人糾結，不知道是要加碼還是保守一點。"
+                    "先維持現在的部位好了，等方向明確再說。")
+        if level == 'bullish':
+            fw_str = f"外資連買 {consec} 天" if direction == 'buy' else "法人偏買"
+            return (f"台股最近有點起色！{fw_str}，感覺有資金要進來..."
+                    f"台積電如果繼續往上，我的帳面會好看很多。"
+                    f"要加碼嗎？心裡很癢，但還是怕追高。再等一天確認方向。")
+        # extreme_greed
+        return ("台股大多頭！台積電帶頭衝，融資跟著爆量..."
+                "這種盤一定要滿倉！我已經加碼了，朋友說這波才剛開始。"
+                "現在不買等什麼？！錢放著只會貶值！")
+
+    if mkt_name == 'JP':
+        r5d = mkt_data.get('NIKKEI_5d_return_pct')
+        r20d = mkt_data.get('NIKKEI_20d_return_pct')
+        nikkei = mkt_data.get('NIKKEI_close')
+        usdjpy = mkt_data.get('USDJPY')
+        if level == 'extreme_fear':
+            nikkei_str = f"日經 {nikkei:.0f}" if nikkei else "日股"
+            return (f"{nikkei_str} 慘不忍睹，日圓一直升值，出口股壓力超大..."
+                    "BOJ 到底要怎麼搞？日經已經跌了好多，我還要繼續 hold 嗎？"
+                    "先出場觀望好了，日圓風險太難搞了。")
+        if level == 'fearful':
+            r5d_str = f"這週跌了 {r5d:+.1f}%" if r5d is not None else "持續下跌"
+            usdjpy_str = f"，美元兌日圓 {usdjpy:.1f}" if usdjpy else ""
+            return (f"日股 {r5d_str}{usdjpy_str}，日圓的走向真的讓人頭大..."
+                    f"每次以為要反彈，又被 BOJ 的話壓回去。"
+                    f"要不要減倉？不確定性太高，心裡不踏實。")
+        if level == 'neutral':
+            nikkei_str = f"日經 {nikkei:.0f}" if nikkei else "日股"
+            r5d_str = f"，近 5 日 {r5d:+.1f}%" if r5d is not None else ""
+            return (f"{nikkei_str}{r5d_str}，上上下下，日圓也沒個定論..."
+                    "不是很敢加碼，但也沒到要跑的地步。"
+                    "先維持目前部位，等 BOJ 下次開會再說。")
+        if level == 'bullish':
+            return ("日股感覺最近有回穩的跡象，日圓如果不繼續升，出口股應該有機會反彈..."
+                    "我有點想加碼，但還在等確認訊號。希望這次是真的反彈，不是假突破。")
+        # extreme_greed
+        return ("日股飆起來了！日圓穩住，外資大買！"
+                "這時候不加碼太可惜了，我已經加碼一些，感覺這波有搞頭！")
+
+    if mkt_name == 'KR':
+        r5d = mkt_data.get('KOSPI_5d_return_pct')
+        r20d = mkt_data.get('KOSPI_20d_return_pct')
+        kospi = mkt_data.get('KOSPI_close')
+        if level == 'extreme_fear':
+            kospi_str = f"KOSPI {kospi:.0f}" if kospi else "韓股"
+            return (f"{kospi_str} 崩！三星、海力士一起跌，DRAM 需求不知道哪裡去了..."
+                    "這種跌法我真的不懂，先出場保命再說。")
+        if level == 'fearful':
+            r5d_str = f"{r5d:+.1f}%" if r5d is not None else "偏弱"
+            kospi_str = f"KOSPI {kospi:.0f}，" if kospi else ""
+            return (f"{kospi_str}韓股最近 {r5d_str}，AI 記憶體的題材還管用嗎？"
+                    f"三星最近感覺被市場嫌棄...不確定要不要繼續 hold，感覺風險有點高。")
+        if level == 'neutral':
+            kospi_str = f"KOSPI {kospi:.0f}" if kospi else "韓股"
+            r5d_str = f"，近 5 日 {r5d:+.1f}%" if r5d is not None else ""
+            r20d_str = f"（月跌 {r20d:+.1f}%）" if r20d is not None else ""
+            return (f"{kospi_str}{r5d_str}{r20d_str}，三星和海力士一個強一個弱..."
+                    "等 DRAM 報價有更清楚方向再說，現在追高追低都不划算。")
+        if level == 'bullish':
+            return ("韓股有點動靜！AI 記憶體需求題材還在，海力士最近表現不錯..."
+                    "要加碼嗎？感覺有機會，但要等三星也跟上才放心。")
+        # extreme_greed
+        return ("韓股 AI 記憶體行情大爆發！海力士、三星都在飆..."
+                "這種時候不能缺席，趕快加碼！等到回頭確認一定已經來不及了。")
+
+    if mkt_name == 'EU':
+        r20d = mkt_data.get('STOXX50_20d_return_pct')
+        if level == 'extreme_fear':
+            return ("歐股一片慘烈，俄烏問題、ECB 態度曖昧..."
+                    "能源股、汽車股全部跌，感覺歐洲的問題比美股嚴重多了。"
+                    "先清倉歐股，等局勢清楚再說。")
+        if level == 'fearful':
+            r20d_str = f"近月跌了 {r20d:+.1f}%" if r20d is not None else "持續走弱"
+            return (f"歐股 {r20d_str}，能源、銀行輪流出事..."
+                    f"ECB 的態度也讓人看不懂，到底要降還是不降利率？"
+                    f"這種不確定性讓我不敢輕易加碼。先觀望。")
+        if level == 'neutral':
+            return ("歐股不上不下，沒什麼特別感覺。"
+                    "德法政局、俄烏...太多地緣風險讓人難以判斷。"
+                    "現在不是加碼歐股的時機，繼續等待就好。")
+        if level == 'bullish':
+            return ("歐股最近有點起色，德國財政刺激的消息讓市場有點興奮..."
+                    "要不要進場歐股做個分散？感覺估值比美股便宜，有點吸引力。")
+        # extreme_greed
+        return ("歐股大反彈！德法政策刺激、俄烏局勢緩和..."
+                "現在不進場太可惜了！趕快買進，這種機會不常有！")
+
+    return None
+
+
+def generate_key_factors_tw(mkt_data, mkt_name, retail=None, score=None, global_ctx=None):
+    """Generate current key_factors list in Traditional Chinese from live market data."""
+    factors = []
+
+    if mkt_name == 'US':
+        rsi = mkt_data.get('SPY_RSI14')
+        close = mkt_data.get('SPY_close')
+        sma20 = mkt_data.get('SPY_SMA20')
+        sma60 = mkt_data.get('SPY_SMA60')
+        r20d = mkt_data.get('SPY_20d_return_pct')
+        vix = mkt_data.get('VIX')
+        yield10y = mkt_data.get('US_10Y_yield')
+        if rsi is not None:
+            if rsi < 30:
+                factors.append(f"RSI {rsi:.1f} 進入超賣 — 技術性反彈機率升高")
+            elif rsi < 35:
+                factors.append(f"RSI {rsi:.1f} 接近超賣 — 技術支撐區間")
+            elif rsi > 70:
+                factors.append(f"RSI {rsi:.1f} 超買 — 短線追高風險上升")
+            else:
+                factors.append(f"RSI {rsi:.1f} 中性偏弱 — 無強力技術訊號")
+        if close is not None and sma20 is not None and sma60 is not None:
+            if close < sma20 and close < sma60:
+                factors.append(f"SPY 低於 SMA20/SMA60 雙線 — 下行趨勢仍在")
+            elif close < sma20:
+                factors.append(f"SPY 低於 SMA20 ({sma20:.0f}) — 短線趨勢偏空")
+            elif close > sma20 and close > sma60:
+                factors.append(f"SPY 站上 SMA20/SMA60 — 多頭格局")
+        if vix is not None:
+            if vix > 30:
+                factors.append(f"VIX {vix:.1f} 恐慌高位 — 系統性風險升溫")
+            elif vix > 20:
+                factors.append(f"VIX {vix:.1f} 偏高未破 30 — 恐慌升溫但非極端")
+            else:
+                factors.append(f"VIX {vix:.1f} 溫和 — 市場波動可控")
+        if r20d is not None:
+            desc = '顯著修正' if r20d < -5 else '溫和回調' if r20d < 0 else '穩健上漲'
+            factors.append(f"20 日報酬 {r20d:+.1f}% — {desc}")
+        if yield10y is not None:
+            desc = '聯準會降息預期分歧' if yield10y > 4.0 else '降息預期升溫'
+            factors.append(f"10Y 殖利率 {yield10y:.2f}% — {desc}")
+
+    elif mkt_name == 'TW':
+        rsi = mkt_data.get('TAIEX_RSI14')
+        if retail:
+            tsmc_margin = retail.get('TSMC_margin_30d_change_pct')
+            margin_5d = retail.get('margin_5d_change_pct')
+            fw = retail.get('foreign_net_TWD')
+            consec = retail.get('foreign_consecutive_days', 0)
+            direction = retail.get('foreign_consecutive_direction', '')
+            retail_net = retail.get('retail_net_est_TWD')
+            if tsmc_margin is not None:
+                risk = "融資槓桿集中風險" if tsmc_margin > 20 else "融資增速正常"
+                factors.append(f"台積電融資月增 {tsmc_margin:+.1f}% — {risk}")
+            if margin_5d is not None:
+                trend = "散戶槓桿擴張" if margin_5d > 0.5 else "散戶降槓桿" if margin_5d < -0.5 else "融資餘額穩定"
+                factors.append(f"融資餘額 5 日 {margin_5d:+.2f}% — {trend}")
+            if fw is not None and consec > 0:
+                dir_zh = "買超" if direction == 'buy' else "賣超"
+                risk_zh = "外資賣壓持續" if direction == 'sell' else "外資回流訊號"
+                factors.append(f"外資{dir_zh} {abs(fw):.1f}億，連{direction} {consec}日 — {risk_zh}")
+            if retail_net is not None:
+                action = "散戶逆勢接刀" if retail_net > 0 else "散戶跟空"
+                dir_zh = "買超" if retail_net > 0 else "賣超"
+                factors.append(f"散戶估計{dir_zh} {abs(retail_net):.0f}億 — {action}")
+        if rsi is not None:
+            if rsi < 30:
+                factors.append(f"TAIEX RSI {rsi:.1f} — 技術超賣，反彈機率升高")
+            else:
+                desc = '中性偏弱' if rsi < 50 else '中性偏強'
+                factors.append(f"TAIEX RSI {rsi:.1f} — {desc}，無自動反彈護盾")
+
+    elif mkt_name == 'JP':
+        rsi = mkt_data.get('NIKKEI_RSI14')
+        r5d = mkt_data.get('NIKKEI_5d_return_pct')
+        r20d = mkt_data.get('NIKKEI_20d_return_pct')
+        if rsi is not None:
+            if rsi < 30:
+                factors.append(f"日經 RSI {rsi:.1f} 超賣 — 技術反彈條件成立")
+            elif rsi < 35:
+                factors.append(f"日經 RSI {rsi:.1f} 接近超賣 — 短線反彈機率升高")
+            else:
+                factors.append(f"日經 RSI {rsi:.1f} 中性")
+        if r5d is not None:
+            desc = '近期急跌' if r5d < -3 else '溫和下跌' if r5d < 0 else '小幅反彈'
+            factors.append(f"5 日報酬 {r5d:+.1f}% — {desc}")
+        if r20d is not None:
+            desc = '累積跌幅顯著，逆勢訊號升溫' if r20d < -8 else '中等回調'
+            factors.append(f"20 日報酬 {r20d:+.1f}% — {desc}")
+        if global_ctx:
+            usdjpy = global_ctx.get('USDJPY')
+            if usdjpy:
+                desc = '日圓走強，出口股承壓' if usdjpy < 150 else '日圓偏弱，出口股獲利' if usdjpy > 155 else '日圓中性'
+                factors.append(f"USDJPY {usdjpy:.1f} — {desc}")
+
+    elif mkt_name == 'KR':
+        rsi = mkt_data.get('KOSPI_RSI14')
+        r5d = mkt_data.get('KOSPI_5d_return_pct')
+        r20d = mkt_data.get('KOSPI_20d_return_pct')
+        if rsi is not None:
+            if rsi < 30:
+                factors.append(f"KOSPI RSI {rsi:.1f} 超賣 — 技術反彈條件成立")
+            elif rsi > 60:
+                factors.append(f"KOSPI RSI {rsi:.1f} 偏強 — 短線追高需謹慎")
+            else:
+                factors.append(f"KOSPI RSI {rsi:.1f} 中性")
+        if r5d is not None:
+            desc = '近期走強' if r5d > 2 else '小幅下跌' if r5d < 0 else '持平'
+            factors.append(f"5 日報酬 {r5d:+.1f}% — {desc}")
+        if r20d is not None:
+            desc = '中期回調' if r20d < -5 else '中期持穩'
+            factors.append(f"20 日報酬 {r20d:+.1f}% — {desc}")
+        if score is not None:
+            if score > 65:
+                factors.append(f"Moodring {score:.1f} — 貪婪區，追高報酬遞減")
+            elif score < 35:
+                factors.append(f"Moodring {score:.1f} — 逆勢買入區間")
+
+    elif mkt_name == 'EU':
+        rsi = mkt_data.get('STOXX50_RSI14')
+        r5d = mkt_data.get('STOXX50_5d_return_pct')
+        r20d = mkt_data.get('STOXX50_20d_return_pct')
+        if rsi is not None:
+            if rsi < 30:
+                factors.append(f"STOXX50 RSI {rsi:.1f} — 深度超賣")
+            elif rsi < 35:
+                factors.append(f"STOXX50 RSI {rsi:.1f} 接近超賣 — 技術支撐區")
+            else:
+                factors.append(f"STOXX50 RSI {rsi:.1f} 中性")
+        if r5d is not None:
+            desc = '近期持續下跌' if r5d < -2 else '小幅震盪'
+            factors.append(f"5 日報酬 {r5d:+.1f}% — {desc}")
+        if r20d is not None:
+            desc = '累積跌幅較重，地緣風險溢價持續' if r20d < -6 else '中期回調'
+            factors.append(f"20 日報酬 {r20d:+.1f}% — {desc}")
+        if score is not None and score < 40:
+            factors.append(f"Moodring {score:.1f} — 恐懼區，需更多降息確信訊號")
+
+    return factors if factors else None
+
+
+def generate_watch_for_tw(mkt_data, mkt_name, score=None, retail=None, global_ctx=None):
+    """Generate Chinese 觀察重點 text from current market data."""
+    parts = []
+
+    if mkt_name == 'US':
+        rsi = mkt_data.get('SPY_RSI14')
+        sma20 = mkt_data.get('SPY_SMA20')
+        vix = mkt_data.get('VIX')
+        yield10y = mkt_data.get('US_10Y_yield')
+        if rsi is not None and rsi < 40:
+            parts.append(f"等待 RSI 從超賣區回升（目標重回 40+）")
+        if sma20 is not None:
+            parts.append(f"SPY 能否收復 SMA20 ({sma20:.0f}) 是短線趨勢轉折關鍵")
+        if vix is not None and vix > 20:
+            parts.append(f"VIX {vix:.1f} 需回落 20 以下才代表恐慌解除")
+        if yield10y is not None:
+            parts.append(f"10Y 殖利率 {yield10y:.2f}% — 注意聯準會措辭及就業數據")
+
+    elif mkt_name == 'TW':
+        if retail:
+            direction = retail.get('foreign_consecutive_direction', '')
+            consec = retail.get('foreign_consecutive_days', 0)
+            tsmc_margin = retail.get('TSMC_margin_30d_change_pct')
+            if direction == 'sell':
+                parts.append(f"外資已連賣 {consec} 日，翻買（連買 2-3 天）才是反彈確認訊號")
+            if tsmc_margin is not None and tsmc_margin > 15:
+                parts.append(f"台積電融資月增 {tsmc_margin:+.1f}%，融資若繼續升速則追繳壓力升高")
+        parts.append("觀察 TAIEX 能否守住 SMA20 及外資方向性轉變")
+
+    elif mkt_name == 'JP':
+        usdjpy = (global_ctx or {}).get('USDJPY')
+        if usdjpy:
+            parts.append(f"USDJPY {usdjpy:.1f} — 日圓升破 150 將觸發套利平倉，是最大尾部風險")
+        parts.append("BOJ 下次利率決策時間點及措辭是最重要催化劑")
+        parts.append("RSI 技術超賣提供反彈可能，但需美股穩定配合")
+
+    elif mkt_name == 'KR':
+        parts.append("三星/SK 海力士 DRAM 報價走勢及韓元匯率是韓股主要驅動力")
+        parts.append("AI 記憶體題材降溫時需注意回調風險")
+
+    elif mkt_name == 'EU':
+        parts.append("ECB 降息路徑及德國財政刺激規模是歐股非對稱風險主要來源")
+        parts.append("RSI 超賣提供技術反彈條件，但地緣風險溢價難以量化")
+
+    return "；".join(parts) + "。" if parts else None
+
+
 def update_agent_results(snapshot, us_data, tw_data, tw_retail, jp_data, kr_data, eu_data, global_ctx):
     """Update phase2_agent_results.json with today's date, scores, and narratives."""
     path = os.path.join(DATA_DIR, 'phase2_agent_results.json')
@@ -997,12 +1369,20 @@ def update_agent_results(snapshot, us_data, tw_data, tw_retail, jp_data, kr_data
 
     us_scores = dd.get('us_score', [])
     tw_scores = dd.get('tw_score', [])
-    if us_scores:
-        agents['us_base_score'] = us_scores[-1]
-    if tw_scores:
-        agents['tw_base_score'] = tw_scores[-1]
+    jp_scores = dd.get('jp_score', [])
+    kr_scores = dd.get('kr_score', [])
+    eu_scores = dd.get('eu_score', [])
+    us_base = us_scores[-1] if us_scores else None
+    tw_base = tw_scores[-1] if tw_scores else None
+    jp_score = jp_scores[-1] if jp_scores else None
+    kr_score = kr_scores[-1] if kr_scores else None
+    eu_score = eu_scores[-1] if eu_scores else None
+    if us_base is not None:
+        agents['us_base_score'] = us_base
+    if tw_base is not None:
+        agents['tw_base_score'] = tw_base
 
-    # Generate fresh narratives from today's data
+    # --- Collect market data from snapshot ---
     us_mkt = snapshot.get('us_market', {})
     tw_mkt = snapshot.get('tw_market', {})
     jp_mkt = snapshot.get('jp_market', {})
@@ -1011,18 +1391,100 @@ def update_agent_results(snapshot, us_data, tw_data, tw_retail, jp_data, kr_data
     retail = snapshot.get('tw_retail_indicators', {})
     gl = snapshot.get('global_context', {})
 
-    narr_map = {
-        'us_agent': generate_narrative(us_mkt, 'US', global_ctx=gl, score=us_scores[-1] if us_scores else None),
-        'tw_agent': generate_narrative(tw_mkt, 'TW', retail=retail, score=tw_scores[-1] if tw_scores else None),
-        'jp_agent': generate_narrative(jp_mkt, 'JP', score=jp_mkt.get('jp_moodring_score')),
-        'kr_agent': generate_narrative(kr_mkt, 'KR', score=kr_mkt.get('kr_moodring_score')),
-        'eu_agent': generate_narrative(eu_mkt, 'EU', score=eu_mkt.get('eu_moodring_score')),
+    # Resolve per-market scores (snapshot inline score takes precedence for JP/KR/EU)
+    jp_score = jp_mkt.get('jp_moodring_score') or jp_score
+    kr_score = kr_mkt.get('kr_moodring_score') or kr_score
+    eu_score = eu_mkt.get('eu_moodring_score') or eu_score
+
+    score_map = {
+        'us_agent': us_base,
+        'tw_agent': tw_base,
+        'jp_agent': jp_score,
+        'kr_agent': kr_score,
+        'eu_agent': eu_score,
     }
 
-    for agent_key, narr in narr_map.items():
-        if narr and agent_key in agents:
-            agents[agent_key]['narrative_en'] = narr
-            agents[agent_key]['narrative'] = narr
+    # --- Issue 2: Generate emotional Chinese retail narratives ---
+    narr_tw_map = {
+        'us_agent': generate_narrative_tw(us_mkt, 'US', score=us_base),
+        'tw_agent': generate_narrative_tw(tw_mkt, 'TW', retail=retail, score=tw_base),
+        'jp_agent': generate_narrative_tw(jp_mkt, 'JP', score=jp_score),
+        'kr_agent': generate_narrative_tw(kr_mkt, 'KR', score=kr_score),
+        'eu_agent': generate_narrative_tw(eu_mkt, 'EU', score=eu_score),
+    }
+
+    # --- English narratives (narrative_en) still use the quant generate_narrative ---
+    narr_en_map = {
+        'us_agent': generate_narrative(us_mkt, 'US', global_ctx=gl, score=us_base),
+        'tw_agent': generate_narrative(tw_mkt, 'TW', retail=retail, score=tw_base),
+        'jp_agent': generate_narrative(jp_mkt, 'JP', score=jp_score),
+        'kr_agent': generate_narrative(kr_mkt, 'KR', score=kr_score),
+        'eu_agent': generate_narrative(eu_mkt, 'EU', score=eu_score),
+    }
+
+    # --- Issue 1 & 4: Generate fresh key_factors and sentiment_level for all agents ---
+    key_factors_map = {
+        'us_agent': generate_key_factors_tw(us_mkt, 'US', score=us_base, global_ctx=gl),
+        'tw_agent': generate_key_factors_tw(tw_mkt, 'TW', retail=retail, score=tw_base),
+        'jp_agent': generate_key_factors_tw(jp_mkt, 'JP', score=jp_score, global_ctx=gl),
+        'kr_agent': generate_key_factors_tw(kr_mkt, 'KR', score=kr_score),
+        'eu_agent': generate_key_factors_tw(eu_mkt, 'EU', score=eu_score),
+    }
+
+    # --- Issue 3 & 4: Generate watch_for_tw for all agents ---
+    watch_for_map = {
+        'us_agent': generate_watch_for_tw(us_mkt, 'US', score=us_base, global_ctx=gl),
+        'tw_agent': generate_watch_for_tw(tw_mkt, 'TW', score=tw_base, retail=retail),
+        'jp_agent': generate_watch_for_tw(jp_mkt, 'JP', score=jp_score, global_ctx=gl),
+        'kr_agent': generate_watch_for_tw(kr_mkt, 'KR', score=kr_score),
+        'eu_agent': generate_watch_for_tw(eu_mkt, 'EU', score=eu_score),
+    }
+
+    for agent_key in ['us_agent', 'tw_agent', 'jp_agent', 'kr_agent', 'eu_agent']:
+        if agent_key not in agents:
+            continue
+        score = score_map[agent_key]
+
+        # Issue 1: update sentiment_level from current score
+        sl = score_to_sentiment_level(score)
+        if sl:
+            agents[agent_key]['sentiment_level'] = sl
+
+        # Issue 2: narrative_tw = emotional Chinese monologue; narrative_en = quant summary
+        narr_tw = narr_tw_map[agent_key]
+        if narr_tw:
+            agents[agent_key]['narrative_tw'] = narr_tw
+            agents[agent_key]['narrative'] = narr_tw  # default display = Chinese emotional
+
+        narr_en = narr_en_map[agent_key]
+        if narr_en:
+            agents[agent_key]['narrative_en'] = narr_en
+
+        # Issue 1 & 4: update key_factors and key_factors_tw
+        kf = key_factors_map[agent_key]
+        if kf:
+            agents[agent_key]['key_factors'] = kf
+            agents[agent_key]['key_factors_tw'] = kf
+
+        # Issue 3 & 4: add watch_for_tw
+        wf = watch_for_map[agent_key]
+        if wf:
+            agents[agent_key]['watch_for_tw'] = wf
+
+    # --- Issue 5: Recalculate summary final scores ---
+    if 'summary' not in agents:
+        agents['summary'] = {}
+    us_delta = agents.get('us_agent', {}).get('adjusted_score_delta', 0) or 0
+    tw_delta = agents.get('tw_agent', {}).get('adjusted_score_delta', 0) or 0
+    if us_base is not None:
+        agents['summary']['us_final_score'] = round(us_base + us_delta, 1)
+    if tw_base is not None:
+        agents['summary']['tw_final_score'] = round(tw_base + tw_delta, 1)
+    # Recalculate divergence if both final scores available
+    us_final = agents['summary'].get('us_final_score')
+    tw_final = agents['summary'].get('tw_final_score')
+    if us_final is not None and tw_final is not None:
+        agents['summary']['divergence'] = round(abs(us_final - tw_final), 1)
 
     agents = sanitize_for_json(agents)
     with open(path, 'w', encoding='utf-8') as f:

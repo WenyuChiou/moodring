@@ -848,12 +848,17 @@ def update_dashboard_json(snapshot, jp_score=None, kr_score=None, eu_score=None)
 
 
 def update_overlay_json(snapshot, jp_score=None, kr_score=None, eu_score=None,
+                        us_score=None, tw_score=None,
                         us_open=True, tw_open=True, jp_open=True, kr_open=True, eu_open=True):
     """Append today's scores and prices to overlay_data.json (used by overlay chart).
 
     Only writes price entries for markets that were actually open today (us_open, tw_open, etc.).
     Carry-forward scores are still written regardless of open status, but prices from stale
     (closed-market) fetches are skipped to prevent holiday artifacts.
+
+    us_score / tw_score: live computed values from this run (preferred). If not provided,
+    falls back to dashboard_data.json — but that array is only rebuilt by rebuild_dashboard_daily.py
+    and may be one day behind, causing today's wrong score to be appended.
     """
     ov_path = os.path.join(DATA_DIR, 'overlay_data.json')
     if not os.path.exists(ov_path):
@@ -865,24 +870,38 @@ def update_overlay_json(snapshot, jp_score=None, kr_score=None, eu_score=None,
 
     today = datetime.now().strftime('%Y-%m-%d')
 
-    # Avoid duplicate entries
+    # Duplicate-date guard: OVERWRITE if today already exists (do not skip).
+    # Skipping was the root cause of the 2026-03-25 bug: a partial run wrote wrong values,
+    # then the guard prevented correction on subsequent runs.
     existing_dates = ov.get('dates', [])
     if existing_dates and existing_dates[-1] == today:
-        print("[SKIP] overlay_data.json already has today's data")
-        return
+        print("[OVERWRITE] overlay_data.json already has today's entry — overwriting with fresh values")
+        for key in ['dates', 'us_score', 'tw_score']:
+            arr = ov.get(key, [])
+            if arr:
+                arr.pop()
+        for dates_key, price_key in [
+            ('spy_dates', 'spy'), ('twii_dates', 'twii'),
+            ('nikkei_dates', 'nikkei'), ('kospi_dates', 'kospi'), ('stoxx50_dates', 'stoxx50'),
+        ]:
+            if ov.get(dates_key, []) and ov[dates_key][-1] == today:
+                ov[dates_key].pop()
+                if ov.get(price_key, []):
+                    ov[price_key].pop()
+        for d_key, s_key in [('jp_dates', 'jp_score'), ('kr_dates', 'kr_score'), ('eu_dates', 'eu_score')]:
+            if ov.get(d_key, []) and ov[d_key][-1] == today:
+                ov[d_key].pop()
+                if ov.get(s_key, []):
+                    ov[s_key].pop()
 
-    # US/TW scores from dashboard_data (latest appended value)
-    dd_path = os.path.join(DATA_DIR, 'dashboard_data.json')
-    with open(dd_path, 'r', encoding='utf-8') as f:
-        dd = json.load(f)
-
-    us_scores = dd.get('us_score', [])
-    tw_scores = dd.get('tw_score', [])
-    if us_scores:
+    # US/TW scores: use live computed values passed in directly.
+    # DO NOT read from dashboard_data.json — its tw_score/us_score arrays are rebuilt by
+    # rebuild_dashboard_daily.py (a separate process) and are one day behind at this point.
+    if us_score is not None:
         ov.setdefault('dates', []).append(today)
-        ov.setdefault('us_score', []).append(us_scores[-1])
-    if tw_scores:
-        ov.setdefault('tw_score', []).append(tw_scores[-1])
+        ov.setdefault('us_score', []).append(round(float(us_score), 1))
+    if tw_score is not None:
+        ov.setdefault('tw_score', []).append(round(float(tw_score), 1))
 
     # Prices from snapshot
     us_mkt = snapshot.get('us_market', {})
@@ -1889,12 +1908,17 @@ def update_agent_results(snapshot, us_data, tw_data, tw_retail, jp_data, kr_data
 def update_forward_outlook(compute_scores=None):
     """Update forward_outlook.json current scores.
 
-    Prefers compute_scores (live values from this run) over dashboard_data.json,
-    because rebuild_dashboard_daily.py may not have run yet when this is called,
-    making dashboard_data.json arrays potentially one day behind.
+    Score priority (highest to lowest):
+      1. Agent-adjusted final scores from phase2_agent_results.json (written by update_agent_results
+         which runs before this function) — these are the "official" scores shown on the dashboard.
+      2. Live compute_scores passed in from this run (base scores before agent adjustment).
+      3. dashboard_data.json arrays (may be one day behind — only used as last resort).
+
+    Using agent-adjusted final scores ensures the thermometer panel and agent narrative
+    display the same number (single source of truth for the current score).
 
     Args:
-        compute_scores: dict mapping fwd_key → compute_score value (preferred source)
+        compute_scores: dict mapping fwd_key → base score value (fallback if phase2 unavailable)
                         例如: {'us_current_score': 39.6, 'tw_current_score': 55.0}
     """
     SANITY_THRESHOLD = 5.0  # 分數差距超過此值即發出警告
@@ -1910,6 +1934,33 @@ def update_forward_outlook(compute_scores=None):
     with open(fwd_path, 'r', encoding='utf-8') as f:
         fwd = json.load(f)
 
+    # Load agent-adjusted final scores (written by update_agent_results earlier this run)
+    phase2_path = os.path.join(DATA_DIR, 'phase2_agent_results.json')
+    agent_final_scores = {}
+    if os.path.exists(phase2_path):
+        try:
+            with open(phase2_path, 'r', encoding='utf-8') as f:
+                p2 = json.load(f)
+            summary = p2.get('summary', {})
+            for fwd_key, final_key in [
+                ('us_current_score', 'us_final_score'),
+                ('tw_current_score', 'tw_final_score'),
+            ]:
+                val = summary.get(final_key)
+                if val is not None:
+                    agent_final_scores[fwd_key] = val
+            # JP/KR/EU agents currently have delta=0; use their base scores directly
+            for fwd_key, p2_key in [
+                ('jp_current_score', 'jp_base_score'),
+                ('kr_current_score', 'kr_base_score'),
+                ('eu_current_score', 'eu_base_score'),
+            ]:
+                val = p2.get(p2_key)
+                if val is not None:
+                    agent_final_scores[fwd_key] = val
+        except Exception as e:
+            print(f"[WARNING] Could not read phase2_agent_results.json for final scores: {e}")
+
     score_map = {
         'us_current_score': 'us_score',
         'tw_current_score': 'tw_score',
@@ -1918,8 +1969,11 @@ def update_forward_outlook(compute_scores=None):
         'eu_current_score': 'eu_score',
     }
     for fwd_key, dd_key in score_map.items():
-        # Prefer live compute_scores; fall back to dashboard_data.json (may be 1 day behind)
-        if compute_scores and fwd_key in compute_scores and compute_scores[fwd_key] is not None:
+        if fwd_key in agent_final_scores:
+            # Priority 1: agent-adjusted final score (single source of truth for display)
+            new_val = agent_final_scores[fwd_key]
+        elif compute_scores and fwd_key in compute_scores and compute_scores[fwd_key] is not None:
+            # Priority 2: live base score from this run
             new_val = compute_scores[fwd_key]
             # Sanity check against dashboard_data to flag rebuild inconsistencies
             dd_scores = dd.get(dd_key, [])
@@ -1933,6 +1987,7 @@ def update_forward_outlook(compute_scores=None):
                         f"請確認 historical_scores.csv 是否已正確更新"
                     )
         else:
+            # Priority 3: dashboard_data.json (may be 1 day behind)
             scores = dd.get(dd_key, [])
             if not scores:
                 continue

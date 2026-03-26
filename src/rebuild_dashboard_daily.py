@@ -58,6 +58,23 @@ def main():
         with open(phase2_path, 'r', encoding='utf-8') as f:
             agents = json.load(f)
         print(f"[AGENTS] Loaded fresh agents from phase2_agent_results.json (date={agents.get('date', '?')})")
+
+        # Patch forward_outlook.json so main panel scores match phase2 agent-adjusted scores.
+        # phase2 final = base_score + agent.adjusted_score_delta
+        tw_final = round(agents.get('tw_base_score', 0) + agents.get('tw_agent', {}).get('adjusted_score_delta', 0), 1)
+        us_final = round(agents.get('us_base_score', 0) + agents.get('us_agent', {}).get('adjusted_score_delta', 0), 1)
+        fwd_path = os.path.join(DATA_DIR, 'forward_outlook.json')
+        if os.path.exists(fwd_path):
+            with open(fwd_path, 'r', encoding='utf-8') as f:
+                fwd_data = json.load(f)
+            old_tw = fwd_data.get('tw_current_score')
+            old_us = fwd_data.get('us_current_score')
+            fwd_data['tw_current_score'] = tw_final
+            fwd_data['us_current_score'] = us_final
+            with open(fwd_path, 'w', encoding='utf-8') as f:
+                json.dump(fwd_data, f, indent=2, ensure_ascii=False)
+            print(f"[FORWARD] tw_current_score: {old_tw} → {tw_final}")
+            print(f"[FORWARD] us_current_score: {old_us} → {us_final}")
     else:
         agents = db_data.get('agents', {})
         print("[AGENTS] phase2_agent_results.json not found — preserving existing agents")

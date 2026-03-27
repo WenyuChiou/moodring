@@ -1,11 +1,11 @@
 {
-  "date": "2026-03-26",
+  "date": "2026-03-27",
   "markets": {
     "us": {
       "full_ic_20d": -0.1689,
-      "recent_ic_20d": -0.0176,
+      "recent_ic_20d": -0.0275,
       "ic_trend": "decaying",
-      "ic_change_pct": -89.6,
+      "ic_change_pct": -83.7,
       "score_mean_60d": 43.1,
       "score_std_60d": 4.5,
       "zone_distribution_60d": {
@@ -17,39 +17,39 @@
       },
       "health": "poor",
       "flags": [
-        "IC decaying: recent -0.0176 vs historical -0.1689",
-        "Weak IC: -0.0176"
+        "IC decaying: recent -0.0275 vs historical -0.1689",
+        "Weak IC: -0.0275"
       ],
       "calibration_stale": false,
-      "calibration_days_ago": 1
+      "calibration_days_ago": 2
     },
     "tw": {
-      "full_ic_20d": -0.1254,
-      "recent_ic_20d": 0.0234,
+      "full_ic_20d": -0.1248,
+      "recent_ic_20d": 0.0215,
       "ic_trend": "decaying",
-      "ic_change_pct": -81.3,
-      "score_mean_60d": 45.2,
-      "score_std_60d": 8.5,
+      "ic_change_pct": -82.8,
+      "score_mean_60d": 45.5,
+      "score_std_60d": 9.0,
       "zone_distribution_60d": {
         "extreme_fear": 0,
         "fear": 21,
-        "neutral": 37,
-        "greed": 2,
+        "neutral": 36,
+        "greed": 3,
         "extreme_greed": 0
       },
       "health": "poor",
       "flags": [
-        "IC decaying: recent 0.0234 vs historical -0.1254",
-        "Weak IC: 0.0234"
+        "IC decaying: recent 0.0215 vs historical -0.1248",
+        "Weak IC: 0.0215"
       ],
       "calibration_stale": false,
-      "calibration_days_ago": 1
+      "calibration_days_ago": 2
     },
     "jp": {
       "full_ic_20d": -0.0666,
-      "recent_ic_20d": -0.0633,
+      "recent_ic_20d": -0.0716,
       "ic_trend": "stable",
-      "ic_change_pct": -5.0,
+      "ic_change_pct": 7.5,
       "score_mean_60d": 48.5,
       "score_std_60d": 9.2,
       "zone_distribution_60d": {
@@ -61,37 +61,37 @@
       },
       "health": "poor",
       "flags": [
-        "Weak IC: -0.0633",
+        "Weak IC: -0.0716",
         "Score stuck in neutral zone 80% of last 60d"
       ],
       "calibration_stale": false,
-      "calibration_days_ago": 1
+      "calibration_days_ago": 2
     },
     "kr": {
-      "full_ic_20d": -0.1069,
-      "recent_ic_20d": -0.1937,
+      "full_ic_20d": -0.1074,
+      "recent_ic_20d": -0.2137,
       "ic_trend": "improving",
-      "ic_change_pct": 81.2,
-      "score_mean_60d": 58.6,
-      "score_std_60d": 10.6,
+      "ic_change_pct": 99.0,
+      "score_mean_60d": 58.1,
+      "score_std_60d": 11.3,
       "zone_distribution_60d": {
         "extreme_fear": 0,
-        "fear": 5,
-        "neutral": 17,
+        "fear": 6,
+        "neutral": 16,
         "greed": 37,
         "extreme_greed": 1
       },
       "health": "good",
       "flags": [],
       "calibration_stale": false,
-      "calibration_days_ago": 1
+      "calibration_days_ago": 2
     },
     "eu": {
       "full_ic_20d": -0.0571,
-      "recent_ic_20d": -0.4541,
+      "recent_ic_20d": -0.4595,
       "ic_trend": "improving",
-      "ic_change_pct": 695.3,
-      "score_mean_60d": 44.0,
+      "ic_change_pct": 704.7,
+      "score_mean_60d": 43.9,
       "score_std_60d": 6.8,
       "zone_distribution_60d": {
         "extreme_fear": 1,
@@ -103,17 +103,17 @@
       "health": "good",
       "flags": [],
       "calibration_stale": false,
-      "calibration_days_ago": 1
+      "calibration_days_ago": 2
     }
   },
   "system_health": {
     "overall": "poor",
     "active_flags": [
-      "US: IC decaying: recent -0.0176 vs historical -0.1689",
-      "US: Weak IC: -0.0176",
-      "TW: IC decaying: recent 0.0234 vs historical -0.1254",
-      "TW: Weak IC: 0.0234",
-      "JP: Weak IC: -0.0633",
+      "US: IC decaying: recent -0.0275 vs historical -0.1689",
+      "US: Weak IC: -0.0275",
+      "TW: IC decaying: recent 0.0215 vs historical -0.1248",
+      "TW: Weak IC: 0.0215",
+      "JP: Weak IC: -0.0716",
       "JP: Score stuck in neutral zone 80% of last 60d"
     ],
     "last_calibration": "2026-03-25",

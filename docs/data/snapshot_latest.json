@@ -1,5 +1,5 @@
 {
-  "date": "2026-03-31",
+  "date": "2026-04-01",
   "data_sources": {
     "market_prices": "Yahoo Finance (yfinance)",
     "tw_margin": "FinMind API (TWSE OpenData)",
@@ -8,25 +8,25 @@
     "behavioral_params": "Kahneman & Tversky (1979), Banerjee (1992)"
   },
   "us_market": {
-    "SPY_close": 647.36,
-    "SPY_RSI14": 35.8,
-    "SPY_SMA20": 660.53,
-    "SPY_SMA60": 678.18,
-    "SPY_vs_52w_high_pct": 93.3,
-    "SPY_5d_return_pct": -0.89,
-    "SPY_20d_return_pct": -4.59,
-    "VIX": 26.27,
+    "SPY_close": 650.34,
+    "SPY_RSI14": 37.8,
+    "SPY_SMA20": 660.67,
+    "SPY_SMA60": 678.23,
+    "SPY_vs_52w_high_pct": 93.8,
+    "SPY_5d_return_pct": -0.43,
+    "SPY_20d_return_pct": -4.15,
+    "VIX": 25.25,
     "US_10Y_yield": 4.31
   },
   "tw_market": {
-    "TAIEX_close": 32518.0,
-    "TAIEX_RSI14": 48.1,
-    "TAIEX_SMA20": 33345.0,
-    "TAIEX_vs_52w_high_pct": 91.8,
-    "TAIEX_5d_return_pct": -0.62,
-    "TAIEX_20d_return_pct": -7.34,
-    "TSMC_close": null,
-    "TSMC_vs_52w_high_pct": null
+    "TAIEX_close": 33115.0,
+    "TAIEX_RSI14": 46.6,
+    "TAIEX_SMA20": 33230.0,
+    "TAIEX_vs_52w_high_pct": 93.5,
+    "TAIEX_5d_return_pct": -0.97,
+    "TAIEX_20d_return_pct": 0.87,
+    "TSMC_close": 1845.0,
+    "TSMC_vs_52w_high_pct": 91.9
   },
   "tw_retail_indicators": {
     "margin_balance": 8067915,
@@ -41,22 +41,22 @@
     "TSMC_margin_30d_change_pct": 21.88
   },
   "jp_market": {
-    "NIKKEI_close": 51885.85,
-    "NIKKEI_RSI14": 46.8,
-    "NIKKEI_SMA20": 54109.96,
-    "NIKKEI_vs_52w_high_pct": 88.2,
-    "NIKKEI_5d_return_pct": 0.72,
-    "NIKKEI_20d_return_pct": -11.83,
-    "jp_moodring_score": 39.1
+    "NIKKEI_close": 53376.88,
+    "NIKKEI_RSI14": 44.0,
+    "NIKKEI_SMA20": 53615.18,
+    "NIKKEI_vs_52w_high_pct": 90.7,
+    "NIKKEI_5d_return_pct": -0.69,
+    "NIKKEI_20d_return_pct": -5.16,
+    "jp_moodring_score": 58.2
   },
   "kr_market": {
-    "KOSPI_close": 5277.3,
-    "KOSPI_RSI14": 42.9,
-    "KOSPI_SMA20": 5547.87,
-    "KOSPI_vs_52w_high_pct": 83.7,
-    "KOSPI_5d_return_pct": -2.38,
-    "KOSPI_20d_return_pct": -15.48,
-    "kr_moodring_score": 18.6
+    "KOSPI_close": 5409.51,
+    "KOSPI_RSI14": 46.2,
+    "KOSPI_SMA20": 5526.7,
+    "KOSPI_vs_52w_high_pct": 85.8,
+    "KOSPI_5d_return_pct": -4.12,
+    "KOSPI_20d_return_pct": 6.2,
+    "kr_moodring_score": 51.7
   },
   "eu_market": {
     "STOXX50_close": 5569.73,
@@ -68,9 +68,8 @@
     "eu_moodring_score": 47.4
   },
   "global_context": {
-    "Gold": 4680.0,
-    "USDJPY": 158.83,
-    "USDTWD": 31.93
-  },
-  "retail_sentiment_commentary": "今天看盤心情很複雜。美股情緒47.3接近中性，台股49.4也差不多，但亞洲其他市場就慘了，韓股只有18.6根本是極度恐懼，日股39.1也偏弱。歐股47.4跟美股差不多勉強撐住。整體來看全球偏空氣氛濃厚，韓國跌最兇連帶信心被拖累。台股外資連續賣超，融資也沒明顯回補，散戶觀望居多。不過說實話，這種恐懼指數反而讓我開始注意逢低布局的機會，歷史經驗告訴我們大家最怕的時候往往就是轉折點。目前先觀望，等市場情緒再沉澱一下再說。"
+    "Gold": 4699.0,
+    "USDJPY": 158.88,
+    "USDTWD": 31.94
+  }
 }

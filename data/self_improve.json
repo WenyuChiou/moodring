@@ -55,8 +55,8 @@
       "zone_distribution_60d": {
         "extreme_fear": 1,
         "fear": 11,
-        "neutral": 47,
-        "greed": 1,
+        "neutral": 46,
+        "greed": 2,
         "extreme_greed": 0
       },
       "health": "warning",
@@ -69,7 +69,7 @@
       "recent_ic_20d": -0.2649,
       "ic_trend": "improving",
       "ic_change_pct": 146.6,
-      "score_mean_60d": 56.3,
+      "score_mean_60d": 56.4,
       "score_std_60d": 13.3,
       "zone_distribution_60d": {
         "extreme_fear": 2,
@@ -84,12 +84,12 @@
       "calibration_days_ago": 7
     },
     "eu": {
-      "full_ic_20d": -0.0569,
-      "recent_ic_20d": -0.5089,
+      "full_ic_20d": -0.0567,
+      "recent_ic_20d": -0.4997,
       "ic_trend": "improving",
-      "ic_change_pct": 794.4,
-      "score_mean_60d": 43.5,
-      "score_std_60d": 6.8,
+      "ic_change_pct": 781.3,
+      "score_mean_60d": 43.6,
+      "score_std_60d": 7.0,
       "zone_distribution_60d": {
         "extreme_fear": 1,
         "fear": 16,

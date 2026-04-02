@@ -1,5 +1,5 @@
 {
-  "date": "2026-04-01",
+  "date": "2026-04-02",
   "data_sources": {
     "market_prices": "Yahoo Finance (yfinance)",
     "tw_margin": "FinMind API (TWSE OpenData)",
@@ -19,14 +19,14 @@
     "US_10Y_yield": 4.32
   },
   "tw_market": {
-    "TAIEX_close": 33175.0,
-    "TAIEX_RSI14": 47.1,
-    "TAIEX_SMA20": 33233.0,
-    "TAIEX_vs_52w_high_pct": 93.7,
-    "TAIEX_5d_return_pct": -0.79,
-    "TAIEX_20d_return_pct": 1.05,
-    "TSMC_close": 1855.0,
-    "TSMC_vs_52w_high_pct": 92.4
+    "TAIEX_close": 32578.0,
+    "TAIEX_RSI14": 44.4,
+    "TAIEX_SMA20": 33178.0,
+    "TAIEX_vs_52w_high_pct": 92.0,
+    "TAIEX_5d_return_pct": -2.28,
+    "TAIEX_20d_return_pct": -3.25,
+    "TSMC_close": 1810.0,
+    "TSMC_vs_52w_high_pct": 90.1
   },
   "tw_retail_indicators": {
     "margin_balance": 8113463,
@@ -41,22 +41,22 @@
     "TSMC_margin_30d_change_pct": 20.71
   },
   "jp_market": {
-    "NIKKEI_close": 51063.72,
-    "NIKKEI_RSI14": 37.0,
-    "NIKKEI_SMA20": 53760.28,
-    "NIKKEI_vs_52w_high_pct": 86.8,
-    "NIKKEI_5d_return_pct": -2.27,
-    "NIKKEI_20d_return_pct": -12.05,
-    "jp_moodring_score": 61.3
+    "NIKKEI_close": 52545.73,
+    "NIKKEI_RSI14": 43.6,
+    "NIKKEI_SMA20": 53548.33,
+    "NIKKEI_vs_52w_high_pct": 89.3,
+    "NIKKEI_5d_return_pct": -1.97,
+    "NIKKEI_20d_return_pct": -3.13,
+    "jp_moodring_score": 53.8
   },
   "kr_market": {
-    "KOSPI_close": 5052.46,
-    "KOSPI_RSI14": 35.6,
-    "KOSPI_SMA20": 5510.9,
-    "KOSPI_vs_52w_high_pct": 80.1,
-    "KOSPI_5d_return_pct": -9.03,
-    "KOSPI_20d_return_pct": -12.77,
-    "kr_moodring_score": 56.2
+    "KOSPI_close": 5258.3,
+    "KOSPI_RSI14": 45.4,
+    "KOSPI_SMA20": 5513.88,
+    "KOSPI_vs_52w_high_pct": 83.4,
+    "KOSPI_5d_return_pct": -3.7,
+    "KOSPI_20d_return_pct": -5.83,
+    "kr_moodring_score": 32.8
   },
   "eu_market": {
     "STOXX50_close": 5732.71,
@@ -68,9 +68,8 @@
     "eu_moodring_score": 59.4
   },
   "global_context": {
-    "Gold": 4728.0,
-    "USDJPY": 159.25,
-    "USDTWD": 31.92
-  },
-  "retail_sentiment_commentary": "今天看 MoodRing，我會覺得整體市場偏樂觀，但還沒到失控。美股 54.3 算中性偏多，資金還願意追；台股 74.9 就真的有點熱了，看到這種分數我反而會想保守一點，別太興奮去追高。日股、韓股、歐股也都在偏多區，代表市場風險胃口還不差。以散戶角度，我現在會偏向續抱強勢股，但新單分批進，不敢一次壓太大，留點現金比較安心。"
+    "Gold": 4783.0,
+    "USDJPY": 159.36,
+    "USDTWD": 31.97
+  }
 }

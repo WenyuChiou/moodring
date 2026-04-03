@@ -1,5 +1,5 @@
 {
-  "date": "2026-04-01",
+  "date": "2026-04-02",
   "data_sources": {
     "market_prices": "Yahoo Finance (yfinance)",
     "tw_margin": "FinMind API (TWSE OpenData)",
@@ -8,69 +8,69 @@
     "behavioral_params": "Kahneman & Tversky (1979), Banerjee (1992)"
   },
   "us_market": {
-    "SPY_close": 655.24,
-    "SPY_RSI14": 45.2,
-    "SPY_SMA20": 659.27,
-    "SPY_SMA60": 677.72,
-    "SPY_vs_52w_high_pct": 94.5,
-    "SPY_5d_return_pct": -0.24,
-    "SPY_20d_return_pct": -4.1,
-    "VIX": 24.54,
-    "US_10Y_yield": 4.32
+    "SPY_close": 655.83,
+    "SPY_RSI14": 47.4,
+    "SPY_SMA20": 658.09,
+    "SPY_SMA60": 677.15,
+    "SPY_vs_52w_high_pct": 94.6,
+    "SPY_5d_return_pct": 1.66,
+    "SPY_20d_return_pct": -3.48,
+    "VIX": 23.87,
+    "US_10Y_yield": 4.31
   },
   "tw_market": {
-    "TAIEX_close": 33175.0,
-    "TAIEX_RSI14": 47.1,
-    "TAIEX_SMA20": 33233.0,
-    "TAIEX_vs_52w_high_pct": 93.7,
-    "TAIEX_5d_return_pct": -0.79,
-    "TAIEX_20d_return_pct": 1.05,
-    "TSMC_close": 1855.0,
-    "TSMC_vs_52w_high_pct": 92.4
+    "TAIEX_close": 32572.0,
+    "TAIEX_RSI14": 44.4,
+    "TAIEX_SMA20": 33178.0,
+    "TAIEX_vs_52w_high_pct": 92.0,
+    "TAIEX_5d_return_pct": -2.3,
+    "TAIEX_20d_return_pct": -3.27,
+    "TSMC_close": 1810.0,
+    "TSMC_vs_52w_high_pct": 90.1
   },
   "tw_retail_indicators": {
-    "margin_balance": 8113463,
-    "margin_5d_change_pct": 0.96,
-    "margin_5d_trend": "INCREASING",
-    "institutional_net_TWD": 550.1,
-    "retail_net_est_TWD": -550.1,
-    "foreign_net_TWD": 232.5,
+    "margin_balance": 8081563,
+    "margin_5d_change_pct": 0.16,
+    "margin_5d_trend": "FLAT",
+    "institutional_net_TWD": -372.6,
+    "retail_net_est_TWD": 372.6,
+    "foreign_net_TWD": -387.0,
     "foreign_consecutive_days": 1,
-    "foreign_consecutive_direction": "buy",
-    "TSMC_margin_balance": 26353,
-    "TSMC_margin_30d_change_pct": 20.71
+    "foreign_consecutive_direction": "sell",
+    "TSMC_margin_balance": 26598,
+    "TSMC_margin_30d_change_pct": 21.83
   },
   "jp_market": {
-    "NIKKEI_close": 51063.72,
-    "NIKKEI_RSI14": 37.0,
-    "NIKKEI_SMA20": 53760.28,
-    "NIKKEI_vs_52w_high_pct": 86.8,
-    "NIKKEI_5d_return_pct": -2.27,
-    "NIKKEI_20d_return_pct": -12.05,
-    "jp_moodring_score": 61.3
+    "NIKKEI_close": 52463.27,
+    "NIKKEI_RSI14": 43.3,
+    "NIKKEI_SMA20": 53544.2,
+    "NIKKEI_vs_52w_high_pct": 89.1,
+    "NIKKEI_5d_return_pct": -2.13,
+    "NIKKEI_20d_return_pct": -3.29,
+    "jp_moodring_score": 52.9
   },
   "kr_market": {
-    "KOSPI_close": 5052.46,
-    "KOSPI_RSI14": 35.6,
-    "KOSPI_SMA20": 5510.9,
-    "KOSPI_vs_52w_high_pct": 80.1,
-    "KOSPI_5d_return_pct": -9.03,
-    "KOSPI_20d_return_pct": -12.77,
-    "kr_moodring_score": 56.2
+    "KOSPI_close": 5234.05,
+    "KOSPI_RSI14": 44.9,
+    "KOSPI_SMA20": 5512.66,
+    "KOSPI_vs_52w_high_pct": 83.0,
+    "KOSPI_5d_return_pct": -4.15,
+    "KOSPI_20d_return_pct": -6.27,
+    "kr_moodring_score": 31.2
   },
   "eu_market": {
-    "STOXX50_close": 5732.71,
-    "STOXX50_RSI14": 49.1,
-    "STOXX50_SMA20": 5668.32,
-    "STOXX50_vs_52w_high_pct": 92.9,
-    "STOXX50_5d_return_pct": 1.48,
-    "STOXX50_20d_return_pct": -2.35,
-    "eu_moodring_score": 59.4
+    "STOXX50_close": 5692.86,
+    "STOXX50_RSI14": 48.6,
+    "STOXX50_SMA20": 5663.82,
+    "STOXX50_vs_52w_high_pct": 92.2,
+    "STOXX50_5d_return_pct": 2.28,
+    "STOXX50_20d_return_pct": -1.56,
+    "eu_moodring_score": 58.5
   },
   "global_context": {
-    "Gold": 4728.0,
-    "USDJPY": 159.25,
-    "USDTWD": 31.92
+    "Gold": 4703.0,
+    "USDJPY": 159.66,
+    "USDTWD": 31.93
   },
-  "retail_sentiment_commentary": "今天看 MoodRing，我會覺得整體市場偏樂觀，但還沒到失控。美股 54.3 算中性偏多，資金還願意追；台股 74.9 就真的有點熱了，看到這種分數我反而會想保守一點，別太興奮去追高。日股、韓股、歐股也都在偏多區，代表市場風險胃口還不差。以散戶角度，我現在會偏向續抱強勢股，但新單分批進，不敢一次壓太大，留點現金比較安心。"
+  "retail_sentiment_commentary": "欸，看了一下今天的情緒指標，感覺好像不錯耶！美股、日股、歐洲都小小偏多（50幾分），感覺市場上大家比較樂觀，準備要衝一波的樣子。尤其是台股，分數衝到64.7，根本是標準的「少年股神」心態，散戶們應該都很有信心，準備大展身手！\n\n不過，韓國股市有點反常，分數只有31.2， parece que está en modo \"恐慌\". 韓國那邊是不是有什麼狀況啊？\n\n總體來說，大部分市場都在往上走，操作上可以稍微大膽一點，但還是要留意一下韓國那邊的警訊，別衝太猛，賺到錢最重要！"
 }

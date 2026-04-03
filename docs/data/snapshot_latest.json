@@ -1,5 +1,5 @@
 {
-  "date": "2026-04-02",
+  "date": "2026-04-03",
   "data_sources": {
     "market_prices": "Yahoo Finance (yfinance)",
     "tw_margin": "FinMind API (TWSE OpenData)",
@@ -41,22 +41,22 @@
     "TSMC_margin_30d_change_pct": 21.83
   },
   "jp_market": {
-    "NIKKEI_close": 52463.27,
-    "NIKKEI_RSI14": 43.3,
-    "NIKKEI_SMA20": 53544.2,
-    "NIKKEI_vs_52w_high_pct": 89.1,
-    "NIKKEI_5d_return_pct": -2.13,
-    "NIKKEI_20d_return_pct": -3.29,
-    "jp_moodring_score": 52.9
+    "NIKKEI_close": 53005.05,
+    "NIKKEI_RSI14": 47.2,
+    "NIKKEI_SMA20": 53430.55,
+    "NIKKEI_vs_52w_high_pct": 90.1,
+    "NIKKEI_5d_return_pct": -0.69,
+    "NIKKEI_20d_return_pct": -4.11,
+    "jp_moodring_score": 57.1
   },
   "kr_market": {
-    "KOSPI_close": 5234.05,
-    "KOSPI_RSI14": 44.9,
-    "KOSPI_SMA20": 5512.66,
-    "KOSPI_vs_52w_high_pct": 83.0,
-    "KOSPI_5d_return_pct": -4.15,
-    "KOSPI_20d_return_pct": -6.27,
-    "kr_moodring_score": 31.2
+    "KOSPI_close": 5367.71,
+    "KOSPI_RSI14": 46.4,
+    "KOSPI_SMA20": 5501.81,
+    "KOSPI_vs_52w_high_pct": 85.1,
+    "KOSPI_5d_return_pct": -1.31,
+    "KOSPI_20d_return_pct": -3.89,
+    "kr_moodring_score": 39.1
   },
   "eu_market": {
     "STOXX50_close": 5692.86,
@@ -68,9 +68,8 @@
     "eu_moodring_score": 58.5
   },
   "global_context": {
-    "Gold": 4703.0,
-    "USDJPY": 159.66,
-    "USDTWD": 31.93
-  },
-  "retail_sentiment_commentary": "欸，看了一下今天的情緒指標，感覺好像不錯耶！美股、日股、歐洲都小小偏多（50幾分），感覺市場上大家比較樂觀，準備要衝一波的樣子。尤其是台股，分數衝到64.7，根本是標準的「少年股神」心態，散戶們應該都很有信心，準備大展身手！\n\n不過，韓國股市有點反常，分數只有31.2， parece que está en modo \"恐慌\". 韓國那邊是不是有什麼狀況啊？\n\n總體來說，大部分市場都在往上走，操作上可以稍微大膽一點，但還是要留意一下韓國那邊的警訊，別衝太猛，賺到錢最重要！"
+    "Gold": 4652.0,
+    "USDJPY": 159.57,
+    "USDTWD": 31.95
+  }
 }

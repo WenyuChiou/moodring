@@ -1,5 +1,5 @@
 {
-  "date": "2026-04-07",
+  "date": "2026-04-08",
   "data_sources": {
     "market_prices": "Yahoo Finance (yfinance)",
     "tw_margin": "FinMind API (TWSE OpenData)",
@@ -8,25 +8,25 @@
     "behavioral_params": "Kahneman & Tversky (1979), Banerjee (1992)"
   },
   "us_market": {
-    "SPY_close": 659.22,
-    "SPY_RSI14": 44.3,
-    "SPY_SMA20": 656.65,
-    "SPY_SMA60": 676.19,
-    "SPY_vs_52w_high_pct": 95.0,
-    "SPY_5d_return_pct": 4.31,
-    "SPY_20d_return_pct": -2.54,
+    "SPY_close": null,
+    "SPY_RSI14": 44.1,
+    "SPY_SMA20": null,
+    "SPY_SMA60": null,
+    "SPY_vs_52w_high_pct": null,
+    "SPY_5d_return_pct": null,
+    "SPY_20d_return_pct": null,
     "VIX": 25.78,
     "US_10Y_yield": 4.34
   },
   "tw_market": {
-    "TAIEX_close": 32572.0,
-    "TAIEX_RSI14": 44.4,
-    "TAIEX_SMA20": 33178.0,
-    "TAIEX_vs_52w_high_pct": 92.0,
-    "TAIEX_5d_return_pct": -2.3,
-    "TAIEX_20d_return_pct": -3.27,
-    "TSMC_close": 1860.0,
-    "TSMC_vs_52w_high_pct": 92.6
+    "TAIEX_close": 34629.0,
+    "TAIEX_RSI14": 56.8,
+    "TAIEX_SMA20": 33229.0,
+    "TAIEX_vs_52w_high_pct": 97.8,
+    "TAIEX_5d_return_pct": 4.58,
+    "TAIEX_20d_return_pct": 3.06,
+    "TSMC_close": 1945.0,
+    "TSMC_vs_52w_high_pct": 96.8
   },
   "tw_retail_indicators": {
     "margin_balance": 8103620,
@@ -41,36 +41,35 @@
     "TSMC_margin_30d_change_pct": 19.09
   },
   "jp_market": {
-    "NIKKEI_close": 53413.68,
-    "NIKKEI_RSI14": 48.9,
-    "NIKKEI_SMA20": 53326.12,
-    "NIKKEI_vs_52w_high_pct": 90.8,
-    "NIKKEI_5d_return_pct": 2.94,
-    "NIKKEI_20d_return_pct": -3.97,
-    "jp_moodring_score": 60.3
+    "NIKKEI_close": 56100.53,
+    "NIKKEI_RSI14": 56.8,
+    "NIKKEI_SMA20": 53494.71,
+    "NIKKEI_vs_52w_high_pct": 95.3,
+    "NIKKEI_5d_return_pct": 9.86,
+    "NIKKEI_20d_return_pct": 6.39,
+    "jp_moodring_score": 85.6
   },
   "kr_market": {
-    "KOSPI_close": 5450.33,
-    "KOSPI_RSI14": 46.3,
-    "KOSPI_SMA20": 5512.21,
-    "KOSPI_vs_52w_high_pct": 86.4,
-    "KOSPI_5d_return_pct": 3.28,
-    "KOSPI_20d_return_pct": 3.78,
-    "kr_moodring_score": 50.4
+    "KOSPI_close": 5845.14,
+    "KOSPI_RSI14": 48.5,
+    "KOSPI_SMA20": 5527.84,
+    "KOSPI_vs_52w_high_pct": 92.7,
+    "KOSPI_5d_return_pct": 15.69,
+    "KOSPI_20d_return_pct": 5.65,
+    "kr_moodring_score": 67.5
   },
   "eu_market": {
-    "STOXX50_close": 5633.22,
-    "STOXX50_RSI14": 44.2,
-    "STOXX50_SMA20": 5659.49,
-    "STOXX50_vs_52w_high_pct": 91.3,
-    "STOXX50_5d_return_pct": 2.31,
-    "STOXX50_20d_return_pct": -1.52,
+    "STOXX50_close": 5692.86,
+    "STOXX50_RSI14": 48.6,
+    "STOXX50_SMA20": 5663.82,
+    "STOXX50_vs_52w_high_pct": 92.2,
+    "STOXX50_5d_return_pct": 2.28,
+    "STOXX50_20d_return_pct": -1.56,
     "eu_moodring_score": 55.0
   },
   "global_context": {
-    "Gold": 4733.0,
-    "USDJPY": 159.59,
-    "USDTWD": 31.89
-  },
-  "retail_sentiment_commentary": "今天MoodRing分數出來囉！台股來到64.7，感覺有點貪婪，好像又有肉可以吃囉！美股57.2、日股60.3、歐股55.0也都小幅偏多，只有韓股50.4比較中性。整體市場氣氛不錯，但大家還是要小心，別追高殺低喔！"
+    "Gold": 4829.0,
+    "USDJPY": 158.39,
+    "USDTWD": 31.75
+  }
 }

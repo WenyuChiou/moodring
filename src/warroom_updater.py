@@ -6,6 +6,8 @@ import json
 import logging
 import math
 import os
+import queue
+import threading
 from collections.abc import Mapping
 from datetime import datetime, timezone
 from pathlib import Path
@@ -447,12 +449,29 @@ def fetch_moomoo_positions() -> tuple[dict[str, Any], list[str]]:
     trade_ctx = None
     try:
         logging.info("Connecting to moomoo OpenD")
-        trade_ctx = OpenSecTradeContext(
-            host="127.0.0.1",
-            port=11111,
-            security_firm=SecurityFirm.FUTUINC,
-            filter_trdmarket=TrdMarket.NONE,
-        )
+        _ctx_queue: queue.Queue[Any] = queue.Queue()
+
+        def _connect() -> None:
+            try:
+                ctx = OpenSecTradeContext(
+                    host="127.0.0.1",
+                    port=11111,
+                    security_firm=SecurityFirm.FUTUINC,
+                    filter_trdmarket=TrdMarket.NONE,
+                )
+                _ctx_queue.put(ctx)
+            except Exception as e:  # noqa: BLE001
+                _ctx_queue.put(e)
+
+        _t = threading.Thread(target=_connect, daemon=True)
+        _t.start()
+        _t.join(timeout=15)
+        if _t.is_alive() or _ctx_queue.empty():
+            raise ConnectionError("moomoo OpenD connection timed out after 15s")
+        _item = _ctx_queue.get_nowait()
+        if isinstance(_item, Exception):
+            raise _item
+        trade_ctx = _item
 
         for account in ACCOUNT_CONFIGS:
             account_id = account["acc_id"]

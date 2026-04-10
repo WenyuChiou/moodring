@@ -9,3 +9,4 @@ gitfetch*.txt
 gitlog.txt
 *_run_log.txt
 VALIDATION_GATE_PLAN.md
+logs/validation_failures/*.json

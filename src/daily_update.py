@@ -285,7 +285,10 @@ def clean_holiday_anomalies(sync_docs=True):
 
         # Pass 3: value-based flatline detection
         # If score[i] == score[i-1] AND date[i] not in price_dates_set → null it (gap marker)
-        for i in range(1, len(new_scores)):
+        # ORDERING GUARD: skip the final entry (i == len-1). Today's price may not yet be
+        # in price_dates_set when --clean runs before the daily fetch, and nulling a fresh
+        # valid score would create the same write-ordering bug it's meant to prevent.
+        for i in range(1, len(new_scores) - 1):
             if score_dates[i] not in price_dates_set:
                 prev = new_scores[i - 1]
                 curr = new_scores[i]
@@ -2571,6 +2574,11 @@ def main():
     print("=" * 50)
 
     # Retroactive cleanup mode
+    # WRITE-ORDERING: --clean MUST run before the market fetch + overlay append below.
+    # If clean runs AFTER append, pass 3 of clean_holiday_anomalies() can null today's
+    # freshly-written score (if today's price isn't in price_dates_set yet).
+    # The guard in pass 3 (skip last entry) is a secondary defence; the primary defence
+    # is this placement: clean is the FIRST writer, append is the LAST writer.
     if args.clean:
         print("\n[CLEAN] Running retroactive holiday anomaly cleanup...")
         clean_holiday_anomalies(sync_docs=True)

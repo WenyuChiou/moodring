@@ -1,23 +1,1230 @@
 {
-  "date": "2026-03-19",
-  "market": { "spy": 659, "qqq": 593, "vix": 26.78, "wti": 96.14, "brent": 108.65, "rate10y": 3.625 },
+  "meta": {
+    "generated_at": "2026-04-10T02:18:22.929986+00:00",
+    "as_of": "2026-04-09",
+    "output_path": "docs\\data\\warroom_data.json",
+    "warnings": [
+      "OpenD unavailable, skipping moomoo data: moomoo OpenD connection timed out after 15s"
+    ]
+  },
+  "market": {
+    "as_of": "2026-04-09",
+    "items": {
+      "SPY": {
+        "symbol": "SPY",
+        "label": "SPDR S&P 500 ETF",
+        "price": 679.91,
+        "change_pct": 0.58,
+        "prev_close": 676.01,
+        "as_of": "2026-04-09"
+      },
+      "QQQ": {
+        "symbol": "QQQ",
+        "label": "Invesco QQQ",
+        "price": 610.19,
+        "change_pct": 0.68,
+        "prev_close": 606.09,
+        "as_of": "2026-04-09"
+      },
+      "VIX": {
+        "symbol": "^VIX",
+        "label": "CBOE Volatility Index",
+        "price": 19.49,
+        "change_pct": -7.37,
+        "prev_close": 21.04,
+        "as_of": "2026-04-09"
+      },
+      "IWM": {
+        "symbol": "IWM",
+        "label": "iShares Russell 2000 ETF",
+        "price": 261.96,
+        "change_pct": 0.57,
+        "prev_close": 260.47,
+        "as_of": "2026-04-09"
+      },
+      "NVDA": {
+        "symbol": "NVDA",
+        "label": "NVIDIA",
+        "price": 183.91,
+        "change_pct": 1.01,
+        "prev_close": 182.08,
+        "as_of": "2026-04-09"
+      },
+      "BRENT": {
+        "symbol": "BZ=F",
+        "label": "Brent Crude Futures",
+        "price": 96.51,
+        "change_pct": 1.86,
+        "prev_close": 94.75,
+        "as_of": "2026-04-09"
+      },
+      "DXY": {
+        "symbol": "DX-Y.NYB",
+        "label": "US Dollar Index",
+        "price": 98.862,
+        "change_pct": -0.27,
+        "prev_close": 99.13,
+        "as_of": "2026-04-09"
+      },
+      "TNX": {
+        "symbol": "^TNX",
+        "label": "US 10Y Treasury Yield",
+        "price": 4.293,
+        "change_pct": 0.05,
+        "prev_close": 4.291,
+        "as_of": "2026-04-09"
+      }
+    }
+  },
+  "moodring": {
+    "as_of": "2026-04-09",
+    "source_url": "https://wenyuchiou.github.io/moodring/data/dashboard_data.json",
+    "regions": {
+      "US": {
+        "date": "2026-04-09",
+        "score": 72.2,
+        "signal": "偏貪婪"
+      },
+      "TW": {
+        "date": "2026-04-09",
+        "score": 84.9,
+        "signal": "極度貪婪"
+      },
+      "JP": {
+        "date": "2026-04-09",
+        "score": 58.1,
+        "signal": "偏貪婪"
+      },
+      "KR": {
+        "date": "2026-04-09",
+        "score": 39.8,
+        "signal": "偏恐懼"
+      },
+      "EU": {
+        "date": "2026-04-09",
+        "score": 58.5,
+        "signal": "偏貪婪"
+      }
+    }
+  },
   "scenarios": [
-    { "id": "S1", "name": "Quick deal + pause", "prob": 5, "spy": 685, "nash": "Not EQ", "duration": "<4 wks" },
-    { "id": "S2", "name": "SOF + partial deal", "prob": 20, "spy": 630, "nash": "Weak", "duration": "4-8 wks" },
-    { "id": "S3", "name": "Protracted standoff + stagflation", "prob": 42, "spy": 575, "nash": "Strong", "duration": "3-6 mo" },
-    { "id": "S4", "name": "Ground escalation + recession", "prob": 33, "spy": 510, "nash": "Unstable", "duration": "6+ mo" }
-  ],
-  "positions": [
-    { "id": "P1", "ticker": "QQQ", "type": "Bear Put", "buyStrike": 595, "sellStrike": 575, "expiry": "Apr 17", "cost": 5.16, "qty": 2, "status": "ITM" },
-    { "id": "P2", "ticker": "SPY", "type": "Bear Put", "buyStrike": 655, "sellStrike": 630, "cost": 7.00, "qty": 2, "expiry": "May 15", "status": "Near ITM" },
-    { "id": "P3", "ticker": "SPY", "type": "Bear Put", "buyStrike": 600, "sellStrike": 570, "cost": 3.87, "qty": 1, "expiry": "Jun 19", "status": "OTM (B1/3)" }
+    {
+      "id": "S1",
+      "name": "Quick deal + pause",
+      "prob": 5,
+      "spy": 685,
+      "nash": "Not EQ",
+      "duration": "<4 wks"
+    },
+    {
+      "id": "S2",
+      "name": "SOF + partial deal",
+      "prob": 20,
+      "spy": 630,
+      "nash": "Weak",
+      "duration": "4-8 wks"
+    },
+    {
+      "id": "S3",
+      "name": "Protracted standoff + stagflation",
+      "prob": 42,
+      "spy": 575,
+      "nash": "Strong",
+      "duration": "3-6 mo"
+    },
+    {
+      "id": "S4",
+      "name": "Ground escalation + recession",
+      "prob": 33,
+      "spy": 510,
+      "nash": "Unstable",
+      "duration": "6+ mo"
+    }
   ],
   "hypotheses": [
-    { "id": 1, "text": "美伊戰爭 4-6 週結束", "status": "BROKEN" },
-    { "id": 2, "text": "Fed 2026 降息 1 次", "status": "BROKEN" },
-    { "id": 3, "text": "AI capex → 營收變現", "status": "SPLIT" },
-    { "id": 4, "text": "油價 Q3 回到 $75", "status": "BROKEN" },
-    { "id": 5, "text": "2026 美國不衰退", "status": "CHALLENGED" }
+    {
+      "id": 1,
+      "text": "美伊戰爭 4-6 週結束",
+      "status": "BROKEN"
+    },
+    {
+      "id": 2,
+      "text": "Fed 2026 降息 1 次",
+      "status": "BROKEN"
+    },
+    {
+      "id": 3,
+      "text": "AI capex → 營收變現",
+      "status": "SPLIT"
+    },
+    {
+      "id": 4,
+      "text": "油價 Q3 回到 $75",
+      "status": "BROKEN"
+    },
+    {
+      "id": 5,
+      "text": "2026 美國不衰退",
+      "status": "CHALLENGED"
+    }
   ],
-  "capital": { "poolA": 20, "poolB": 15, "poolC": 50, "cash": 48, "deployed": 37 }
+  "positions": {
+    "as_of": "2026-04-09",
+    "accounts": [
+      {
+        "account_name": "cash",
+        "acc_id": "283445328432576687",
+        "strategy": "stocks",
+        "funds": {},
+        "positions": []
+      },
+      {
+        "account_name": "margin",
+        "acc_id": "283445329185003354",
+        "strategy": "options",
+        "funds": {},
+        "positions": []
+      }
+    ],
+    "warnings": [
+      "OpenD unavailable, skipping moomoo data: moomoo OpenD connection timed out after 15s"
+    ]
+  },
+  "macro": {
+    "macro": {
+      "yield_curve": {
+        "1M": 3.67,
+        "3M": 3.69,
+        "6M": 3.73,
+        "1Y": 3.69,
+        "2Y": 3.79,
+        "3Y": 3.78,
+        "5Y": 3.92,
+        "10Y": 4.29,
+        "30Y": 4.89
+      },
+      "spread_2s10s": 0.5,
+      "yield_curve_inverted": false,
+      "indicators": [
+        {
+          "name": "CPI",
+          "label": "消費者物價指數 (CPI)",
+          "series": "CPIAUCSL",
+          "latest": 327.46,
+          "previous": 326.588,
+          "change": 0.872,
+          "trend": "上升",
+          "date": "2026-02-01"
+        },
+        {
+          "name": "核心PCE",
+          "label": "核心個人消費支出 (Core PCE)",
+          "series": "PCEPILFE",
+          "latest": 128.859,
+          "previous": 128.388,
+          "change": 0.471,
+          "trend": "上升",
+          "date": "2026-02-01"
+        },
+        {
+          "name": "失業率",
+          "label": "失業率",
+          "series": "UNRATE",
+          "latest": 4.3,
+          "previous": 4.4,
+          "change": -0.1,
+          "trend": "下降",
+          "date": "2026-03-01"
+        },
+        {
+          "name": "非農就業人數",
+          "label": "非農就業人數 (NFP)",
+          "series": "PAYEMS",
+          "latest": 158637.0,
+          "previous": 158459.0,
+          "change": 178.0,
+          "trend": "上升",
+          "date": "2026-03-01"
+        },
+        {
+          "name": "GDP",
+          "label": "國內生產毛額 (GDP)",
+          "series": "GDP",
+          "latest": 31422.526,
+          "previous": 31098.027,
+          "change": 324.499,
+          "trend": "上升",
+          "date": "2025-10-01"
+        },
+        {
+          "name": "初領失業救濟金",
+          "label": "初領失業救濟金人數",
+          "series": "ICSA",
+          "latest": 219000.0,
+          "previous": 203000.0,
+          "change": 16000.0,
+          "trend": "上升",
+          "date": "2026-04-04"
+        },
+        {
+          "name": "消費者信心指數",
+          "label": "密歇根消費者信心指數",
+          "series": "UMCSENT",
+          "latest": 56.6,
+          "previous": 56.4,
+          "change": 0.2,
+          "trend": "上升",
+          "date": "2026-02-01"
+        }
+      ],
+      "calendar": [
+        {
+          "date": "2026-04-09",
+          "event": "初領失業救濟金",
+          "importance": "MEDIUM"
+        },
+        {
+          "date": "2026-04-11",
+          "event": "零售銷售",
+          "importance": "MEDIUM"
+        },
+        {
+          "date": "2026-04-16",
+          "event": "初領失業救濟金",
+          "importance": "MEDIUM"
+        }
+      ],
+      "updated_at": "2026-04-10T02:18:20"
+    }
+  },
+  "news": {
+    "news": {
+      "items": [
+        {
+          "time": "2026-04-10T00:47:03",
+          "source": "cnbc",
+          "headline": "Asia-Pacific markets open mostly higher as a fragile Iran-U.S. ceasefire keeps investors on edge",
+          "relevance_score": 10,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [
+            "H1",
+            "H4"
+          ],
+          "category": "earnings"
+        },
+        {
+          "time": "2026-04-10T01:56:46",
+          "source": "cnbc",
+          "headline": "China factory prices return to growth after 3 years, beating expectations on surging oil prices",
+          "relevance_score": 8,
+          "sentiment": "bullish",
+          "impact": {
+            "spy": 0.48,
+            "vix": -2.0
+          },
+          "related_hypotheses": [
+            "H2",
+            "H4",
+            "H5"
+          ],
+          "category": "macro"
+        },
+        {
+          "time": "2026-04-08T14:07:34",
+          "source": "yahoo",
+          "headline": "Robinhood Markets Earnings Preview: What to Expect",
+          "relevance_score": 7,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [],
+          "category": "earnings"
+        },
+        {
+          "time": "2026-04-08T14:07:57",
+          "source": "yahoo",
+          "headline": "Moderna Is Most Shorted S&P 500 Stock Now. Is It a Contrarian Buy?",
+          "relevance_score": 7,
+          "sentiment": "bullish",
+          "impact": {
+            "spy": 0.42,
+            "vix": -1.75
+          },
+          "related_hypotheses": [],
+          "category": "macro"
+        },
+        {
+          "time": "2026-04-08T14:09:09",
+          "source": "yahoo",
+          "headline": "Metals Platform Miotal To Be Listed on Nasdaq Through FERA Merger",
+          "relevance_score": 7,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [
+            "H3"
+          ],
+          "category": "technical"
+        },
+        {
+          "time": "2026-04-09T22:13:47",
+          "source": "cnbc",
+          "headline": "Cramer explains the divergence in tech stocks – and why software may continue to lag",
+          "relevance_score": 7,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [
+            "H1",
+            "H3"
+          ],
+          "category": "geopolitical"
+        },
+        {
+          "time": "2026-04-08T14:08:21",
+          "source": "yahoo",
+          "headline": "Stocks Soar as US and Iran Agree to a Ceasefire",
+          "relevance_score": 6,
+          "sentiment": "bullish",
+          "impact": {
+            "spy": 0.36,
+            "vix": -1.5
+          },
+          "related_hypotheses": [
+            "H1"
+          ],
+          "category": "geopolitical"
+        },
+        {
+          "time": "2026-04-08T14:23:34",
+          "source": "yahoo",
+          "headline": "Is Hut 8 Corp. (HUT) One of the Most Oversold Data Center Stocks to Invest In?",
+          "relevance_score": 6,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [
+            "H3"
+          ],
+          "category": "technical"
+        },
+        {
+          "time": "2026-04-08T14:23:38",
+          "source": "yahoo",
+          "headline": "Analysts Confident in Amazon.com (AMZN)’s Scale and Ability to Drive Additional Revenue from Its Existing Platforms",
+          "relevance_score": 6,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [
+            "H3"
+          ],
+          "category": "earnings"
+        },
+        {
+          "time": "2026-04-08T14:23:40",
+          "source": "yahoo",
+          "headline": "Citi Remains Bullish on Taiwan Semiconductor (TSM) Amid Growing Demand for AI-Driven Chips",
+          "relevance_score": 6,
+          "sentiment": "bullish",
+          "impact": {
+            "spy": 0.36,
+            "vix": -1.5
+          },
+          "related_hypotheses": [
+            "H3"
+          ],
+          "category": "technical"
+        },
+        {
+          "time": "2026-04-09T14:38:23",
+          "source": "cnbc",
+          "headline": "Inflation held sticky at 3% as U.S. headed into war with Iran, key Fed gauge shows",
+          "relevance_score": 6,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [
+            "H1",
+            "H2"
+          ],
+          "category": "policy"
+        },
+        {
+          "time": "2026-04-09T16:03:29",
+          "source": "cnbc",
+          "headline": "Trump says U.S. ready for 'next conquest,' warns military will remain near Iran until 'real agreement' is honored",
+          "relevance_score": 6,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [
+            "H1",
+            "H3"
+          ],
+          "category": "geopolitical"
+        },
+        {
+          "time": "2026-04-09T16:43:20",
+          "source": "cnbc",
+          "headline": "The Strait of Hormuz is not open as Iran controls access after ceasefire, UAE oil CEO says",
+          "relevance_score": 6,
+          "sentiment": "bearish",
+          "impact": {
+            "spy": -0.65,
+            "vix": 3.0
+          },
+          "related_hypotheses": [
+            "H1",
+            "H3",
+            "H4"
+          ],
+          "category": "geopolitical"
+        },
+        {
+          "time": "2026-04-09T18:53:33",
+          "source": "cnbc",
+          "headline": "Maine set to become first state with data center ban",
+          "relevance_score": 6,
+          "sentiment": "bearish",
+          "impact": {
+            "spy": -0.36,
+            "vix": 1.5
+          },
+          "related_hypotheses": [
+            "H3",
+            "H4"
+          ],
+          "category": "technical"
+        },
+        {
+          "time": "2026-04-09T19:06:41",
+          "source": "cnbc",
+          "headline": "OpenAI looks to take on Anthropic with $100 per month ChatGPT Pro subscriptions",
+          "relevance_score": 6,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [
+            "H3"
+          ],
+          "category": "technical"
+        },
+        {
+          "time": "2026-04-09T19:07:13",
+          "source": "cnbc",
+          "headline": "47% of college students have seriously considered changing majors due to AI: Survey",
+          "relevance_score": 6,
+          "sentiment": "bearish",
+          "impact": {
+            "spy": -0.36,
+            "vix": 1.5
+          },
+          "related_hypotheses": [
+            "H3"
+          ],
+          "category": "technical"
+        },
+        {
+          "time": "2026-04-09T20:03:59",
+          "source": "cnbc",
+          "headline": "Automatic U.S. military draft registration planned by December, filing shows",
+          "relevance_score": 6,
+          "sentiment": "bullish",
+          "impact": {
+            "spy": 0.65,
+            "vix": -3.0
+          },
+          "related_hypotheses": [
+            "H1",
+            "H3"
+          ],
+          "category": "geopolitical"
+        },
+        {
+          "time": "2026-04-09T20:44:10",
+          "source": "cnbc",
+          "headline": "Iran attacks on crucial Saudi pipeline and production facilities slash kingdom's oil output",
+          "relevance_score": 6,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [
+            "H1",
+            "H3",
+            "H4"
+          ],
+          "category": "macro"
+        },
+        {
+          "time": "2026-04-09T21:09:28",
+          "source": "cnbc",
+          "headline": "Melania Trump blasts claims about Jeffrey Epstein and her",
+          "relevance_score": 6,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [
+            "H3"
+          ],
+          "category": "earnings"
+        },
+        {
+          "time": "2026-04-09T21:24:19",
+          "source": "cnbc",
+          "headline": "Keir Starmer: 'I'm fed up' with Trump and Putin affecting UK energy costs",
+          "relevance_score": 6,
+          "sentiment": "bullish",
+          "impact": {
+            "spy": 0.65,
+            "vix": -3.0
+          },
+          "related_hypotheses": [
+            "H1",
+            "H2",
+            "H3",
+            "H4"
+          ],
+          "category": "geopolitical"
+        },
+        {
+          "time": "2026-04-09T22:41:02",
+          "source": "cnbc",
+          "headline": "Trump says Iran 'better stop now' if it's charging oil tankers fees to go through Strait of Hormuz",
+          "relevance_score": 6,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [
+            "H1",
+            "H3",
+            "H4"
+          ],
+          "category": "geopolitical"
+        },
+        {
+          "time": "2026-04-10T01:03:15",
+          "source": "cnbc",
+          "headline": "Oil edges higher as U.S.-Iran ceasefire fails to boost traffic via Strait of Hormuz",
+          "relevance_score": 6,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [
+            "H1",
+            "H3",
+            "H4"
+          ],
+          "category": "geopolitical"
+        },
+        {
+          "time": "2026-04-08T14:07:00",
+          "source": "yahoo",
+          "headline": "Super Micro Stock Is Rising. How It Plans to Probe the China Server Scandal.",
+          "relevance_score": 5,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [],
+          "category": "macro"
+        },
+        {
+          "time": "2026-04-08T14:08:44",
+          "source": "yahoo",
+          "headline": "Levi Strauss (LEVI) Q3 2024 Earnings Transcript",
+          "relevance_score": 5,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [],
+          "category": "earnings"
+        },
+        {
+          "time": "2026-04-08T14:12:45",
+          "source": "yahoo",
+          "headline": "New tolls could add $1 a barrel to Hormuz oil",
+          "relevance_score": 5,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [
+            "H4"
+          ],
+          "category": "macro"
+        },
+        {
+          "time": "2026-04-08T14:15:01",
+          "source": "yahoo",
+          "headline": "Oracle Just Got a New CFO. Does That Make ORCL Stock a Buy, Sell, or Hold Here?",
+          "relevance_score": 5,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [],
+          "category": "macro"
+        },
+        {
+          "time": "2026-04-08T14:18:38",
+          "source": "yahoo",
+          "headline": "Tesla Missed Q1 Delivery Expectations. Can TSLA Stock Survive Yet Another Blow?",
+          "relevance_score": 5,
+          "sentiment": "bearish",
+          "impact": {
+            "spy": -0.3,
+            "vix": 1.25
+          },
+          "related_hypotheses": [],
+          "category": "earnings"
+        },
+        {
+          "time": "2026-04-08T14:23:21",
+          "source": "yahoo",
+          "headline": "NVIDIA (NVDA) Among the Hedge Fund Favorites with Strong Setup in 2026",
+          "relevance_score": 5,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [
+            "H3"
+          ],
+          "category": "technical"
+        },
+        {
+          "time": "2026-04-09T19:12:43",
+          "source": "cnbc",
+          "headline": "Salesforce won't be discarded in the AI boom, but what companies want is changing",
+          "relevance_score": 5,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [
+            "H3",
+            "H5"
+          ],
+          "category": "technical"
+        },
+        {
+          "time": "2026-04-09T20:08:14",
+          "source": "cnbc",
+          "headline": "Amazon CEO Jassy defends $200 billion AI spend: \"We're not going to be conservative\"",
+          "relevance_score": 5,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [
+            "H3"
+          ],
+          "category": "technical"
+        },
+        {
+          "time": "2026-04-09T20:29:52",
+          "source": "cnbc",
+          "headline": "Meta's long-awaited AI model is finally here. But can it make money?",
+          "relevance_score": 5,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [
+            "H3"
+          ],
+          "category": "technical"
+        },
+        {
+          "time": "2026-04-10T00:00:01",
+          "source": "cnbc",
+          "headline": "OpenAI slams Anthropic in memo to shareholders as its leading AI rival gains momentum",
+          "relevance_score": 5,
+          "sentiment": "bullish",
+          "impact": {
+            "spy": 0.3,
+            "vix": -1.25
+          },
+          "related_hypotheses": [
+            "H3"
+          ],
+          "category": "technical"
+        },
+        {
+          "time": "2026-04-10T02:00:43",
+          "source": "cnbc",
+          "headline": "Alibaba leads $290 million investment for building a new kind of AI model as LLM limits emerge",
+          "relevance_score": 5,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [
+            "H3"
+          ],
+          "category": "technical"
+        },
+        {
+          "time": "2026-04-10T02:13:58",
+          "source": "cnbc",
+          "headline": "Warsh Fed confirmation plan hits a snag as expected nomination hearing is delayed",
+          "relevance_score": 5,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [
+            "H1",
+            "H2"
+          ],
+          "category": "geopolitical"
+        },
+        {
+          "time": "2026-04-08T11:08:29",
+          "source": "yahoo",
+          "headline": "Gold and silver price today, Wednesday, April 8: Prices rise after announcement of U.S.-Iran ceasefire",
+          "relevance_score": 4,
+          "sentiment": "bullish",
+          "impact": {
+            "spy": 0.24,
+            "vix": -1.0
+          },
+          "related_hypotheses": [
+            "H1"
+          ],
+          "category": "geopolitical"
+        },
+        {
+          "time": "2026-04-08T11:38:37",
+          "source": "yahoo",
+          "headline": "Bitcoin and ethereum price today, Wednesday, April 8, 2026: Prices rise after U.S.-Iran ceasefire announcement",
+          "relevance_score": 4,
+          "sentiment": "bullish",
+          "impact": {
+            "spy": 0.24,
+            "vix": -1.0
+          },
+          "related_hypotheses": [
+            "H1"
+          ],
+          "category": "geopolitical"
+        },
+        {
+          "time": "2026-04-08T13:00:00",
+          "source": "yahoo",
+          "headline": "What is crypto staking? A beginner's guide to earning rewards on your crypto.",
+          "relevance_score": 4,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [
+            "H1"
+          ],
+          "category": "geopolitical"
+        },
+        {
+          "time": "2026-04-08T14:06:00",
+          "source": "yahoo",
+          "headline": "Rezolve AI launches hostile takeover bid for Commerce.com",
+          "relevance_score": 4,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [
+            "H3"
+          ],
+          "category": "technical"
+        },
+        {
+          "time": "2026-04-08T14:07:06",
+          "source": "yahoo",
+          "headline": "Is the Retail Sector Having a Resurgence? What the Charts of This Retail ETF Tell Us.",
+          "relevance_score": 4,
+          "sentiment": "bullish",
+          "impact": {
+            "spy": 0.24,
+            "vix": -1.0
+          },
+          "related_hypotheses": [
+            "H3"
+          ],
+          "category": "technical"
+        },
+        {
+          "time": "2026-04-08T14:23:24",
+          "source": "yahoo",
+          "headline": "Is Microsoft (MSFT) One of the Hedge Fund Favorites with Strong Setup in 2026?",
+          "relevance_score": 4,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [
+            "H3"
+          ],
+          "category": "technical"
+        },
+        {
+          "time": "2026-04-08T14:23:27",
+          "source": "yahoo",
+          "headline": "Analysts See Over 100% Upside in IREN (IREN) Amid Growing Demand for AI-Linked Compute Infrastructure",
+          "relevance_score": 4,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [
+            "H3"
+          ],
+          "category": "technical"
+        },
+        {
+          "time": "2026-04-09T01:10:36",
+          "source": "yahoo",
+          "headline": "Goldman Sachs private credit fund narrowly misses a redemption crisis",
+          "relevance_score": 4,
+          "sentiment": "bearish",
+          "impact": {
+            "spy": -0.24,
+            "vix": 1.0
+          },
+          "related_hypotheses": [
+            "H5"
+          ],
+          "category": "macro"
+        },
+        {
+          "time": "2026-04-09T05:01:10",
+          "source": "cnbc",
+          "headline": "From war to weather: A 'super El Niño' event poses fresh risks to global food costs",
+          "relevance_score": 4,
+          "sentiment": "bearish",
+          "impact": {
+            "spy": -0.43,
+            "vix": 2.0
+          },
+          "related_hypotheses": [
+            "H1"
+          ],
+          "category": "geopolitical"
+        },
+        {
+          "time": "2026-04-09T08:51:39",
+          "source": "cnbc",
+          "headline": "Fast food, faster charging? BYD and KFC China collaborate to offer 9-minute refueling stations",
+          "relevance_score": 4,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [
+            "H3"
+          ],
+          "category": "technical"
+        },
+        {
+          "time": "2026-04-09T10:16:18",
+          "source": "yahoo",
+          "headline": "Daily – Vickers Top Buyers & Sellers for 04/09/2026",
+          "relevance_score": 4,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [
+            "H3"
+          ],
+          "category": "technical"
+        },
+        {
+          "time": "2026-04-09T10:16:18",
+          "source": "yahoo",
+          "headline": "Daily – Vickers Top Insider Picks for 04/09/2026",
+          "relevance_score": 4,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [
+            "H3"
+          ],
+          "category": "technical"
+        },
+        {
+          "time": "2026-04-09T11:08:12",
+          "source": "yahoo",
+          "headline": "Analyst Report: Alliant Energy Corp",
+          "relevance_score": 4,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [
+            "H4"
+          ],
+          "category": "macro"
+        },
+        {
+          "time": "2026-04-09T15:01:10",
+          "source": "cnbc",
+          "headline": "Kia plans to launch U.S. pickup truck by 2030",
+          "relevance_score": 4,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [
+            "H5"
+          ],
+          "category": "macro"
+        },
+        {
+          "time": "2026-04-09T17:56:44",
+          "source": "cnbc",
+          "headline": "DOJ launches probe into NFL over media rights packages and antitrust concerns",
+          "relevance_score": 4,
+          "sentiment": "bearish",
+          "impact": {
+            "spy": -0.24,
+            "vix": 1.0
+          },
+          "related_hypotheses": [
+            "H3"
+          ],
+          "category": "technical"
+        },
+        {
+          "time": "2026-04-09T18:49:53",
+          "source": "cnbc",
+          "headline": "American Airlines makes bag fees even more expensive for basic economy tickets",
+          "relevance_score": 4,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [
+            "H3"
+          ],
+          "category": "technical"
+        },
+        {
+          "time": "2026-04-09T20:45:16",
+          "source": "cnbc",
+          "headline": "U.S. Postal Service seeks hike in price of first-class mail stamps to 82 cents in July",
+          "relevance_score": 4,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [
+            "H3"
+          ],
+          "category": "technical"
+        },
+        {
+          "time": "2026-04-10T01:39:02",
+          "source": "cnbc",
+          "headline": "Fast Retailing shares soar to record high after the Uniqlo owner lifts profit forecast",
+          "relevance_score": 4,
+          "sentiment": "bullish",
+          "impact": {
+            "spy": 0.24,
+            "vix": -1.0
+          },
+          "related_hypotheses": [
+            "H3"
+          ],
+          "category": "technical"
+        },
+        {
+          "time": "2026-04-08T13:00:00",
+          "source": "yahoo",
+          "headline": "Should you pay off your mortgage early? Consider these pros and cons.",
+          "relevance_score": 3,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [],
+          "category": "macro"
+        },
+        {
+          "time": "2026-04-08T14:06:28",
+          "source": "yahoo",
+          "headline": "Rivian vs. Ford: The Underdog Story Investors Should Be Watching",
+          "relevance_score": 3,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [],
+          "category": "macro"
+        },
+        {
+          "time": "2026-04-08T14:12:30",
+          "source": "yahoo",
+          "headline": "Digital price tags increase store efficiency, but some worry they’ll spur price gouging",
+          "relevance_score": 3,
+          "sentiment": "bearish",
+          "impact": {
+            "spy": -0.18,
+            "vix": 0.75
+          },
+          "related_hypotheses": [],
+          "category": "macro"
+        },
+        {
+          "time": "2026-04-08T14:23:29",
+          "source": "yahoo",
+          "headline": "Analysts See 100% Upside in Credo Technology (CRDO)",
+          "relevance_score": 3,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [],
+          "category": "macro"
+        },
+        {
+          "time": "2026-04-08T14:23:37",
+          "source": "yahoo",
+          "headline": "Goldman Sachs Cautious on QUALCOMM (QCOM) Amid Key Customer Losses",
+          "relevance_score": 3,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [],
+          "category": "macro"
+        },
+        {
+          "time": "2026-04-08T16:17:00",
+          "source": "yahoo",
+          "headline": "Major alcohol distributor shuts down operations, lays off over 500 workers",
+          "relevance_score": 3,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [],
+          "category": "macro"
+        },
+        {
+          "time": "2026-04-09T19:01:11",
+          "source": "cnbc",
+          "headline": "Disney plans layoffs of as many as 1,000 employees",
+          "relevance_score": 3,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [],
+          "category": "macro"
+        },
+        {
+          "time": "2026-04-09T20:30:55",
+          "source": "cnbc",
+          "headline": "How 'married filing separately' status could affect Trump tax breaks this season",
+          "relevance_score": 3,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [],
+          "category": "macro"
+        }
+      ],
+      "summary": {
+        "bullish_count": 11,
+        "bearish_count": 8,
+        "neutral_count": 41,
+        "total_items": 60,
+        "avg_relevance": 5.0,
+        "top_theme": "AI科技泡沫"
+      },
+      "source_counts": {
+        "jin10": 0,
+        "yahoo": 30,
+        "cnbc": 30
+      },
+      "updated_at": "2026-04-10T02:18:22"
+    }
+  },
+  "greeks": [],
+  "edges": [],
+  "stop_rules": [],
+  "mispricing": {
+    "as_of": "2026-04-09",
+    "market_spy": 679.91,
+    "expected_spy": 570.05,
+    "mispricing_pct": 16.158,
+    "history": [
+      {
+        "date": "2026-04-09",
+        "market_spy": 679.91,
+        "expected_spy": 570.05,
+        "mispricing_pct": 16.158
+      }
+    ]
+  }
 }

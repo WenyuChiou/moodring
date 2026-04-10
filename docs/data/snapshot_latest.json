@@ -1,5 +1,5 @@
 {
-  "date": "2026-04-08",
+  "date": "2026-04-09",
   "data_sources": {
     "market_prices": "Yahoo Finance (yfinance)",
     "tw_margin": "FinMind API (TWSE OpenData)",
@@ -8,68 +8,69 @@
     "behavioral_params": "Kahneman & Tversky (1979), Banerjee (1992)"
   },
   "us_market": {
-    "SPY_close": 673.0,
-    "SPY_RSI14": 57.5,
-    "SPY_SMA20": 656.53,
-    "SPY_SMA60": 675.87,
-    "SPY_vs_52w_high_pct": 97.0,
-    "SPY_5d_return_pct": 3.48,
-    "SPY_20d_return_pct": -0.35,
-    "VIX": 22.06,
-    "US_10Y_yield": 4.27
+    "SPY_close": 679.91,
+    "SPY_RSI14": 61.5,
+    "SPY_SMA20": 656.96,
+    "SPY_SMA60": 675.7,
+    "SPY_vs_52w_high_pct": 98.0,
+    "SPY_5d_return_pct": 3.77,
+    "SPY_20d_return_pct": 0.8,
+    "VIX": 19.49,
+    "US_10Y_yield": 4.29
   },
   "tw_market": {
-    "TAIEX_close": 34761.0,
-    "TAIEX_RSI14": 55.1,
-    "TAIEX_SMA20": 33292.0,
-    "TAIEX_vs_52w_high_pct": 98.2,
-    "TAIEX_5d_return_pct": 6.9,
-    "TAIEX_20d_return_pct": 8.26,
-    "TSMC_close": 1950.0,
-    "TSMC_vs_52w_high_pct": 97.1
+    "TAIEX_close": 34861.0,
+    "TAIEX_RSI14": 53.0,
+    "TAIEX_SMA20": 33396.0,
+    "TAIEX_vs_52w_high_pct": 98.4,
+    "TAIEX_5d_return_pct": 9.89,
+    "TAIEX_20d_return_pct": 6.38,
+    "TSMC_close": 1955.0,
+    "TSMC_vs_52w_high_pct": 97.3
   },
   "tw_retail_indicators": {
-    "margin_balance": 8141199,
-    "margin_5d_change_pct": 0.91,
+    "margin_balance": 8234120,
+    "margin_5d_change_pct": 1.49,
     "margin_5d_trend": "INCREASING",
-    "institutional_net_TWD": 1583.6,
-    "retail_net_est_TWD": -1583.6,
-    "foreign_net_TWD": 1177.7,
-    "foreign_consecutive_days": 2,
+    "institutional_net_TWD": 393.3,
+    "retail_net_est_TWD": -393.3,
+    "foreign_net_TWD": 317.8,
+    "foreign_consecutive_days": 3,
     "foreign_consecutive_direction": "buy",
-    "TSMC_margin_balance": 26797,
-    "TSMC_margin_30d_change_pct": 22.74
+    "TSMC_margin_balance": 26636,
+    "TSMC_margin_30d_change_pct": 22.0
   },
   "jp_market": {
-    "NIKKEI_close": 53429.56,
-    "NIKKEI_RSI14": 49.1,
-    "NIKKEI_SMA20": 53361.16,
-    "NIKKEI_vs_52w_high_pct": 90.8,
-    "NIKKEI_5d_return_pct": 4.63,
-    "NIKKEI_20d_return_pct": 1.33,
-    "jp_moodring_score": 85.6
+    "NIKKEI_close": 55895.32,
+    "NIKKEI_RSI14": 58.4,
+    "NIKKEI_SMA20": 53507.66,
+    "NIKKEI_vs_52w_high_pct": 95.0,
+    "NIKKEI_5d_return_pct": 6.54,
+    "NIKKEI_20d_return_pct": 1.58,
+    "jp_moodring_score": 82.7
   },
   "kr_market": {
-    "KOSPI_close": 5494.78,
-    "KOSPI_RSI14": 40.7,
-    "KOSPI_SMA20": 5510.32,
-    "KOSPI_vs_52w_high_pct": 87.1,
-    "KOSPI_5d_return_pct": 8.75,
-    "KOSPI_20d_return_pct": -0.68,
-    "kr_moodring_score": 67.5
+    "KOSPI_close": 5778.01,
+    "KOSPI_RSI14": 49.9,
+    "KOSPI_SMA20": 5533.17,
+    "KOSPI_vs_52w_high_pct": 91.6,
+    "KOSPI_5d_return_pct": 10.39,
+    "KOSPI_20d_return_pct": 3.49,
+    "kr_moodring_score": 63.1
   },
   "eu_market": {
-    "STOXX50_close": 5887.81,
-    "STOXX50_RSI14": 55.2,
-    "STOXX50_SMA20": 5669.62,
-    "STOXX50_vs_52w_high_pct": 95.4,
-    "STOXX50_5d_return_pct": 6.24,
-    "STOXX50_20d_return_pct": 3.56,
-    "eu_moodring_score": 72.6
+    "STOXX50_close": 5896.29,
+    "STOXX50_RSI14": 56.9,
+    "STOXX50_SMA20": 5673.85,
+    "STOXX50_vs_52w_high_pct": 95.5,
+    "STOXX50_5d_return_pct": 5.86,
+    "STOXX50_20d_return_pct": 1.01,
+    "eu_moodring_score": 70.4
   },
   "global_context": {
-    "Gold": 4771.0,
-    "USDJPY": 158.43,
-    "USDTWD": 31.73
-  }
+    "Gold": 4784.0,
+    "USDJPY": 159.12,
+    "USDTWD": 31.76
+  },
+  "retail_sentiment_commentary": "今天整體盤面真的有點熱，美股74.8、台股84.9、日股82.7，幾乎都在偏貪婪區，台股尤其有種大家搶著追價的味道。韓股63.1算還穩，歐股70.4也是偏樂觀。以我這種散戶來看，這種氣氛最怕就是漲到大家都覺得不會跌，短線可以順勢，但真的不要太亢奮，該分批、該停利還是要做。"
 }

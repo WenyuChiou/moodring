@@ -209,7 +209,8 @@ def main() -> None:
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--strict", action="store_true", help="Explicit strict mode (default behavior)")
-    parser.add_argument("--since", type=str, default=None, help="Only audit dates >= YYYY-MM-DD")
+    parser.add_argument("--since", type=str, default="2024-01-01",
+                        help="Only audit dates >= YYYY-MM-DD (default: 2024-01-01; pre-2024 TW carry-forwards are legacy and excluded from default scope; use --since 2010-01-01 to force full scan)")
     parser.add_argument("--until", type=str, default=_yesterday,
                         help="Only audit dates <= YYYY-MM-DD (default: yesterday)")
     args = parser.parse_args()

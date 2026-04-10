@@ -237,7 +237,13 @@ def _fetch_yahoo() -> list:
 
     url = "https://finance.yahoo.com/news/rssindex"
     try:
-        feed = feedparser.parse(url)
+        import socket as _socket
+        old_timeout = _socket.getdefaulttimeout()
+        _socket.setdefaulttimeout(10)
+        try:
+            feed = feedparser.parse(url)
+        finally:
+            _socket.setdefaulttimeout(old_timeout)
         items = []
         for entry in feed.entries[:30]:
             headline = entry.get("title", "").strip()
@@ -271,7 +277,13 @@ def _fetch_cnbc() -> list:
 
     url = "https://www.cnbc.com/id/100003114/device/rss/rss.html"
     try:
-        feed = feedparser.parse(url)
+        import socket as _socket
+        old_timeout = _socket.getdefaulttimeout()
+        _socket.setdefaulttimeout(10)
+        try:
+            feed = feedparser.parse(url)
+        finally:
+            _socket.setdefaulttimeout(old_timeout)
         items = []
         for entry in feed.entries[:30]:
             headline = entry.get("title", "").strip()

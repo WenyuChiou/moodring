@@ -7,6 +7,7 @@ import logging
 import math
 import os
 import queue
+import socket
 import threading
 from collections.abc import Mapping
 from datetime import datetime, timezone
@@ -679,6 +680,7 @@ def write_output(payload: dict[str, Any]) -> None:
 
 def main() -> None:
     """Entry point."""
+    socket.setdefaulttimeout(15)
     configure_logging()
     logging.info("Generating %s", OUTPUT_PATH)
     existing = get_existing_data()

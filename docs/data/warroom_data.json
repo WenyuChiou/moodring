@@ -1,11 +1,9 @@
 {
   "meta": {
-    "generated_at": "2026-04-10T02:18:22.929986+00:00",
+    "generated_at": "2026-04-10T02:30:28.518532+00:00",
     "as_of": "2026-04-09",
     "output_path": "docs\\data\\warroom_data.json",
-    "warnings": [
-      "OpenD unavailable, skipping moomoo data: moomoo OpenD connection timed out after 15s"
-    ]
+    "warnings": []
   },
   "market": {
     "as_of": "2026-04-09",
@@ -53,16 +51,16 @@
       "BRENT": {
         "symbol": "BZ=F",
         "label": "Brent Crude Futures",
-        "price": 96.51,
-        "change_pct": 1.86,
+        "price": 96.57,
+        "change_pct": 1.92,
         "prev_close": 94.75,
         "as_of": "2026-04-09"
       },
       "DXY": {
         "symbol": "DX-Y.NYB",
         "label": "US Dollar Index",
-        "price": 98.862,
-        "change_pct": -0.27,
+        "price": 98.895,
+        "change_pct": -0.24,
         "prev_close": 99.13,
         "as_of": "2026-04-09"
       },
@@ -175,20 +173,180 @@
         "account_name": "cash",
         "acc_id": "283445328432576687",
         "strategy": "stocks",
-        "funds": {},
-        "positions": []
+        "funds": {
+          "total_assets": 409.36,
+          "cash": 0.06,
+          "market_val": 409.3,
+          "power": 0.06
+        },
+        "positions": [
+          {
+            "code": "US.IBIT",
+            "name": "iShares Bitcoin Trust",
+            "qty": 10.0,
+            "cost_price": 36.0,
+            "nominal_price": 40.93,
+            "pl_val": 49.3,
+            "pl_ratio": 13.69,
+            "side": "LONG"
+          }
+        ]
       },
       {
         "account_name": "margin",
         "acc_id": "283445329185003354",
         "strategy": "options",
-        "funds": {},
-        "positions": []
+        "funds": {
+          "total_assets": 29256.45,
+          "cash": 12502.16,
+          "market_val": 16754.29,
+          "power": 5004.32
+        },
+        "positions": [
+          {
+            "code": "US.SPY260424P687500",
+            "name": "SPY 260424 687.50P",
+            "qty": -6.0,
+            "cost_price": 11.77,
+            "nominal_price": 11.343,
+            "pl_val": 256.02,
+            "pl_ratio": 3.63,
+            "side": "SHORT"
+          },
+          {
+            "code": "US.SPY260417P687000",
+            "name": "SPY 260417 687.00P",
+            "qty": -10.0,
+            "cost_price": 13.37,
+            "nominal_price": 9.176,
+            "pl_val": 4194.3,
+            "pl_ratio": 31.37,
+            "side": "SHORT"
+          },
+          {
+            "code": "US.SPY260417P681000",
+            "name": "SPY 260417 681.00P",
+            "qty": -5.0,
+            "cost_price": 9.56,
+            "nominal_price": 6.08,
+            "pl_val": 1739.9,
+            "pl_ratio": 36.4,
+            "side": "SHORT"
+          },
+          {
+            "code": "US.QQQ260417P620000",
+            "name": "QQQ 260417 620.00P",
+            "qty": -13.0,
+            "cost_price": 14.952,
+            "nominal_price": 11.707,
+            "pl_val": 4218.29,
+            "pl_ratio": 21.7,
+            "side": "SHORT"
+          },
+          {
+            "code": "US.IWM260618P210000",
+            "name": "IWM 260618 210.00P",
+            "qty": -2.0,
+            "cost_price": 3.33,
+            "nominal_price": 1.055,
+            "pl_val": 455.0,
+            "pl_ratio": 68.32,
+            "side": "SHORT"
+          },
+          {
+            "code": "US.IWM260417P265000",
+            "name": "IWM 260417 265.00P",
+            "qty": -20.0,
+            "cost_price": 7.08,
+            "nominal_price": 4.871,
+            "pl_val": 4418.8,
+            "pl_ratio": 31.21,
+            "side": "SHORT"
+          },
+          {
+            "code": "US.GLD260515P415000",
+            "name": "GLD 260515 415.00P",
+            "qty": -20.0,
+            "cost_price": 7.66,
+            "nominal_price": 6.675,
+            "pl_val": 1970.0,
+            "pl_ratio": 12.86,
+            "side": "SHORT"
+          },
+          {
+            "code": "US.SPY260424P692500",
+            "name": "SPY 260424 692.50P",
+            "qty": 6.0,
+            "cost_price": 14.85,
+            "nominal_price": 14.425,
+            "pl_val": -255.12,
+            "pl_ratio": -2.86,
+            "side": "LONG"
+          },
+          {
+            "code": "US.SPY260417P692000",
+            "name": "SPY 260417 692.00P",
+            "qty": 10.0,
+            "cost_price": 17.47,
+            "nominal_price": 12.744,
+            "pl_val": -4725.9,
+            "pl_ratio": -27.05,
+            "side": "LONG"
+          },
+          {
+            "code": "US.SPY260417P686000",
+            "name": "SPY 260417 686.00P",
+            "qty": 5.0,
+            "cost_price": 12.86,
+            "nominal_price": 8.583,
+            "pl_val": -2138.65,
+            "pl_ratio": -33.26,
+            "side": "LONG"
+          },
+          {
+            "code": "US.QQQ260417P625000",
+            "name": "QQQ 260417 625.00P",
+            "qty": 13.0,
+            "cost_price": 19.04,
+            "nominal_price": 15.511,
+            "pl_val": -4588.35,
+            "pl_ratio": -18.54,
+            "side": "LONG"
+          },
+          {
+            "code": "US.IWM260618P225000",
+            "name": "IWM 260618 225.00P",
+            "qty": 2.0,
+            "cost_price": 5.78,
+            "nominal_price": 1.995,
+            "pl_val": -757.0,
+            "pl_ratio": -65.48,
+            "side": "LONG"
+          },
+          {
+            "code": "US.IWM260417P270000",
+            "name": "IWM 260417 270.00P",
+            "qty": 20.0,
+            "cost_price": 10.86,
+            "nominal_price": 8.472,
+            "pl_val": -4776.0,
+            "pl_ratio": -21.99,
+            "side": "LONG"
+          },
+          {
+            "code": "US.GLD260515P410000",
+            "name": "GLD 260515 410.00P",
+            "qty": 20.0,
+            "cost_price": 6.49,
+            "nominal_price": 5.55,
+            "pl_val": -1880.0,
+            "pl_ratio": -14.48,
+            "side": "LONG"
+          }
+        ]
       }
     ],
-    "warnings": [
-      "OpenD unavailable, skipping moomoo data: moomoo OpenD connection timed out after 15s"
-    ]
+    "warnings": []
   },
   "macro": {
     "macro": {
@@ -270,11 +428,11 @@
           "name": "消費者信心指數",
           "label": "密歇根消費者信心指數",
           "series": "UMCSENT",
-          "latest": 56.6,
-          "previous": 56.4,
-          "change": 0.2,
-          "trend": "上升",
-          "date": "2026-02-01"
+          "latest": null,
+          "previous": null,
+          "change": null,
+          "trend": "持平",
+          "date": null
         }
       ],
       "calendar": [
@@ -294,30 +452,31 @@
           "importance": "MEDIUM"
         }
       ],
-      "updated_at": "2026-04-10T02:18:20"
+      "updated_at": "2026-04-10T02:30:25"
     }
   },
   "news": {
     "news": {
       "items": [
         {
-          "time": "2026-04-10T00:47:03",
+          "time": "2026-04-10T02:18:53",
           "source": "cnbc",
-          "headline": "Asia-Pacific markets open mostly higher as a fragile Iran-U.S. ceasefire keeps investors on edge",
-          "relevance_score": 10,
-          "sentiment": "neutral",
+          "headline": "Asia-Pacific markets rise as inventors assess a fragile Iran-U.S. ceasefire; oil gains",
+          "relevance_score": 8,
+          "sentiment": "bullish",
           "impact": {
-            "spy": 0.0,
-            "vix": 0.0
+            "spy": 0.48,
+            "vix": -2.0
           },
           "related_hypotheses": [
             "H1",
+            "H3",
             "H4"
           ],
-          "category": "earnings"
+          "category": "macro"
         },
         {
-          "time": "2026-04-10T01:56:46",
+          "time": "2026-04-10T02:25:49",
           "source": "cnbc",
           "headline": "China factory prices return to growth after 3 years, beating expectations on surging oil prices",
           "relevance_score": 8,
@@ -334,40 +493,30 @@
           "category": "macro"
         },
         {
-          "time": "2026-04-08T14:07:34",
+          "time": "2026-04-08T14:15:00",
           "source": "yahoo",
-          "headline": "Robinhood Markets Earnings Preview: What to Expect",
-          "relevance_score": 7,
-          "sentiment": "neutral",
-          "impact": {
-            "spy": 0.0,
-            "vix": 0.0
-          },
-          "related_hypotheses": [],
-          "category": "earnings"
-        },
-        {
-          "time": "2026-04-08T14:07:57",
-          "source": "yahoo",
-          "headline": "Moderna Is Most Shorted S&P 500 Stock Now. Is It a Contrarian Buy?",
+          "headline": "Helium Stocks Soar on Conflict and Chip Demand: 5 Names to Know",
           "relevance_score": 7,
           "sentiment": "bullish",
           "impact": {
             "spy": 0.42,
             "vix": -1.75
           },
-          "related_hypotheses": [],
-          "category": "macro"
+          "related_hypotheses": [
+            "H1",
+            "H3"
+          ],
+          "category": "geopolitical"
         },
         {
-          "time": "2026-04-08T14:09:09",
+          "time": "2026-04-08T14:23:42",
           "source": "yahoo",
-          "headline": "Metals Platform Miotal To Be Listed on Nasdaq Through FERA Merger",
+          "headline": "Analysts Remain Constructive on Apple (AAPL) Amid Expectations for Market Share Gain",
           "relevance_score": 7,
-          "sentiment": "neutral",
+          "sentiment": "bullish",
           "impact": {
-            "spy": 0.0,
-            "vix": 0.0
+            "spy": 0.42,
+            "vix": -1.75
           },
           "related_hypotheses": [
             "H3"
@@ -387,21 +536,6 @@
           "related_hypotheses": [
             "H1",
             "H3"
-          ],
-          "category": "geopolitical"
-        },
-        {
-          "time": "2026-04-08T14:08:21",
-          "source": "yahoo",
-          "headline": "Stocks Soar as US and Iran Agree to a Ceasefire",
-          "relevance_score": 6,
-          "sentiment": "bullish",
-          "impact": {
-            "spy": 0.36,
-            "vix": -1.5
-          },
-          "related_hypotheses": [
-            "H1"
           ],
           "category": "geopolitical"
         },
@@ -646,22 +780,9 @@
           "category": "geopolitical"
         },
         {
-          "time": "2026-04-08T14:07:00",
+          "time": "2026-04-08T14:11:11",
           "source": "yahoo",
-          "headline": "Super Micro Stock Is Rising. How It Plans to Probe the China Server Scandal.",
-          "relevance_score": 5,
-          "sentiment": "neutral",
-          "impact": {
-            "spy": 0.0,
-            "vix": 0.0
-          },
-          "related_hypotheses": [],
-          "category": "macro"
-        },
-        {
-          "time": "2026-04-08T14:08:44",
-          "source": "yahoo",
-          "headline": "Levi Strauss (LEVI) Q3 2024 Earnings Transcript",
+          "headline": "Levi Strauss (LEVI) Q1 2026 Earnings Transcript",
           "relevance_score": 5,
           "sentiment": "neutral",
           "impact": {
@@ -724,6 +845,35 @@
           },
           "related_hypotheses": [
             "H3"
+          ],
+          "category": "technical"
+        },
+        {
+          "time": "2026-04-08T14:23:46",
+          "source": "yahoo",
+          "headline": "Oppenheimer Bullish on Netflix (NFLX) Amid Higher Revenue Driven By Price Hikes",
+          "relevance_score": 5,
+          "sentiment": "bullish",
+          "impact": {
+            "spy": 0.3,
+            "vix": -1.25
+          },
+          "related_hypotheses": [],
+          "category": "earnings"
+        },
+        {
+          "time": "2026-04-08T14:23:48",
+          "source": "yahoo",
+          "headline": "Analysts Remain Confident in UnitedHealth (UNH)’s Growth Initiatives Outside of Its Main Insurance Operations",
+          "relevance_score": 5,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [
+            "H3",
+            "H5"
           ],
           "category": "technical"
         },
@@ -804,7 +954,7 @@
           "category": "technical"
         },
         {
-          "time": "2026-04-10T02:13:58",
+          "time": "2026-04-10T02:23:58",
           "source": "cnbc",
           "headline": "Warsh Fed confirmation plan hits a snag as expected nomination hearing is delayed",
           "relevance_score": 5,
@@ -865,36 +1015,6 @@
           "category": "geopolitical"
         },
         {
-          "time": "2026-04-08T14:06:00",
-          "source": "yahoo",
-          "headline": "Rezolve AI launches hostile takeover bid for Commerce.com",
-          "relevance_score": 4,
-          "sentiment": "neutral",
-          "impact": {
-            "spy": 0.0,
-            "vix": 0.0
-          },
-          "related_hypotheses": [
-            "H3"
-          ],
-          "category": "technical"
-        },
-        {
-          "time": "2026-04-08T14:07:06",
-          "source": "yahoo",
-          "headline": "Is the Retail Sector Having a Resurgence? What the Charts of This Retail ETF Tell Us.",
-          "relevance_score": 4,
-          "sentiment": "bullish",
-          "impact": {
-            "spy": 0.24,
-            "vix": -1.0
-          },
-          "related_hypotheses": [
-            "H3"
-          ],
-          "category": "technical"
-        },
-        {
           "time": "2026-04-08T14:23:24",
           "source": "yahoo",
           "headline": "Is Microsoft (MSFT) One of the Hedge Fund Favorites with Strong Setup in 2026?",
@@ -923,6 +1043,21 @@
             "H3"
           ],
           "category": "technical"
+        },
+        {
+          "time": "2026-04-08T14:23:49",
+          "source": "yahoo",
+          "headline": "Guggenheim Remains Bullish on Eli Lilly (LLY) Ahead of Q1 2026 Results",
+          "relevance_score": 4,
+          "sentiment": "bullish",
+          "impact": {
+            "spy": 0.24,
+            "vix": -1.0
+          },
+          "related_hypotheses": [
+            "H3"
+          ],
+          "category": "earnings"
         },
         {
           "time": "2026-04-09T01:10:36",
@@ -1103,9 +1238,9 @@
           "category": "macro"
         },
         {
-          "time": "2026-04-08T14:06:28",
+          "time": "2026-04-08T14:12:09",
           "source": "yahoo",
-          "headline": "Rivian vs. Ford: The Underdog Story Investors Should Be Watching",
+          "headline": "The Russell 2000 Is Soaring. It’s Almost Out of Correction Territory.",
           "relevance_score": 3,
           "sentiment": "neutral",
           "impact": {
@@ -1119,6 +1254,19 @@
           "time": "2026-04-08T14:12:30",
           "source": "yahoo",
           "headline": "Digital price tags increase store efficiency, but some worry they’ll spur price gouging",
+          "relevance_score": 3,
+          "sentiment": "bearish",
+          "impact": {
+            "spy": -0.18,
+            "vix": 0.75
+          },
+          "related_hypotheses": [],
+          "category": "macro"
+        },
+        {
+          "time": "2026-04-08T14:12:40",
+          "source": "yahoo",
+          "headline": "Tango Therapeutics President Sells 27,000 Shares for $572,000 as Share Price Skyrockets",
           "relevance_score": 3,
           "sentiment": "bearish",
           "impact": {
@@ -1145,6 +1293,19 @@
           "time": "2026-04-08T14:23:37",
           "source": "yahoo",
           "headline": "Goldman Sachs Cautious on QUALCOMM (QCOM) Amid Key Customer Losses",
+          "relevance_score": 3,
+          "sentiment": "neutral",
+          "impact": {
+            "spy": 0.0,
+            "vix": 0.0
+          },
+          "related_hypotheses": [],
+          "category": "macro"
+        },
+        {
+          "time": "2026-04-08T14:23:45",
+          "source": "yahoo",
+          "headline": "Wells Fargo Cautious on Uber Technologies (UBER)’s Near-Term Outlook",
           "relevance_score": 3,
           "sentiment": "neutral",
           "impact": {
@@ -1195,11 +1356,11 @@
         }
       ],
       "summary": {
-        "bullish_count": 11,
-        "bearish_count": 8,
-        "neutral_count": 41,
+        "bullish_count": 13,
+        "bearish_count": 9,
+        "neutral_count": 38,
         "total_items": 60,
-        "avg_relevance": 5.0,
+        "avg_relevance": 4.8,
         "top_theme": "AI科技泡沫"
       },
       "source_counts": {
@@ -1207,7 +1368,7 @@
         "yahoo": 30,
         "cnbc": 30
       },
-      "updated_at": "2026-04-10T02:18:22"
+      "updated_at": "2026-04-10T02:30:28"
     }
   },
   "greeks": [],

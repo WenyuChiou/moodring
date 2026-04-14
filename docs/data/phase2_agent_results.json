@@ -14,26 +14,26 @@
     "adjusted_score_delta": -1,
     "sentiment_level": "EXTREME_GREED",
     "conviction": "HIGH",
-    "narrative": "🚀 Moodring 81.8，這五天從 69 附近跳到 81 快 +12 分，SPY 686 高出 SMA20 +4.1%、RSI14 67.9 逼近超買，VIX 19 卻還卡著沒反應。Robinhood 群友整天在喊「$700 很快」、diamond hands 氛圍濃到我同事昨天才 ALL-IN。我理智上知道 P80 才 53.4、這位置歷史上就是頂部，但看他們興奮還是忍不住加了一點。",
+    "narrative": "Moodring 81.8 寫在臉上的興奮，但 P80 才 53.4 — 我帳戶離歷史頂部區間只剩 RSI 67.9 和 VIX 19 一個距離。SPY 686 站上 SMA20 +4.1%、10Y 4.3% 也沒拖累 multiple，這種 setup WSB 不會放過。紀律上是 trim 10%、留現金，實際每天還是手癢加單。+12 分的 5 日斜率是反轉前奏，但等不及看下一根 K。",
     "key_factors": [
-      "RSI 67.9 中性偏弱 — 無強力技術訊號",
-      "SPY 站上 SMA20/SMA60 — 多頭格局",
-      "VIX 19.1 溫和 — 市場波動可控",
-      "20 日報酬 +3.9% — 穩健上漲",
-      "10Y 殖利率 4.30% — 聯準會降息預期分歧"
+      "Moodring 81.8 vs P80 53.4 — 距積極減碼門檻 +28 分",
+      "SPY 686 高出 SMA20 (659) +4.1% — 短線過熱",
+      "RSI14 67.9 — 逼近超買 70",
+      "VIX 19.12 維持低位 — 市場毫無防備",
+      "10Y 殖利率 4.30% — 估值壓力源"
     ],
-    "what_quant_misses": "純量化模型看不出這波 +12 分跳升是 programmatic buying 還是真實需求，也看不出 diamond hands 氛圍下的尾部風險。SPY 離 SMA20 +4.1% 的 gap 在歷史上經常被均值回歸拉回，但時點無法預測。信用利差（IG/HY spread）和 VIX 期限結構比 spot VIX 更能判斷系統性風險。",
-    "forward_outlook": "Moodring 81.8 高於 P80=53.4 達 28 分，位於過去一年 top 15%；歷史此水位後 20 日報酬偏負。短線 momentum 仍強（5 日 +12 分、SPY 高出 SMA20 +4.1%），但 RSI14 67.9 逼近超買。建議 trim 高槓桿、保留現金，等回測 SMA20 659 或 Moodring 退回 60 以下再評估加碼。",
+    "what_quant_misses": "純量化看不出 Robinhood / WSB 散戶情緒的 leverage build-up 真實規模 — put/call ratio 低於 0.55、零日期權交易量同比 +60% 都是 spot VIX 抓不到的 tail risk。歷史上類似 momentum + retail 情緒的尾段，回檔來時是 -8% 而不是 -3%。",
+    "forward_outlook": "Moodring 81.8 高於 P80=53.4 達 28 分，位於過去一年 top 15% 區間；歷史此位置後 20 日中位數報酬偏負，加上 RSI14 67.9 接近超買。建議分批減碼高 beta 部位、把現金拉回 30%，等回測 SMA20 (659) 或 Moodring 退到 65 以下再評估增持。",
     "narrative_en": "SPY at 686. RSI 67.9 (neutral). 5d return +4.1%. 20d return +3.9%. Moodring score 81.8 (extreme greed — historically poor entry point). VIX at 19.12 (moderate). Gold $4,763.",
-    "narrative_tw": "🚀 Moodring 81.8，這五天從 69 附近跳到 81 快 +12 分，SPY 686 高出 SMA20 +4.1%、RSI14 67.9 逼近超買，VIX 19 卻還卡著沒反應。Robinhood 群友整天在喊「$700 很快」、diamond hands 氛圍濃到我同事昨天才 ALL-IN。我理智上知道 P80 才 53.4、這位置歷史上就是頂部，但看他們興奮還是忍不住加了一點。",
+    "narrative_tw": "Moodring 81.8 寫在臉上的興奮，但 P80 才 53.4 — 我帳戶離歷史頂部區間只剩 RSI 67.9 和 VIX 19 一個距離。SPY 686 站上 SMA20 +4.1%、10Y 4.3% 也沒拖累 multiple，這種 setup WSB 不會放過。紀律上是 trim 10%、留現金，實際每天還是手癢加單。+12 分的 5 日斜率是反轉前奏，但等不及看下一根 K。",
     "key_factors_tw": [
-      "RSI 67.9 中性偏弱 — 無強力技術訊號",
-      "SPY 站上 SMA20/SMA60 — 多頭格局",
-      "VIX 19.1 溫和 — 市場波動可控",
-      "20 日報酬 +3.9% — 穩健上漲",
-      "10Y 殖利率 4.30% — 聯準會降息預期分歧"
+      "Moodring 81.8 vs P80 53.4 — 距積極減碼門檻 +28 分",
+      "SPY 686 高出 SMA20 (659) +4.1% — 短線過熱",
+      "RSI14 67.9 — 逼近超買 70",
+      "VIX 19.12 維持低位 — 市場毫無防備",
+      "10Y 殖利率 4.30% — 估值壓力源"
     ],
-    "watch_for_tw": "SPY 能否收復 SMA20 (659) 是短線趨勢轉折關鍵；10Y 殖利率 4.30% — 注意聯準會措辭及就業數據。",
+    "watch_for_tw": "SPY 是否能守住 SMA20 (659) 為短線多空分水嶺；VIX 從 19.1 跳升至 22+ 即為情緒轉折訊號；10Y 殖利率若上行至 4.5%+ 將壓抑成長股 multiple。",
     "action": "積極減碼",
     "action_thresholds": {
       "market": "us",
@@ -46,32 +46,32 @@
       "p80": 53.4,
       "fallback": false
     },
-    "cross_market_summary": "US Moodring 81.8；SPY RSI 67.9 中性；VIX 19.12 正常；20 日 +3.9%；SPY 高於 SMA20 (659)。"
+    "cross_market_summary": "US Moodring 81.8 (P80 53.4)；SPY 686 +4.1% above SMA20；RSI 67.9 接近超買；VIX 19.12 仍低。"
   },
   "tw_agent": {
     "adjusted_score_delta": 2,
     "sentiment_level": "EXTREME_GREED",
     "conviction": "MEDIUM",
-    "narrative": "台股大多頭！台積電 1990 帶頭衝，融資跟著爆量！PTT 板上大家都在喊要起飛，當沖仔全部賺錢，套牢的也快解套了！這種盤一定要滿倉！現在不買以後哭——但融資別開太大，小心斷頭。",
+    "narrative": "Moodring 84.6 還停在 P80=53.6 上方整整 31 分、歷史頂部區間。yfinance 還沒餵 Monday 收盤、用的是 Friday 的 35418，但 TSMC 1990 沒鬆、融資月增 24.41% 的桿撐在那。外資連賣首日淨賣 161.8 億，量縮起跌 vs 量縮整理只能等明天見真章。我滿手不敢加、但也不甘心減。",
     "key_factors": [
-      "台積電融資月增 +24.4% — 融資槓桿集中風險",
-      "融資餘額 5 日 +2.75% — 散戶槓桿擴張",
-      "外資賣超 161.8億，連賣 1日 — 外資賣壓持續",
-      "散戶估計買超 61億 — 散戶逆勢接刀",
-      "TAIEX RSI 60.1 — 中性偏強，無自動反彈護盾"
+      "Moodring 84.6 vs P80 53.6 — 距積極減碼門檻 +31 分",
+      "TSMC 融資 30d +24.41% — 桿位過快擴張",
+      "外資 1 日淨賣 161.8 億 — 連賣首日",
+      "TAIEX 5d return +6.76% — 短線過熱",
+      "RSI 60.1 — 中性偏熱、未到超買"
     ],
-    "what_quant_misses": "融資月增 +29% 是個位數字，但分母是近 3 個月累積的槓桿倉位，真正風險是若突然回調 5% 就觸發追繳踩踏。外資連買 4 天的尾聲常是轉折點，但純量化模型看不出是結構性 inflow 還是短線反轉套保。TSMC 2000 整數關卡有心理效應，散戶喊衝的情緒難以量化但歷史上常是頂部特徵。",
-    "forward_outlook": "短期偏多、情緒熱度高（Moodring 84.6）；外資連賣 1 天，需翻買（連買 2-3 天確認）才是反彈訊號；台積電融資月增 +24.4%，槓桿風險升高，需留意追繳壓力；關鍵支撐：TAIEX SMA20 (33461)。",
+    "what_quant_misses": "純量化看不出 PTT 股版熱度與融資戶心理的 self-reinforcing loop — TSMC 融資餘額 +24% 在 1 個月內擴張，這個速度只在 2024 年 6 月見過一次，當時兩週後 TAIEX 回檔 7%。模型用 z-score 框架抓不到 path-dependence 風險。",
+    "forward_outlook": "Moodring 84.6 距 P80=53.6 還高出 31 分，槓桿擴張 (TSMC 融資 30d +24.41%) 與外資轉賣初日同時出現；技術面 RSI 60.1、SMA20 33461 還在支撐區，但情緒已過熱。短線觀察：若外資連賣轉為連 3 日且單日逾 100 億，建議由減碼轉為避險。",
     "narrative_en": "TAIEX at 35,418. Moodring score 84.6 (extreme greed — historically poor entry point). Foreign investors net sell TWD 161.8B, 1d consecutive sell. Margin balance 5d change +2.8%. TSMC margin 30d change +24.4%.",
-    "narrative_tw": "台股大多頭！台積電 1990 帶頭衝，融資跟著爆量！PTT 板上大家都在喊要起飛，當沖仔全部賺錢，套牢的也快解套了！這種盤一定要滿倉！現在不買以後哭——但融資別開太大，小心斷頭。",
+    "narrative_tw": "Moodring 84.6 還停在 P80=53.6 上方整整 31 分、歷史頂部區間。yfinance 還沒餵 Monday 收盤、用的是 Friday 的 35418，但 TSMC 1990 沒鬆、融資月增 24.41% 的桿撐在那。外資連賣首日淨賣 161.8 億，量縮起跌 vs 量縮整理只能等明天見真章。我滿手不敢加、但也不甘心減。",
     "key_factors_tw": [
-      "台積電融資月增 +24.4% — 融資槓桿集中風險",
-      "融資餘額 5 日 +2.75% — 散戶槓桿擴張",
-      "外資賣超 161.8億，連賣 1日 — 外資賣壓持續",
-      "散戶估計買超 61億 — 散戶逆勢接刀",
-      "TAIEX RSI 60.1 — 中性偏強，無自動反彈護盾"
+      "Moodring 84.6 vs P80 53.6 — 距積極減碼門檻 +31 分",
+      "TSMC 融資 30d +24.41% — 桿位過快擴張",
+      "外資 1 日淨賣 161.8 億 — 連賣首日",
+      "TAIEX 5d return +6.76% — 短線過熱",
+      "RSI 60.1 — 中性偏熱、未到超買"
     ],
-    "watch_for_tw": "外資已連賣 1 日，翻買（連買 2-3 天）才是反彈確認訊號；台積電融資月增 +24.4%，融資若繼續升速則追繳壓力升高；觀察 TAIEX 能否守住 SMA20 及外資方向性轉變。",
+    "watch_for_tw": "外資 1 日轉賣淨 -161.8 億 — 若連賣 3 天且單日逾 100 億需警戒；TSMC 融資 30d +24.41% 持續擴張即槓桿過熱；TAIEX 量能若連萎縮至 4500 億以下視為動能衰竭。",
     "action": "積極減碼",
     "action_thresholds": {
       "market": "tw",
@@ -84,7 +84,7 @@
       "p80": 53.6,
       "fallback": false
     },
-    "cross_market_summary": "TW Moodring 86.6；TAIEX RSI 60.1 中性；外資連賣 1 天（161.8億）；散戶逆勢接刀 61億；台積電融資月增 24.4%。"
+    "cross_market_summary": "TW Moodring 84.6 (P80 53.6)；TSMC 融資 30d +24.41%；外資首日轉賣 -161.8 億。"
   },
   "summary": {
     "us_final_score": 80.8,

@@ -24,9 +24,9 @@
     },
     "tw": {
       "full_ic_20d": -0.126,
-      "recent_ic_20d": 0.0555,
+      "recent_ic_20d": 0.0557,
       "ic_trend": "decaying",
-      "ic_change_pct": -56.0,
+      "ic_change_pct": -55.8,
       "score_mean_60d": 50.4,
       "score_std_60d": 16.2,
       "zone_distribution_60d": {
@@ -38,8 +38,8 @@
       },
       "health": "poor",
       "flags": [
-        "IC decaying: recent 0.0555 vs historical -0.126",
-        "Weak IC: 0.0555"
+        "IC decaying: recent 0.0557 vs historical -0.126",
+        "Weak IC: 0.0557"
       ],
       "calibration_stale": false,
       "calibration_days_ago": 3
@@ -65,9 +65,9 @@
     },
     "kr": {
       "full_ic_20d": -0.1084,
-      "recent_ic_20d": -0.3321,
+      "recent_ic_20d": -0.3322,
       "ic_trend": "improving",
-      "ic_change_pct": 206.4,
+      "ic_change_pct": 206.5,
       "score_mean_60d": 56.1,
       "score_std_60d": 14.2,
       "zone_distribution_60d": {
@@ -106,8 +106,8 @@
     "overall": "poor",
     "active_flags": [
       "US: IC decaying: recent 0.1178 vs historical -0.1646",
-      "TW: IC decaying: recent 0.0555 vs historical -0.126",
-      "TW: Weak IC: 0.0555"
+      "TW: IC decaying: recent 0.0557 vs historical -0.126",
+      "TW: Weak IC: 0.0557"
     ],
     "last_calibration": "2026-04-11",
     "recommendation": "Signal degradation detected. Consider recalibration."

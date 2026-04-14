@@ -1541,18 +1541,55 @@ def generate_watch_for_tw(mkt_data, mkt_name, score=None, retail=None, global_ct
 
     elif mkt_name == 'JP':
         usdjpy = (global_ctx or {}).get('USDJPY')
-        if usdjpy:
-            parts.append(f"USDJPY {usdjpy:.1f} — 日圓升破 150 將觸發套利平倉，是最大尾部風險")
-        parts.append("BOJ 下次利率決策時間點及措辭是最重要催化劑")
-        parts.append("RSI 技術超賣提供反彈可能，但需美股穩定配合")
+        rsi = mkt_data.get('NIKKEI_RSI14') if mkt_data else None
+        if usdjpy is not None:
+            if usdjpy > 155:
+                parts.append(f"USDJPY {usdjpy:.1f} 円安區間，BOJ 干預風險隨時存在")
+            elif usdjpy < 145:
+                parts.append(f"USDJPY {usdjpy:.1f} 円高壓力，出口股獲利空間收窄")
+            else:
+                parts.append(f"USDJPY {usdjpy:.1f} — BOJ 下次利率決策是最重要催化劑")
+        if rsi is not None:
+            if rsi > 70:
+                parts.append(f"日經 RSI {rsi:.1f} 偏熱，留意技術性回調")
+            elif rsi < 35:
+                parts.append(f"日經 RSI {rsi:.1f} 接近超賣，技術反彈條件具備，但需美股穩定配合")
+            else:
+                parts.append(f"日經 RSI {rsi:.1f}，等待方向性突破")
+        else:
+            parts.append("BOJ 下次利率決策時間點及措辭是最重要催化劑")
 
     elif mkt_name == 'KR':
-        parts.append("三星/SK 海力士 DRAM 報價走勢及韓元匯率是韓股主要驅動力")
-        parts.append("AI 記憶體題材降溫時需注意回調風險")
+        rsi = mkt_data.get('KOSPI_RSI14') if mkt_data else None
+        r5d = mkt_data.get('KOSPI_5d_return_pct') if mkt_data else None
+        if rsi is not None:
+            if rsi > 70:
+                parts.append(f"KOSPI RSI {rsi:.1f} 偏熱，貪婪區需留意回調風險")
+            elif rsi < 35:
+                parts.append(f"KOSPI RSI {rsi:.1f} 超賣，逢低布局機會但需確認")
+            else:
+                parts.append(f"KOSPI RSI {rsi:.1f}，三星/SK 海力士 AI 記憶體出貨動向是主要催化劑")
+        else:
+            parts.append("三星/SK 海力士 DRAM 報價走勢及韓元匯率是韓股主要驅動力")
+        if r5d is not None and abs(r5d) > 3:
+            parts.append(f"近 5 日 KOSPI {r5d:+.1f}%，{'強勢延伸，追高需謹慎' if r5d > 0 else '快速回落，支撐位確認中'}")
 
     elif mkt_name == 'EU':
-        parts.append("ECB 降息路徑及德國財政刺激規模是歐股非對稱風險主要來源")
-        parts.append("RSI 超賣提供技術反彈條件，但地緣風險溢價難以量化")
+        rsi = mkt_data.get('STOXX50_RSI14') if mkt_data else None
+        r5d = mkt_data.get('STOXX50_5d_return_pct') if mkt_data else None
+        if rsi is not None:
+            if rsi > 70:
+                parts.append(f"STOXX50 RSI {rsi:.1f} 偏熱，短線過熱風險需留意")
+            elif rsi < 35:
+                parts.append(f"STOXX50 RSI {rsi:.1f} 超賣，技術反彈條件具備")
+            else:
+                parts.append(f"STOXX50 RSI {rsi:.1f}，ECB 降息路徑是歐股非對稱風險主要來源")
+        else:
+            parts.append("ECB 降息路徑及德國財政刺激規模是歐股非對稱風險主要來源")
+        if r5d is not None and abs(r5d) > 3:
+            parts.append(f"近 5 日 STOXX50 {r5d:+.1f}%，地緣風險溢價難以量化")
+        else:
+            parts.append("地緣風險溢價及歐元走勢為重要觀察變數")
 
     return "；".join(parts) + "。" if parts else None
 
@@ -1605,6 +1642,207 @@ def generate_forward_outlook_tw(score=None, retail=None, mkt_data=None):
             parts.append(f"關鍵支撐：TAIEX SMA20 ({sma20:.0f})")
 
     return "；".join(parts) + "。" if parts else None
+
+
+def generate_forward_outlook_us(score, mkt_data, global_ctx=None, delta_5d=None):
+    if score is None:
+        return None
+
+    parts = []
+
+    if score >= 80:
+        parts.append(f"Moodring {score:.1f} 位於貪婪區高位")
+    elif score >= 65:
+        parts.append(f"Moodring {score:.1f} 進入偏多區間")
+    elif score >= 50:
+        parts.append(f"Moodring {score:.1f} 中性偏多")
+    elif score >= 35:
+        parts.append(f"Moodring {score:.1f} 中性偏弱")
+    else:
+        parts.append(f"Moodring {score:.1f} 位於恐懼區")
+
+    if delta_5d is not None and abs(delta_5d) > 4:
+        if delta_5d > 0:
+            parts.append(f"五日累漲 {delta_5d:+.1f} 分，動能持續")
+        else:
+            parts.append(f"五日累跌 {delta_5d:+.1f} 分，注意動能衰退")
+
+    rsi = mkt_data.get('SPY_RSI14') if mkt_data else None
+    if rsi is not None:
+        if rsi > 75:
+            parts.append(f"SPY RSI {rsi:.1f} 偏熱，短線留意過熱回調")
+        elif rsi < 30:
+            parts.append(f"SPY RSI {rsi:.1f} 深度超賣，技術反彈條件具備")
+        elif rsi < 40:
+            parts.append(f"SPY RSI {rsi:.1f} 接近超賣，尋底訊號")
+        elif 40 <= rsi <= 60:
+            parts.append(f"SPY RSI {rsi:.1f} 中性區，方向待確認")
+
+    vix = mkt_data.get('VIX') if mkt_data else None
+    if vix is not None:
+        if vix > 30:
+            parts.append(f"VIX {vix:.1f} 恐慌高位，注意避險需求")
+        elif vix > 20:
+            parts.append(f"VIX {vix:.1f} 偏高，市場仍有隱憂")
+        elif vix < 15:
+            parts.append(f"VIX {vix:.1f} 低迷，波動率壓縮")
+
+    yield10y = mkt_data.get('US_10Y_yield') if mkt_data else None
+    if yield10y is not None:
+        if yield10y > 4.5:
+            parts.append(f"10Y 殖利率 {yield10y:.2f}% 偏高，壓制估值擴張")
+        elif 4.0 <= yield10y <= 4.5:
+            parts.append(f"10Y 殖利率 {yield10y:.2f}%，聯準會路徑為關鍵變數")
+        elif yield10y < 3.5:
+            parts.append(f"10Y 殖利率 {yield10y:.2f}% 走低，有利風險資產")
+
+    sma20 = mkt_data.get('SPY_SMA20') if mkt_data else None
+    close = mkt_data.get('SPY_close') if mkt_data else None
+    if sma20 is not None and close is not None and score <= 55:
+        parts.append(f"SPY 能否守住 SMA20 ({sma20:.0f}) 為短期關鍵支撐")
+
+    return "；".join(parts) + "。"
+
+
+def generate_forward_outlook_jp(score, mkt_data, global_ctx=None, delta_5d=None):
+    if score is None:
+        return None
+
+    parts = []
+
+    if score >= 80:
+        parts.append(f"日股 Moodring {score:.1f}，短線偏多動能強勁")
+    elif score >= 65:
+        parts.append(f"日股 Moodring {score:.1f}，偏多但需確認延續性")
+    elif score >= 50:
+        parts.append(f"日股 Moodring {score:.1f}，中性觀望")
+    elif score >= 35:
+        parts.append(f"日股 Moodring {score:.1f}，偏弱，下行風險需注意")
+    else:
+        parts.append(f"日股 Moodring {score:.1f}，恐慌模式")
+
+    if delta_5d is not None and abs(delta_5d) > 4:
+        if delta_5d > 0:
+            parts.append(f"近 5 日上漲 {delta_5d:+.1f} 分")
+        else:
+            parts.append(f"近 5 日下跌 {delta_5d:+.1f} 分，注意動能轉折")
+
+    usdjpy = (global_ctx or {}).get('USDJPY')
+    if usdjpy is not None:
+        if usdjpy > 155:
+            parts.append(f"USDJPY {usdjpy:.1f}，円安持續支撐出口股獲利")
+        elif usdjpy > 150:
+            parts.append(f"USDJPY {usdjpy:.1f}，日圓弱勢區間，BOJ 干預風險存在")
+        elif usdjpy < 145:
+            parts.append(f"USDJPY {usdjpy:.1f}，円高壓力，注意出口股獲利回吐")
+
+    rsi = mkt_data.get('NIKKEI_RSI14') if mkt_data else None
+    if rsi is not None:
+        if rsi > 75:
+            parts.append(f"RSI {rsi:.1f} 偏熱，短線留意技術修正")
+        elif rsi < 30:
+            parts.append(f"RSI {rsi:.1f} 超賣，技術反彈條件具備")
+        elif rsi < 40:
+            parts.append(f"RSI {rsi:.1f} 接近超賣")
+        elif 40 <= rsi <= 60:
+            parts.append(f"RSI {rsi:.1f} 中性")
+
+    r5d = mkt_data.get('NIKKEI_5d_return_pct') if mkt_data else None
+    if r5d is not None and abs(r5d) > 3:
+        parts.append(f"近 5 日 {r5d:+.1f}%，{'強勢反彈' if r5d > 0 else '快速回落'}")
+
+    return "；".join(parts) + "。"
+
+
+def generate_forward_outlook_kr(score, mkt_data, delta_5d=None):
+    if score is None:
+        return None
+
+    parts = []
+
+    if score >= 80:
+        parts.append(f"韓股 Moodring {score:.1f}，貪婪區，動能偏強")
+    elif score >= 65:
+        parts.append(f"韓股 Moodring {score:.1f}，偏多，但貪婪訊號需確認")
+    elif score >= 50:
+        parts.append(f"韓股 Moodring {score:.1f}，中性偏多")
+    elif score >= 35:
+        parts.append(f"韓股 Moodring {score:.1f}，中性偏弱")
+    else:
+        parts.append(f"韓股 Moodring {score:.1f}，恐懼區")
+
+    if delta_5d is not None and abs(delta_5d) > 4:
+        if delta_5d > 0:
+            parts.append(f"近 5 日上漲 {delta_5d:+.1f} 分，動能加速")
+        else:
+            parts.append(f"近 5 日下跌 {delta_5d:+.1f} 分")
+
+    rsi = mkt_data.get('KOSPI_RSI14') if mkt_data else None
+    if rsi is not None:
+        if rsi > 75:
+            parts.append(f"KOSPI RSI {rsi:.1f} 偏熱，留意短線過熱")
+        elif rsi < 30:
+            parts.append(f"KOSPI RSI {rsi:.1f} 超賣，技術反彈空間存在")
+        elif rsi < 40:
+            parts.append(f"KOSPI RSI {rsi:.1f} 接近超賣")
+        elif 40 <= rsi <= 60:
+            parts.append(f"KOSPI RSI {rsi:.1f} 中性")
+
+    r5d = mkt_data.get('KOSPI_5d_return_pct') if mkt_data else None
+    if r5d is not None and abs(r5d) > 3:
+        parts.append(f"近 5 日 KOSPI {r5d:+.1f}%，{'強勢上揚' if r5d > 0 else '快速下滑'}")
+
+    sma20 = mkt_data.get('KOSPI_SMA20') if mkt_data else None
+    close = mkt_data.get('KOSPI_close') if mkt_data else None
+    if sma20 is not None and close is not None and score <= 55:
+        parts.append(f"KOSPI 能否守住 SMA20 ({sma20:.0f}) 是近期關鍵支撐")
+
+    return "；".join(parts) + "。"
+
+
+def generate_forward_outlook_eu(score, mkt_data, delta_5d=None):
+    if score is None:
+        return None
+
+    parts = []
+
+    if score >= 80:
+        parts.append(f"歐股 Moodring {score:.1f}，貪婪區，動能持續")
+    elif score >= 65:
+        parts.append(f"歐股 Moodring {score:.1f}，偏多，歐股動能延伸中")
+    elif score >= 50:
+        parts.append(f"歐股 Moodring {score:.1f}，中性偏多")
+    elif score >= 35:
+        parts.append(f"歐股 Moodring {score:.1f}，中性偏弱")
+    else:
+        parts.append(f"歐股 Moodring {score:.1f}，恐懼區")
+
+    if delta_5d is not None and abs(delta_5d) > 4:
+        if delta_5d > 0:
+            parts.append(f"近 5 日上漲 {delta_5d:+.1f} 分，偏多動能延伸")
+        else:
+            parts.append(f"近 5 日下跌 {delta_5d:+.1f} 分，注意修正風險")
+
+    rsi = mkt_data.get('STOXX50_RSI14') if mkt_data else None
+    if rsi is not None:
+        if rsi > 75:
+            parts.append(f"STOXX50 RSI {rsi:.1f} 偏熱，短線過熱風險")
+        elif rsi < 30:
+            parts.append(f"STOXX50 RSI {rsi:.1f} 超賣，技術反彈條件存在")
+        elif rsi < 40:
+            parts.append(f"STOXX50 RSI {rsi:.1f} 接近超賣")
+        elif 40 <= rsi <= 60:
+            parts.append(f"STOXX50 RSI {rsi:.1f} 中性")
+
+    r5d = mkt_data.get('STOXX50_5d_return_pct') if mkt_data else None
+    if r5d is not None and abs(r5d) > 3:
+        parts.append(f"近 5 日 STOXX50 {r5d:+.1f}%，{'強勢反彈' if r5d > 0 else '快速回落'}")
+
+    sma20 = mkt_data.get('STOXX50_SMA20') if mkt_data else None
+    if sma20 is not None and score <= 55:
+        parts.append(f"STOXX50 SMA20 ({sma20:.0f}) 為近期支撐關鍵")
+
+    return "；".join(parts) + "。"
 
 
 def build_cross_market_view(us_final, tw_final, divergence, snapshot, jp_score, kr_score, eu_score, kr_scores_hist=None):
@@ -1945,6 +2183,12 @@ def update_agent_results(snapshot, us_data, tw_data, tw_retail, jp_data, kr_data
     jp_score = jp_mkt.get('jp_moodring_score') or jp_score
     kr_score = kr_mkt.get('kr_moodring_score') or kr_score
     eu_score = eu_mkt.get('eu_moodring_score') or eu_score
+    if jp_score is not None:
+        agents['jp_base_score'] = round(float(jp_score), 1)
+    if kr_score is not None:
+        agents['kr_base_score'] = round(float(kr_score), 1)
+    if eu_score is not None:
+        agents['eu_base_score'] = round(float(eu_score), 1)
 
     score_map = {
         'us_agent': us_base,
@@ -1986,13 +2230,60 @@ def update_agent_results(snapshot, us_data, tw_data, tw_retail, jp_data, kr_data
         'us_agent': generate_watch_for_tw(us_mkt, 'US', score=us_base, global_ctx=gl),
         'tw_agent': generate_watch_for_tw(tw_mkt, 'TW', score=tw_base, retail=retail),
         'jp_agent': generate_watch_for_tw(jp_mkt, 'JP', score=jp_score, global_ctx=gl),
-        'kr_agent': generate_watch_for_tw(kr_mkt, 'KR', score=kr_score),
-        'eu_agent': generate_watch_for_tw(eu_mkt, 'EU', score=eu_score),
+        'kr_agent': generate_watch_for_tw(kr_mkt, 'KR', score=kr_score, global_ctx=gl),
+        'eu_agent': generate_watch_for_tw(eu_mkt, 'EU', score=eu_score, global_ctx=gl),
     }
 
     # --- Generate forward_outlook for all agents (keeps the narrative field fresh each run) ---
+    # Read overlay_data.json for JP/KR/EU delta computation
+    _overlay_path = os.path.join(DATA_DIR, 'overlay_data.json')
+    jp_scores_hist = kr_scores_ol = eu_scores_hist = []
+    try:
+        with open(_overlay_path, 'r', encoding='utf-8') as _f:
+            _ov = json.load(_f)
+        jp_scores_hist = [v for v in _ov.get('jp_score', []) if v is not None]
+        kr_scores_ol = [v for v in _ov.get('kr_score', []) if v is not None]
+        eu_scores_hist = [v for v in _ov.get('eu_score', []) if v is not None]
+    except Exception:
+        pass
+
+    # US/TW delta from historical_scores.csv (already read as df_csv earlier)
+    us_delta_5d = None
+    tw_delta_5d = None
+    if os.path.exists(csv_path):
+        try:
+            import pandas as pd
+            df_csv2 = pd.read_csv(csv_path, encoding='utf-8')
+            if len(df_csv2) >= 6:
+                us_vals = df_csv2['us_score'].replace('', float('nan')).dropna()
+                tw_vals = df_csv2['tw_score'].replace('', float('nan')).dropna()
+                if len(us_vals) >= 6:
+                    us_delta_5d = round(float(us_vals.iloc[-1]) - float(us_vals.iloc[-6]), 1)
+                if len(tw_vals) >= 6:
+                    tw_delta_5d = round(float(tw_vals.iloc[-1]) - float(tw_vals.iloc[-6]), 1)
+        except Exception:
+            pass
+
+    def _delta5(hist):
+        """Return delta over last 5 entries, or None if insufficient data."""
+        if hist and len(hist) >= 6:
+            return round(hist[-1] - hist[-6], 1)
+        return None
+
+    jp_delta_5d = _delta5(jp_scores_hist)
+    kr_delta_5d = _delta5(kr_scores_ol)
+    eu_delta_5d = _delta5(eu_scores_hist)
+
     forward_outlook_map = {
         'tw_agent': generate_forward_outlook_tw(score=tw_base, retail=retail, mkt_data=tw_mkt),
+        'us_agent': generate_forward_outlook_us(score=us_base, mkt_data=us_mkt,
+                                                 global_ctx=gl, delta_5d=us_delta_5d),
+        'jp_agent': generate_forward_outlook_jp(score=jp_score, mkt_data=jp_mkt,
+                                                 global_ctx=gl, delta_5d=jp_delta_5d),
+        'kr_agent': generate_forward_outlook_kr(score=kr_score, mkt_data=kr_mkt,
+                                                 delta_5d=kr_delta_5d),
+        'eu_agent': generate_forward_outlook_eu(score=eu_score, mkt_data=eu_mkt,
+                                                 delta_5d=eu_delta_5d),
     }
 
     # --- Phase 1: compute dynamic action thresholds for US + TW ---

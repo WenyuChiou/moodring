@@ -1845,6 +1845,60 @@ def generate_forward_outlook_eu(score, mkt_data, delta_5d=None):
     return "；".join(parts) + "。"
 
 
+def _rsi_label_us(rsi):
+    """Return Chinese RSI zone label for US markets."""
+    if rsi > 70:
+        return '超買'
+    if rsi < 30:
+        return '超賣'
+    if rsi < 35:
+        return '接近超賣'
+    return '中性'
+
+
+def build_actionable_signal(us_final, tw_final, snapshot, retail=None):
+    """Generate actionable_signal from live market data — refreshed each run."""
+    us_mkt = snapshot.get('us_market', {})
+    if retail is None:
+        retail = snapshot.get('tw_retail_indicators', {})
+
+    us_rsi = us_mkt.get('SPY_RSI14')
+    rsi_label = _rsi_label_us(us_rsi) if us_rsi is not None else '中性'
+
+    # Determine action word
+    if us_final is not None and us_final >= 80:
+        action = 'HOLD'
+    elif us_rsi is not None and us_rsi < 30:
+        action = 'HOLD'
+    else:
+        action = 'HOLD'
+
+    # US clause
+    if us_rsi is not None and us_rsi > 70:
+        us_clause = f"US RSI {us_rsi:.1f} 超買 — 短線追高風險上升，不宜加碼。"
+    elif us_rsi is not None and us_rsi < 30:
+        us_clause = f"US 超賣但趨勢未逆轉，等 RSI 從超賣反彈確認。"
+    elif us_rsi is not None and us_rsi < 35:
+        us_clause = f"US RSI {us_rsi:.1f} 接近超賣，技術支撐區間。"
+    else:
+        us_clause = f"US RSI {us_rsi:.1f} {rsi_label}，趨勢持續觀察。" if us_rsi is not None else "US 技術面中性。"
+
+    # TW clause
+    foreign_dir = retail.get('foreign_consecutive_direction', '')
+    foreign_days = retail.get('foreign_consecutive_days')
+    retail_net = retail.get('retail_net_est_TWD')
+    tw_clause = ''
+    if foreign_dir == 'sell' and retail_net is not None and retail_net > 0:
+        tw_clause = f"TW 散戶槓桿加速追買+外資賣超，不宜追多。等外資翻買連確認（2-3 天+）再動。"
+    elif foreign_dir == 'buy' and foreign_days is not None:
+        tw_clause = f"TW 外資連買 {foreign_days} 天，多頭動能維持，留意是否延續。"
+
+    parts = [f"{action} — {us_clause}"]
+    if tw_clause:
+        parts.append(tw_clause)
+    return ' '.join(parts)
+
+
 def build_cross_market_view(us_final, tw_final, divergence, snapshot, jp_score, kr_score, eu_score, kr_scores_hist=None):
     """Rebuild cross_market_view from live data each run — keeps numbers fresh."""
     us_mkt = snapshot.get('us_market', {})
@@ -1864,7 +1918,7 @@ def build_cross_market_view(us_final, tw_final, divergence, snapshot, jp_score, 
     tw_rsi = tw_mkt.get('TAIEX_RSI14')
     rsi_parts = []
     if us_rsi is not None:
-        rsi_parts.append(f"US RSI {us_rsi:.1f} {'超賣' if us_rsi < 30 else ('接近超賣' if us_rsi < 35 else '中性')}")
+        rsi_parts.append(f"US RSI {us_rsi:.1f} {'超買' if us_rsi > 70 else ('超賣' if us_rsi < 30 else ('接近超賣' if us_rsi < 35 else '中性'))}")
     if tw_rsi is not None:
         rsi_parts.append(f"台股 RSI {tw_rsi:.1f} {'超賣' if tw_rsi < 30 else ('中性偏弱' if tw_rsi < 45 else '中性')}")
     if rsi_parts:
@@ -1930,7 +1984,7 @@ def build_global_narrative(today, us_final, tw_final, snapshot, jp_score, kr_sco
     vix = us_mkt.get('VIX')
     us_pieces = []
     if us_rsi is not None:
-        us_pieces.append(f"SPY RSI {us_rsi:.1f} {'進入超賣' if us_rsi < 30 else ('接近超賣' if us_rsi < 35 else '中性')}")
+        us_pieces.append(f"SPY RSI {us_rsi:.1f} {'超買' if us_rsi > 70 else ('進入超賣' if us_rsi < 30 else ('接近超賣' if us_rsi < 35 else '中性'))}")
     if vix is not None:
         us_pieces.append(f"VIX {vix:.2f}")
     if us_final is not None:
@@ -2369,6 +2423,11 @@ def update_agent_results(snapshot, us_data, tw_data, tw_retail, jp_data, kr_data
     )
     if new_cross:
         agents['summary']['cross_market_view'] = new_cross
+
+    # Regenerate actionable_signal with correct RSI direction label
+    new_signal = build_actionable_signal(us_final, tw_final, snapshot, retail=retail)
+    if new_signal:
+        agents['summary']['actionable_signal'] = new_signal
 
     new_global = build_global_narrative(
         today, us_final, tw_final, snapshot,

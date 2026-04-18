@@ -1,48 +1,48 @@
 {
-  "date": "2026-04-17",
+  "date": "2026-04-18",
   "markets": {
     "us": {
       "full_ic_20d": -0.166,
-      "recent_ic_20d": 0.1257,
+      "recent_ic_20d": 0.1407,
       "ic_trend": "decaying",
-      "ic_change_pct": -24.3,
+      "ic_change_pct": -15.2,
       "score_mean_60d": 48.5,
-      "score_std_60d": 15.2,
+      "score_std_60d": 15.3,
       "zone_distribution_60d": {
         "extreme_fear": 0,
         "fear": 17,
-        "neutral": 32,
+        "neutral": 31,
         "greed": 2,
         "extreme_greed": 6
       },
       "health": "warning",
       "flags": [
-        "IC decaying: recent 0.1257 vs historical -0.166"
+        "IC decaying: recent 0.1407 vs historical -0.166"
       ],
       "calibration_stale": false,
-      "calibration_days_ago": 23
+      "calibration_days_ago": 24
     },
     "tw": {
       "full_ic_20d": -0.1274,
-      "recent_ic_20d": 0.0743,
+      "recent_ic_20d": 0.0895,
       "ic_trend": "decaying",
-      "ic_change_pct": -41.7,
-      "score_mean_60d": 53.5,
-      "score_std_60d": 19.4,
+      "ic_change_pct": -29.7,
+      "score_mean_60d": 53.7,
+      "score_std_60d": 19.5,
       "zone_distribution_60d": {
         "extreme_fear": 0,
         "fear": 15,
-        "neutral": 19,
+        "neutral": 18,
         "greed": 7,
         "extreme_greed": 7
       },
       "health": "poor",
       "flags": [
-        "IC decaying: recent 0.0743 vs historical -0.1274",
-        "Weak IC: 0.0743"
+        "IC decaying: recent 0.0895 vs historical -0.1274",
+        "Weak IC: 0.0895"
       ],
       "calibration_stale": false,
-      "calibration_days_ago": 6
+      "calibration_days_ago": 7
     },
     "jp": {
       "full_ic_20d": -0.0671,
@@ -61,7 +61,7 @@
       "health": "warning",
       "flags": [],
       "calibration_stale": false,
-      "calibration_days_ago": 23
+      "calibration_days_ago": 24
     },
     "kr": {
       "full_ic_20d": -0.1087,
@@ -80,7 +80,7 @@
       "health": "good",
       "flags": [],
       "calibration_stale": false,
-      "calibration_days_ago": 6
+      "calibration_days_ago": 7
     },
     "eu": {
       "full_ic_20d": -0.0581,
@@ -99,15 +99,15 @@
       "health": "good",
       "flags": [],
       "calibration_stale": false,
-      "calibration_days_ago": 6
+      "calibration_days_ago": 7
     }
   },
   "system_health": {
     "overall": "poor",
     "active_flags": [
-      "US: IC decaying: recent 0.1257 vs historical -0.166",
-      "TW: IC decaying: recent 0.0743 vs historical -0.1274",
-      "TW: Weak IC: 0.0743"
+      "US: IC decaying: recent 0.1407 vs historical -0.166",
+      "TW: IC decaying: recent 0.0895 vs historical -0.1274",
+      "TW: Weak IC: 0.0895"
     ],
     "last_calibration": "2026-04-11",
     "recommendation": "Signal degradation detected. Consider recalibration."

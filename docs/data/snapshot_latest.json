@@ -1,5 +1,5 @@
 {
-  "date": "2026-04-17",
+  "date": "2026-04-18",
   "data_sources": {
     "market_prices": "Yahoo Finance (yfinance)",
     "tw_margin": "FinMind API (TWSE OpenData)",
@@ -38,7 +38,7 @@
     "foreign_consecutive_days": 1,
     "foreign_consecutive_direction": "sell",
     "TSMC_margin_balance": 25670,
-    "TSMC_margin_30d_change_pct": 14.93
+    "TSMC_margin_30d_change_pct": 15.58
   },
   "jp_market": {
     "NIKKEI_close": 58475.9,
@@ -68,7 +68,7 @@
     "eu_moodring_score": 81.1
   },
   "global_context": {
-    "Gold": 4849.0,
+    "Gold": 4858.0,
     "USDJPY": 158.58,
     "USDTWD": 31.46
   }

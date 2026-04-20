@@ -39,14 +39,17 @@ def check_narrative_freshness(max_hours=DEFAULT_MAX_HOURS):
         date_str = data.get('date', '')
         today_dt = datetime.now().date()
         today = today_dt.strftime('%Y-%m-%d')
-        # Weekend grace: on Sat/Sun the latest valid trading day is Friday.
-        # Allow both today and the most recent prior weekday so the audit
-        # doesn't false-fail on weekend checks.
+        # Weekend/Monday grace: allow the most recent prior trading day (Fri)
+        # when today is Sat, Sun, or Mon so the audit doesn't false-fail on
+        # weekend/Monday-morning checks before the pipeline has run.
         allowed_dates = {today}
-        if today_dt.weekday() == 5:  # Saturday -> allow Friday
+        wd = today_dt.weekday()
+        if wd == 5:    # Saturday -> allow Friday (1 day back)
             allowed_dates.add((today_dt - timedelta(days=1)).strftime('%Y-%m-%d'))
-        elif today_dt.weekday() == 6:  # Sunday -> allow Friday
+        elif wd == 6:  # Sunday -> allow Friday (2 days back)
             allowed_dates.add((today_dt - timedelta(days=2)).strftime('%Y-%m-%d'))
+        elif wd == 0:  # Monday -> allow Friday (3 days back)
+            allowed_dates.add((today_dt - timedelta(days=3)).strftime('%Y-%m-%d'))
         if date_str and date_str not in allowed_dates:
             print(f"[AUDIT WARN] phase2_agent_results.json date field is {date_str!r}, expected one of {sorted(allowed_dates)}",
                   file=sys.stderr)
@@ -54,16 +57,22 @@ def check_narrative_freshness(max_hours=DEFAULT_MAX_HOURS):
     except (json.JSONDecodeError, UnicodeDecodeError) as e:
         print(f"[AUDIT WARN] Could not parse {NARRATIVE_FILE}: {e}", file=sys.stderr)
 
-    if age_hours > max_hours:
+    # Extend threshold for weekends: Saturday adds 1 extra day, Sunday/Monday add 2.
+    # This prevents false-fails when the pipeline legitimately last ran on Friday.
+    wd = datetime.now().date().weekday()
+    extra_days = 2 if wd in (0, 6) else (1 if wd == 5 else 0)
+    effective_max_hours = max_hours + extra_days * 24
+
+    if age_hours > effective_max_hours:
         print(
             f"[AUDIT FAIL] {NARRATIVE_FILE} is {age_hours:.1f}h old "
-            f"(threshold: {max_hours}h). Narrative may be stale.",
+            f"(threshold: {effective_max_hours:.0f}h). Narrative may be stale.",
             file=sys.stderr,
         )
         return 1
 
     status = "OK" if stale_ok else "WARN"
-    print(f"[AUDIT {status}] {NARRATIVE_FILE} is {age_hours:.1f}h old — within {max_hours}h threshold.")
+    print(f"[AUDIT {status}] {NARRATIVE_FILE} is {age_hours:.1f}h old — within {effective_max_hours:.0f}h threshold.")
     return 0 if stale_ok else 1
 
 

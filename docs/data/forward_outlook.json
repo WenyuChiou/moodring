@@ -1,5 +1,5 @@
 {
-  "us_current_score": 92.3,
+  "us_current_score": 88.4,
   "tw_current_score": 98.0,
   "us_forward": {
     "spy_fwd_5d": {
@@ -69,7 +69,7 @@
       "n": 80
     }
   },
-  "jp_current_score": 94.2,
+  "jp_current_score": 93.8,
   "jp_forward": {
     "jp_fwd_5d": {
       "mean": 0.2,
@@ -104,7 +104,7 @@
       "n": 1195
     }
   },
-  "kr_current_score": 91.5,
+  "kr_current_score": 92.0,
   "kr_forward": {
     "kr_fwd_5d": {
       "mean": 0.28,
@@ -139,7 +139,7 @@
       "n": 1367
     }
   },
-  "eu_current_score": 73.5,
+  "eu_current_score": 73.4,
   "eu_forward": {
     "eu_fwd_5d": {
       "mean": 0.01,

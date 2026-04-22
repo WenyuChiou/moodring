@@ -8,15 +8,15 @@
     "behavioral_params": "Kahneman & Tversky (1979), Banerjee (1992)"
   },
   "us_market": {
-    "SPY_close": 707.93,
-    "SPY_RSI14": 95.8,
-    "SPY_SMA20": 672.25,
-    "SPY_SMA60": 677.27,
-    "SPY_vs_52w_high_pct": 99.7,
-    "SPY_5d_return_pct": 1.94,
-    "SPY_20d_return_pct": 8.02,
-    "VIX": 19.48,
-    "US_10Y_yield": 4.3
+    "SPY_close": 704.08,
+    "SPY_RSI14": 90.2,
+    "SPY_SMA20": 672.06,
+    "SPY_SMA60": 677.21,
+    "SPY_vs_52w_high_pct": 99.1,
+    "SPY_5d_return_pct": 1.39,
+    "SPY_20d_return_pct": 7.43,
+    "VIX": 19.5,
+    "US_10Y_yield": 4.29
   },
   "tw_market": {
     "TAIEX_close": 37605.0,
@@ -41,35 +41,35 @@
     "TSMC_margin_30d_change_pct": -0.68
   },
   "jp_market": {
-    "NIKKEI_close": 58824.89,
-    "NIKKEI_RSI14": 77.6,
-    "NIKKEI_SMA20": 55027.96,
-    "NIKKEI_vs_52w_high_pct": 98.8,
-    "NIKKEI_5d_return_pct": 4.11,
-    "NIKKEI_20d_return_pct": 14.19,
-    "jp_moodring_score": 94.2
+    "NIKKEI_close": 59349.17,
+    "NIKKEI_RSI14": 73.5,
+    "NIKKEI_SMA20": 55382.81,
+    "NIKKEI_vs_52w_high_pct": 99.7,
+    "NIKKEI_5d_return_pct": 2.54,
+    "NIKKEI_20d_return_pct": 13.58,
+    "jp_moodring_score": 93.8
   },
   "kr_market": {
-    "KOSPI_close": 6219.09,
-    "KOSPI_RSI14": 79.0,
-    "KOSPI_SMA20": 5673.72,
-    "KOSPI_vs_52w_high_pct": 98.6,
-    "KOSPI_5d_return_pct": 7.07,
-    "KOSPI_20d_return_pct": 15.05,
-    "kr_moodring_score": 91.5
+    "KOSPI_close": 6388.47,
+    "KOSPI_RSI14": 75.9,
+    "KOSPI_SMA20": 5715.45,
+    "KOSPI_vs_52w_high_pct": 100.0,
+    "KOSPI_5d_return_pct": 7.05,
+    "KOSPI_20d_return_pct": 15.03,
+    "kr_moodring_score": 92.0
   },
   "eu_market": {
-    "STOXX50_close": 5935.15,
-    "STOXX50_RSI14": 69.4,
-    "STOXX50_SMA20": 5776.07,
+    "STOXX50_close": 5930.25,
+    "STOXX50_RSI14": 69.0,
+    "STOXX50_SMA20": 5775.82,
     "STOXX50_vs_52w_high_pct": 96.1,
-    "STOXX50_5d_return_pct": -0.82,
-    "STOXX50_20d_return_pct": 7.89,
-    "eu_moodring_score": 73.5
+    "STOXX50_5d_return_pct": -0.91,
+    "STOXX50_20d_return_pct": 7.8,
+    "eu_moodring_score": 73.4
   },
   "global_context": {
-    "Gold": 4754.0,
-    "USDJPY": 159.3,
-    "USDTWD": 31.45
+    "Gold": 4770.0,
+    "USDJPY": 159.26,
+    "USDTWD": 31.46
   }
 }

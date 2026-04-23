@@ -1865,13 +1865,11 @@ def build_actionable_signal(us_final, tw_final, snapshot, retail=None):
     us_rsi = us_mkt.get('SPY_RSI14')
     rsi_label = _rsi_label_us(us_rsi) if us_rsi is not None else '中性'
 
-    # Determine action word
-    if us_final is not None and us_final >= 80:
-        action = 'HOLD'
-    elif us_rsi is not None and us_rsi < 30:
-        action = 'HOLD'
+    # Determine action word using dynamic thresholds (same logic as individual agent actions)
+    if us_final is not None:
+        action = score_to_action(us_final, market='us')
     else:
-        action = 'HOLD'
+        action = '觀望持有'
 
     # US clause
     if us_rsi is not None and us_rsi > 70:

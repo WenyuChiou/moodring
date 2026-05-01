@@ -1,5 +1,5 @@
 {
-  "date": "2026-04-30",
+  "date": "2026-05-01",
   "data_sources": {
     "market_prices": "Yahoo Finance (yfinance)",
     "tw_margin": "FinMind API (TWSE OpenData)",
@@ -38,16 +38,16 @@
     "foreign_consecutive_days": 4,
     "foreign_consecutive_direction": "sell",
     "TSMC_margin_balance": 28818,
-    "TSMC_margin_30d_change_pct": 9.79
+    "TSMC_margin_30d_change_pct": 15.44
   },
   "jp_market": {
-    "NIKKEI_close": 59284.92,
-    "NIKKEI_RSI14": 67.4,
-    "NIKKEI_SMA20": 57421.13,
-    "NIKKEI_vs_52w_high_pct": 97.9,
-    "NIKKEI_5d_return_pct": -0.51,
-    "NIKKEI_20d_return_pct": 10.32,
-    "jp_moodring_score": 90.4
+    "NIKKEI_close": 59664.3,
+    "NIKKEI_RSI14": 65.1,
+    "NIKKEI_SMA20": 57781.18,
+    "NIKKEI_vs_52w_high_pct": 98.6,
+    "NIKKEI_5d_return_pct": 0.89,
+    "NIKKEI_20d_return_pct": 13.73,
+    "jp_moodring_score": 92.2
   },
   "kr_market": {
     "KOSPI_close": 6598.87,
@@ -68,8 +68,8 @@
     "eu_moodring_score": 64.2
   },
   "global_context": {
-    "Gold": 4632.0,
-    "USDJPY": 157.15,
+    "Gold": 4621.0,
+    "USDJPY": 157.22,
     "USDTWD": 31.58
   }
 }

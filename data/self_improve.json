@@ -3,11 +3,11 @@
   "markets": {
     "us": {
       "full_ic_20d": -0.1685,
-      "recent_ic_20d": 0.2028,
+      "recent_ic_20d": 0.2029,
       "ic_trend": "decaying",
       "ic_change_pct": 20.4,
       "score_mean_60d": 56.2,
-      "score_std_60d": 22.0,
+      "score_std_60d": 22.1,
       "zone_distribution_60d": {
         "extreme_fear": 0,
         "fear": 17,
@@ -17,7 +17,7 @@
       },
       "health": "good",
       "flags": [
-        "IC decaying: recent 0.2028 vs historical -0.1685",
+        "IC decaying: recent 0.2029 vs historical -0.1685",
         "Calibration stale: 2026-03-25 (36d ago)"
       ],
       "calibration_stale": true,
@@ -45,18 +45,18 @@
       "calibration_days_ago": 19
     },
     "jp": {
-      "full_ic_20d": -0.0687,
-      "recent_ic_20d": -0.132,
+      "full_ic_20d": -0.0692,
+      "recent_ic_20d": -0.1318,
       "ic_trend": "improving",
-      "ic_change_pct": 92.1,
-      "score_mean_60d": 53.6,
-      "score_std_60d": 17.5,
+      "ic_change_pct": 90.5,
+      "score_mean_60d": 54.2,
+      "score_std_60d": 18.1,
       "zone_distribution_60d": {
         "extreme_fear": 1,
         "fear": 10,
-        "neutral": 35,
+        "neutral": 34,
         "greed": 3,
-        "extreme_greed": 8
+        "extreme_greed": 9
       },
       "health": "warning",
       "flags": [
@@ -66,18 +66,18 @@
       "calibration_days_ago": 36
     },
     "kr": {
-      "full_ic_20d": -0.1095,
-      "recent_ic_20d": -0.3531,
+      "full_ic_20d": -0.1097,
+      "recent_ic_20d": -0.3533,
       "ic_trend": "improving",
-      "ic_change_pct": 222.5,
-      "score_mean_60d": 57.7,
-      "score_std_60d": 16.6,
+      "ic_change_pct": 222.1,
+      "score_mean_60d": 58.1,
+      "score_std_60d": 17.3,
       "zone_distribution_60d": {
         "extreme_fear": 2,
         "fear": 8,
         "neutral": 16,
-        "greed": 27,
-        "extreme_greed": 5
+        "greed": 26,
+        "extreme_greed": 6
       },
       "health": "good",
       "flags": [],
@@ -107,7 +107,7 @@
   "system_health": {
     "overall": "warning",
     "active_flags": [
-      "US: IC decaying: recent 0.2028 vs historical -0.1685",
+      "US: IC decaying: recent 0.2029 vs historical -0.1685",
       "TW: IC decaying: recent 0.1346 vs historical -0.1273",
       "US: Calibration stale: 2026-03-25 (36d ago)",
       "JP: Calibration stale: 2026-03-25 (36d ago)"

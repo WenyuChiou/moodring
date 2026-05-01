@@ -2,22 +2,22 @@
   "date": "2026-05-01",
   "markets": {
     "us": {
-      "full_ic_20d": -0.1685,
-      "recent_ic_20d": 0.2116,
+      "full_ic_20d": -0.1683,
+      "recent_ic_20d": 0.2198,
       "ic_trend": "decaying",
-      "ic_change_pct": 25.6,
-      "score_mean_60d": 56.4,
-      "score_std_60d": 22.2,
+      "ic_change_pct": 30.6,
+      "score_mean_60d": 57.1,
+      "score_std_60d": 22.5,
       "zone_distribution_60d": {
         "extreme_fear": 0,
         "fear": 17,
         "neutral": 21,
         "greed": 2,
-        "extreme_greed": 15
+        "extreme_greed": 16
       },
       "health": "good",
       "flags": [
-        "IC decaying: recent 0.2116 vs historical -0.1685",
+        "IC decaying: recent 0.2198 vs historical -0.1683",
         "Calibration stale: 2026-03-25 (37d ago)"
       ],
       "calibration_stale": true,
@@ -107,7 +107,7 @@
   "system_health": {
     "overall": "warning",
     "active_flags": [
-      "US: IC decaying: recent 0.2116 vs historical -0.1685",
+      "US: IC decaying: recent 0.2198 vs historical -0.1683",
       "TW: IC decaying: recent 0.1376 vs historical -0.1273",
       "US: Calibration stale: 2026-03-25 (37d ago)",
       "JP: Calibration stale: 2026-03-25 (37d ago)"

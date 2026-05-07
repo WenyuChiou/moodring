@@ -7,7 +7,7 @@
       "ic_trend": "decaying",
       "ic_change_pct": 68.4,
       "score_mean_60d": 60.5,
-      "score_std_60d": 23.6,
+      "score_std_60d": 23.5,
       "zone_distribution_60d": {
         "extreme_fear": 0,
         "fear": 16,
@@ -85,17 +85,17 @@
       "calibration_days_ago": 26
     },
     "eu": {
-      "full_ic_20d": -0.0597,
-      "recent_ic_20d": -0.3749,
+      "full_ic_20d": -0.0598,
+      "recent_ic_20d": -0.3947,
       "ic_trend": "improving",
-      "ic_change_pct": 528.0,
-      "score_mean_60d": 52.8,
-      "score_std_60d": 14.3,
+      "ic_change_pct": 560.0,
+      "score_mean_60d": 52.4,
+      "score_std_60d": 14.2,
       "zone_distribution_60d": {
         "extreme_fear": 0,
         "fear": 14,
-        "neutral": 24,
-        "greed": 14,
+        "neutral": 25,
+        "greed": 13,
         "extreme_greed": 4
       },
       "health": "good",

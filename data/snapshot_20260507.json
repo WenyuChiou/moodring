@@ -19,12 +19,12 @@
     "US_10Y_yield": 4.39
   },
   "tw_market": {
-    "TAIEX_close": 41139.0,
-    "TAIEX_RSI14": 82.6,
-    "TAIEX_SMA20": 37826.0,
+    "TAIEX_close": 41934.0,
+    "TAIEX_RSI14": 83.5,
+    "TAIEX_SMA20": 38185.0,
     "TAIEX_vs_52w_high_pct": 100.0,
-    "TAIEX_5d_return_pct": 4.09,
-    "TAIEX_20d_return_pct": 23.8,
+    "TAIEX_5d_return_pct": 6.69,
+    "TAIEX_20d_return_pct": 20.63,
     "TSMC_close": 2310.0,
     "TSMC_vs_52w_high_pct": 100.0
   },
@@ -41,35 +41,35 @@
     "TSMC_margin_30d_change_pct": 2.36
   },
   "jp_market": {
-    "NIKKEI_close": 59513.12,
-    "NIKKEI_RSI14": 64.5,
-    "NIKKEI_SMA20": 57773.62,
-    "NIKKEI_vs_52w_high_pct": 98.3,
-    "NIKKEI_5d_return_pct": 0.63,
-    "NIKKEI_20d_return_pct": 13.44,
-    "jp_moodring_score": 91.9
+    "NIKKEI_close": 62833.84,
+    "NIKKEI_RSI14": 76.8,
+    "NIKKEI_SMA20": 58259.14,
+    "NIKKEI_vs_52w_high_pct": 100.0,
+    "NIKKEI_5d_return_pct": 5.22,
+    "NIKKEI_20d_return_pct": 18.28,
+    "jp_moodring_score": 95.4
   },
   "kr_market": {
-    "KOSPI_close": 7384.56,
-    "KOSPI_RSI14": 92.4,
-    "KOSPI_SMA20": 6306.7,
+    "KOSPI_close": 7490.05,
+    "KOSPI_RSI14": 92.3,
+    "KOSPI_SMA20": 6406.46,
     "KOSPI_vs_52w_high_pct": 100.0,
-    "KOSPI_5d_return_pct": 11.63,
-    "KOSPI_20d_return_pct": 35.49,
-    "kr_moodring_score": 94.7
+    "KOSPI_5d_return_pct": 12.78,
+    "KOSPI_20d_return_pct": 36.31,
+    "kr_moodring_score": 97.5
   },
   "eu_market": {
-    "STOXX50_close": 6027.13,
-    "STOXX50_RSI14": 55.3,
-    "STOXX50_SMA20": 5910.44,
-    "STOXX50_vs_52w_high_pct": 97.6,
-    "STOXX50_5d_return_pct": 3.27,
-    "STOXX50_20d_return_pct": 6.99,
+    "STOXX50_close": 5972.65,
+    "STOXX50_RSI14": 52.3,
+    "STOXX50_SMA20": 5913.4,
+    "STOXX50_vs_52w_high_pct": 96.7,
+    "STOXX50_5d_return_pct": 2.68,
+    "STOXX50_20d_return_pct": 1.0,
     "eu_moodring_score": 67.9
   },
   "global_context": {
-    "Gold": 4707.0,
-    "USDJPY": 156.9,
+    "Gold": 4732.0,
+    "USDJPY": 156.94,
     "USDTWD": 31.39
   }
 }

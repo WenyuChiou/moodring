@@ -13,13 +13,13 @@
   "tw": {
     "market": "tw",
     "lookback_days": 252,
-    "sample_size": 229,
+    "sample_size": 230,
     "computed_at": "2026-05-07",
     "p20": 43.9,
     "p40": 47.3,
-    "p60": 50.3,
-    "p80": 56.5,
+    "p60": 50.4,
+    "p80": 56.6,
     "fallback": false
   },
-  "generated_at": "2026-05-07T19:32:00-04:00"
+  "generated_at": "2026-05-07T22:05:47-04:00"
 }

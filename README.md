@@ -2,6 +2,11 @@
 
 > 透過多維度情緒指標分析美股與台股市場方向的每日儀表板
 
+> 📌 **Side project** — quant-finance experiment. Main work: agent safety
+> + human-flood modeling. See [WAGF](https://github.com/WenyuChiou/WAGF) ·
+> [FLOODABM](https://github.com/WenyuChiou/FLOODABM) ·
+> [awesome-agentic-ai-zh](https://github.com/WenyuChiou/awesome-agentic-ai-zh).
+
 **[美股儀表板 (US)](https://wenyuchiou.github.io/moodring/)** · **[台股儀表板 (TW)](https://wenyuchiou.github.io/moodring/tw.html)**
 
 ---

@@ -1,98 +1,98 @@
 {
-  "date": "2026-05-15",
+  "date": "2026-05-18",
   "markets": {
     "us": {
-      "full_ic_20d": -0.162,
-      "recent_ic_20d": 0.3383,
+      "full_ic_20d": -0.1614,
+      "recent_ic_20d": 0.3437,
       "ic_trend": "decaying",
-      "ic_change_pct": 108.8,
-      "score_mean_60d": 65.5,
-      "score_std_60d": 24.0,
+      "ic_change_pct": 112.9,
+      "score_mean_60d": 66.2,
+      "score_std_60d": 23.9,
       "zone_distribution_60d": {
         "extreme_fear": 0,
         "fear": 15,
-        "neutral": 13,
+        "neutral": 12,
         "greed": 2,
-        "extreme_greed": 26
+        "extreme_greed": 27
       },
       "health": "good",
       "flags": [
-        "IC decaying: recent 0.3383 vs historical -0.162",
-        "Calibration stale: 2026-03-25 (51d ago)"
+        "IC decaying: recent 0.3437 vs historical -0.1614",
+        "Calibration stale: 2026-03-25 (54d ago)"
       ],
       "calibration_stale": true,
-      "calibration_days_ago": 51
+      "calibration_days_ago": 54
     },
     "tw": {
-      "full_ic_20d": -0.125,
-      "recent_ic_20d": 0.1924,
+      "full_ic_20d": -0.1241,
+      "recent_ic_20d": 0.2037,
       "ic_trend": "decaying",
-      "ic_change_pct": 53.9,
-      "score_mean_60d": 68.5,
+      "ic_change_pct": 64.1,
+      "score_mean_60d": 69.6,
       "score_std_60d": 24.6,
       "zone_distribution_60d": {
         "extreme_fear": 0,
         "fear": 9,
-        "neutral": 10,
+        "neutral": 9,
         "greed": 7,
-        "extreme_greed": 18
+        "extreme_greed": 19
       },
       "health": "good",
       "flags": [
-        "IC decaying: recent 0.1924 vs historical -0.125",
-        "Calibration stale: 2026-04-11 (34d ago)"
+        "IC decaying: recent 0.2037 vs historical -0.1241",
+        "Calibration stale: 2026-04-11 (37d ago)"
       ],
       "calibration_stale": true,
-      "calibration_days_ago": 34
+      "calibration_days_ago": 37
     },
     "jp": {
-      "full_ic_20d": -0.0694,
-      "recent_ic_20d": -0.1103,
+      "full_ic_20d": -0.0695,
+      "recent_ic_20d": -0.1033,
       "ic_trend": "improving",
-      "ic_change_pct": 58.9,
-      "score_mean_60d": 55.8,
-      "score_std_60d": 19.5,
+      "ic_change_pct": 48.6,
+      "score_mean_60d": 56.5,
+      "score_std_60d": 19.8,
       "zone_distribution_60d": {
         "extreme_fear": 1,
         "fear": 10,
-        "neutral": 32,
+        "neutral": 31,
         "greed": 3,
-        "extreme_greed": 11
+        "extreme_greed": 12
       },
       "health": "warning",
       "flags": [
-        "Calibration stale: 2026-03-25 (51d ago)"
+        "Calibration stale: 2026-03-25 (54d ago)"
       ],
       "calibration_stale": true,
-      "calibration_days_ago": 51
+      "calibration_days_ago": 54
     },
     "kr": {
-      "full_ic_20d": -0.1099,
-      "recent_ic_20d": -0.3622,
+      "full_ic_20d": -0.1091,
+      "recent_ic_20d": -0.3466,
       "ic_trend": "improving",
-      "ic_change_pct": 229.6,
-      "score_mean_60d": 58.7,
-      "score_std_60d": 18.0,
+      "ic_change_pct": 217.7,
+      "score_mean_60d": 59.0,
+      "score_std_60d": 18.4,
       "zone_distribution_60d": {
         "extreme_fear": 2,
         "fear": 8,
         "neutral": 16,
-        "greed": 25,
-        "extreme_greed": 7
+        "greed": 24,
+        "extreme_greed": 8
       },
       "health": "good",
       "flags": [
-        "Calibration stale: 2026-04-11 (34d ago)"
+        "Calibration stale: 2026-04-11 (37d ago)"
       ],
       "calibration_stale": true,
-      "calibration_days_ago": 34
+      "calibration_days_ago": 37
     },
     "eu": {
-      "full_ic_20d": -0.0607,
-      "recent_ic_20d": -0.3756,
+      "full_ic_20d": -0.0611,
+      "recent_ic_20d": -0.3768,
       "ic_trend": "improving",
-      "ic_change_pct": 518.8,
-      "score_mean_60d": 53.9,
+      "ic_change_pct": 516.7,
+      "score_mean_60d": 54.0,
       "score_std_60d": 14.4,
       "zone_distribution_60d": {
         "extreme_fear": 0,
@@ -103,22 +103,22 @@
       },
       "health": "good",
       "flags": [
-        "Calibration stale: 2026-04-11 (34d ago)"
+        "Calibration stale: 2026-04-11 (37d ago)"
       ],
       "calibration_stale": true,
-      "calibration_days_ago": 34
+      "calibration_days_ago": 37
     }
   },
   "system_health": {
     "overall": "warning",
     "active_flags": [
-      "US: IC decaying: recent 0.3383 vs historical -0.162",
-      "TW: IC decaying: recent 0.1924 vs historical -0.125",
-      "US: Calibration stale: 2026-03-25 (51d ago)",
-      "TW: Calibration stale: 2026-04-11 (34d ago)",
-      "JP: Calibration stale: 2026-03-25 (51d ago)",
-      "KR: Calibration stale: 2026-04-11 (34d ago)",
-      "EU: Calibration stale: 2026-04-11 (34d ago)"
+      "US: IC decaying: recent 0.3437 vs historical -0.1614",
+      "TW: IC decaying: recent 0.2037 vs historical -0.1241",
+      "US: Calibration stale: 2026-03-25 (54d ago)",
+      "TW: Calibration stale: 2026-04-11 (37d ago)",
+      "JP: Calibration stale: 2026-03-25 (54d ago)",
+      "KR: Calibration stale: 2026-04-11 (37d ago)",
+      "EU: Calibration stale: 2026-04-11 (37d ago)"
     ],
     "last_calibration": "2026-04-11",
     "recommendation": "Some signals showing weakness. Monitor closely."

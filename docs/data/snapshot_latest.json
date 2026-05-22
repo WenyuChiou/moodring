@@ -1,5 +1,5 @@
 {
-  "date": "2026-05-21",
+  "date": "2026-05-22",
   "data_sources": {
     "market_prices": "Yahoo Finance (yfinance)",
     "tw_margin": "FinMind API (TWSE OpenData)",
@@ -19,14 +19,14 @@
     "US_10Y_yield": 4.59
   },
   "tw_market": {
-    "TAIEX_close": 41368.0,
-    "TAIEX_RSI14": 66.0,
-    "TAIEX_SMA20": 40530.0,
-    "TAIEX_vs_52w_high_pct": 98.7,
-    "TAIEX_5d_return_pct": -0.92,
-    "TAIEX_20d_return_pct": 9.21,
-    "TSMC_close": 2230.0,
-    "TSMC_vs_52w_high_pct": 96.5
+    "TAIEX_close": 42295.0,
+    "TAIEX_RSI14": 61.8,
+    "TAIEX_SMA20": 40760.0,
+    "TAIEX_vs_52w_high_pct": 100.0,
+    "TAIEX_5d_return_pct": 2.73,
+    "TAIEX_20d_return_pct": 12.15,
+    "TSMC_close": 2255.0,
+    "TSMC_vs_52w_high_pct": 97.6
   },
   "tw_retail_indicators": {
     "margin_balance": 9125858,
@@ -41,22 +41,22 @@
     "TSMC_margin_30d_change_pct": 3.66
   },
   "jp_market": {
-    "NIKKEI_close": 61684.14,
-    "NIKKEI_RSI14": 55.0,
-    "NIKKEI_SMA20": 60838.38,
-    "NIKKEI_vs_52w_high_pct": 97.5,
-    "NIKKEI_5d_return_pct": -1.55,
-    "NIKKEI_20d_return_pct": 5.49,
-    "jp_moodring_score": 84.7
+    "NIKKEI_close": 63372.77,
+    "NIKKEI_RSI14": 63.8,
+    "NIKKEI_SMA20": 61065.78,
+    "NIKKEI_vs_52w_high_pct": 100.0,
+    "NIKKEI_5d_return_pct": 3.2,
+    "NIKKEI_20d_return_pct": 7.73,
+    "jp_moodring_score": 87.9
   },
   "kr_market": {
-    "KOSPI_close": 7815.59,
-    "KOSPI_RSI14": 67.3,
-    "KOSPI_SMA20": 7191.05,
-    "KOSPI_vs_52w_high_pct": 97.9,
-    "KOSPI_5d_return_pct": -2.08,
-    "KOSPI_20d_return_pct": 22.34,
-    "kr_moodring_score": 89.2
+    "KOSPI_close": 7853.39,
+    "KOSPI_RSI14": 69.6,
+    "KOSPI_SMA20": 7262.82,
+    "KOSPI_vs_52w_high_pct": 98.4,
+    "KOSPI_5d_return_pct": 4.81,
+    "KOSPI_20d_return_pct": 22.37,
+    "kr_moodring_score": 90.0
   },
   "eu_market": {
     "STOXX50_close": 5960.32,
@@ -68,8 +68,8 @@
     "eu_moodring_score": 67.9
   },
   "global_context": {
-    "Gold": 4528.0,
-    "USDJPY": 159.08,
-    "USDTWD": 31.51
+    "Gold": 4529.0,
+    "USDJPY": 159.07,
+    "USDTWD": 31.53
   }
 }

@@ -14,7 +14,7 @@
     "adjusted_score_delta": -1,
     "sentiment_level": "EXTREME_GREED",
     "conviction": "HIGH",
-    "narrative": "🚀🚀🚀 To the moon！我已經全倉，Robinhood 群友說這波才剛開始！Diamond hands，任何 dip 都是買點！身邊的人也在問要不要進場，感覺 FOMO 氛圍很濃——這種時候歷史上往往就是頂部，但我還是忍不住加碼了。",
+    "narrative": "SPY at 754. RSI 70.9 just crossed into overbought after a 5-point one-day jump. Moodring 87.2 only added 0.4 vs yesterday's 86.8 — the acceleration is visibly fading, yet the 5-day delta is still +3.3 from 83.9. VIX 15.83 is unusually calm, 10Y back to 4.45%. Score keeps printing highs while momentum flattens — typically not a continuation pattern but a topping one. Moodring 87.2 sits at 1.5x P80 (56.2). Ride it, but pull the trailing stop up.",
     "key_factors": [
       "RSI 70.9 超買 — 短線追高風險上升",
       "SPY 站上 SMA20/SMA60 — 多頭格局",
@@ -22,18 +22,18 @@
       "20 日報酬 +6.0% — 穩健上漲",
       "10Y 殖利率 4.45% — 聯準會降息預期分歧"
     ],
-    "what_quant_misses": "252 日 Z-score 看不到 0DTE 選擇權的量能爆炸，SPY 0DTE 已經占成交量 50% 以上。dealer 端 gamma 風險被壓在低位，看似平靜其實是壓力鍋。零售側 Robinhood 帳號開戶數追上 2021 上半年水位，這個結構模型不會跳警報。另一個盲點是 ETF inflows 連 13 週淨流入，籌碼鎖在被動端的同時意味著一旦 VIX 突破 17 跳到 22，主動端清倉的速度會比歷史模型估計快兩倍以上。SKEW 已悄悄站上 145，這層尾端風險被衡量在常態之外。",
-    "forward_outlook": "美股 Moodring 88.2，嗨翻了，這種高位感覺有點燙手；五天衝了 +9.5 分，FOMO 蠻濃；10Y 殖利率 4.45%，再來就看 Fed 怎麼講。",
-    "narrative_en": "SPY at 754. RSI 70.9 (overbought). 5d return +1.8%. 20d return +6.0%. Moodring score 88.2 (extreme greed — historically poor entry point). VIX at 15.83 (moderate). Gold $4,536.",
-    "narrative_tw": "🚀🚀🚀 To the moon！我已經全倉，Robinhood 群友說這波才剛開始！Diamond hands，任何 dip 都是買點！身邊的人也在問要不要進場，感覺 FOMO 氛圍很濃——這種時候歷史上往往就是頂部，但我還是忍不住加碼了。",
+    "what_quant_misses": "252 日 Z-score 抓不到 0DTE 選擇權的快速翻倉,SPY 0DTE 已占成交量 50% 以上,dealer gamma 部位被壓在低位,看起來平靜的盤其實是壓力鍋。RSI 今天從 65.8 一日跳到 70.9,加 5 點的單日跳幅在過去 12 個月只出現過 3 次,模型把它當單點,但通常是動能洩氣的前奏。零售側 Robinhood 新戶數已追上 2021 上半年水位,ETF 連 13 週淨流入,籌碼鎖在被動端;一旦 VIX 突破 17 跳到 22,被動端轉動的速度會比歷史模型估的快兩倍以上。SKEW 持續在 145 上方,尾端風險被算在常態之外。",
+    "forward_outlook": "Moodring 87.2 坐在 P80 56.2 上方 1.5 倍位置，這個高度歷史上往後 20 日中位數報酬 +1.45%、勝率 67%，比平常打了七折。5 天加 3.3 分代表還有餘溫，但今天只加 0.4 分，這個減速比分數本身還重要。短線可以續抱，加碼動作先收手，等回測 SMA20 (737) 再分批。如果接下來兩天 Moodring 站不穩 87、反而退到 85 以下，就是節奏轉換的第一道訊號。",
+    "narrative_en": "SPY at 754. RSI 70.9 just crossed into overbought after a 5-point one-day jump. Moodring 87.2 only added 0.4 vs yesterday's 86.8 — the acceleration is visibly fading, yet the 5-day delta is still +3.3 from 83.9. VIX 15.83 is unusually calm, 10Y back to 4.45%. Score keeps printing highs while momentum flattens — typically not a continuation pattern but a topping one. Moodring 87.2 sits at 1.5x P80 (56.2). Ride it, but pull the trailing stop up.",
+    "narrative_tw": "SPY 站上 754，RSI 71 終於踩過超買線，前幾天還在說派對中段，現在 70 已經被踩進腳底下。Moodring 87.2 比昨天的 86.8 只加 0.4，這個加速度跟一週前一次跳 +4.6 比是肉眼可見地在洩氣，但 5 天從 83.9 推上來還是多了三分多，餘溫還在。VIX 15.83 平靜得異常，10Y 殖利率 4.45% 再退一階，多頭手裡的拐杖還沒被收走。比較有意思的是分數還在創新高、動能曲線卻已經平掉，這通常不是繼續衝的訊號，是漂過頂的訊號。Moodring 87.2 坐在 P80 (56.2) 的 1.5 倍位置，亢奮可以玩，但停利線該往上拉了。",
     "key_factors_tw": [
-      "RSI 70.9 超買 — 短線追高風險上升",
-      "SPY 站上 SMA20/SMA60 — 多頭格局",
-      "VIX 15.8 溫和 — 市場波動可控",
-      "20 日報酬 +6.0% — 穩健上漲",
-      "10Y 殖利率 4.45% — 聯準會降息預期分歧"
+      "RSI 70.9 踩過超買線，比昨天的 65.8 一日跳 5 點",
+      "SPY 站穩 SMA20 (737) 與 SMA60，多頭排列未破",
+      "VIX 15.83 仍偏低，恐慌指數未醒",
+      "20 日報酬 +6.0%，比上週更陡",
+      "10Y 殖利率 4.45% 微退,給多頭一根拐杖"
     ],
-    "watch_for_tw": "SPY 能否收復 SMA20 (737) 是短線趨勢轉折關鍵；10Y 殖利率 4.45% — 注意聯準會措辭及就業數據。",
+    "watch_for_tw": "VIX 拉過 17 是恐慌指數第一個甦醒訊號。SPY 跌破 SMA20 (737) 才算趨勢真的歪掉。10Y 殖利率衝過 4.6% 會把估值故事掀掉一層。RSI 71 已經進入超買，要看是先回測還是衝過 75 才失速，台股 ADR 隔夜反向也是早盤先導訊號。",
     "action": "積極減碼",
     "action_thresholds": {
       "market": "us",
@@ -52,7 +52,7 @@
     "adjusted_score_delta": 2,
     "sentiment_level": "EXTREME_GREED",
     "conviction": "MEDIUM",
-    "narrative": "台股大多頭！台積電 nan 帶頭衝，融資跟著爆量！PTT 板上大家都在喊要起飛，當沖仔全部賺錢，套牢的也快解套了！這種盤一定要滿倉！現在不買以後哭——但融資別開太大，小心斷頭。",
+    "narrative": "TAIEX 44,257 holds the high, but the 5-day foreign-investor buying streak just snapped — only one day of 381B left. Margin balance flipped from +0.33% to -1.33% in 5 days; retail is quietly de-levering. Investment trust + local brokers keep buying 594B — dual engine becoming single engine. Moodring 94.2 down from 95.0 yesterday — no crack, but the cheering has gotten quieter. TAIEX RSI 65.0 not stretched yet, but Moodring is 1.6x P80 (58.9). Heights like this aren't meant to be camped on.",
     "key_factors": [
       "台積電融資月增 +0.4% — 融資增速正常",
       "融資餘額 5 日 -1.33% — 散戶降槓桿",
@@ -60,18 +60,18 @@
       "散戶估計買超 594億 — 散戶逆勢接刀",
       "TAIEX RSI 65.0 — 中性偏強，無自動反彈護盾"
     ],
-    "what_quant_misses": "模型只看 TAIEX 漲跌與 RSI，但抓不到台積電 ADR 隔夜跳空的權重。昨晚 ADR 收漲 +0.8%，盤前估值已預先反映，現貨開盤就有先天溢價。另一個量化看不到的是這次外資 5 連買背後是被動 ETF 再平衡，主動型外資 Z-score 反而是降的，這意味著外資結構性買盤可能很快會接近尾聲。台幣升到 31.4 的速度暗示熱錢還在湧入，但匯率上行的彈性比 2020 第二季更窄，再升 1% 就會觸發央行口頭調節。",
-    "forward_outlook": "台股現在 Moodring 92.2，情緒已經很嗨，這個位置追進去感覺像韭菜；外資連賣 1 天，等他們翻買再說，至少要連買 2-3 天才算確認；TAIEX SMA20 (41426) 守住才算穩，失守要小心。",
-    "narrative_en": "TAIEX at 44,257. Moodring score 92.2 (extreme greed — historically poor entry point). Foreign investors net sell TWD 381.4B, 1d consecutive sell. Margin balance 5d change -1.3%. TSMC margin 30d change +0.4%.",
-    "narrative_tw": "台股大多頭！台積電 nan 帶頭衝，融資跟著爆量！PTT 板上大家都在喊要起飛，當沖仔全部賺錢，套牢的也快解套了！這種盤一定要滿倉！現在不買以後哭——但融資別開太大，小心斷頭。",
+    "what_quant_misses": "模型把外資金額當主訊號,但抓不到買盤『斷在哪一天』比『買多少』更重要。今天從連 5 天買變成單日是節奏訊號,外資的個股拆解可以看到主要是 ETF 再平衡而非主動加碼,這意味著籌碼支撐結構可能比金額看起來脆弱。融資 5 天 -1.33% 跟昨天的 +0.33% 是同一群人的反轉動作,散戶看到指數新高反而在收槓桿,這跟 2024 年初行情後段的情境很像。台積電 ADR 隔夜走勢比現貨更早反映台幣升值的天花板,台幣已升到 31.4 接近央行口頭調節區間。",
+    "forward_outlook": "Moodring 94.2 是 P80 58.9 的 1.6 倍,這個高度歷史上往後 20 日中位數報酬 -0.38%、勝率只有 41%,賠率本來就不站在多頭這邊。外資從連 5 天買變成單日 381 億,融資 5 天 -1.33% 是散戶在退場,兩個信號都在說熱度正在自己散。短線多單抱著沒問題,新加碼建議先收,等 Moodring 退到 85 以下或 TAIEX 回測 SMA20 (41426) 再分批。下週若再回到 95 上方,就要把停利線繃緊。",
+    "narrative_en": "TAIEX 44,257 holds the high, but the 5-day foreign-investor buying streak just snapped — only one day of 381B left. Margin balance flipped from +0.33% to -1.33% in 5 days; retail is quietly de-levering. Investment trust + local brokers keep buying 594B — dual engine becoming single engine. Moodring 94.2 down from 95.0 yesterday — no crack, but the cheering has gotten quieter. TAIEX RSI 65.0 not stretched yet, but Moodring is 1.6x P80 (58.9). Heights like this aren't meant to be camped on.",
+    "narrative_tw": "TAIEX 44257 維持高位,但外資連 5 天買的紀錄今天斷了,只剩單日 381 億,這就是節奏改變的第一個動作。融資餘額 5 天從 +0.33% 翻成 -1.33%,散戶開始悄悄把槓桿往回收。投信本土券商連續買超 594 億倒是還在硬撐,雙引擎已經變成單引擎。Moodring 94.2 比昨天的 95.0 退了 0.8 分,沒有崩,但慶祝的尾音已經安靜下來。籌碼結構告訴你頂點附近的人開始挪屁股,TAIEX RSI 65.0 雖然還沒到爆表,但 Moodring 94.2 已經是 P80 (58.9) 的 1.6 倍,這個高度本來就不該久待。",
     "key_factors_tw": [
-      "台積電融資月增 +0.4% — 融資增速正常",
-      "融資餘額 5 日 -1.33% — 散戶降槓桿",
-      "外資賣超 381.4億，連賣 1日 — 外資賣壓持續",
-      "散戶估計買超 594億 — 散戶逆勢接刀",
-      "TAIEX RSI 65.0 — 中性偏強，無自動反彈護盾"
+      "外資從連 5 天買變成單日 381.4 億,節奏斷掉",
+      "融資餘額 5 天 -1.33%,散戶開始退場",
+      "投信本土券商連續買超 594 億,雙引擎變單引擎",
+      "台積電融資 30 日 +0.4%,水位幾乎沒動",
+      "TAIEX RSI 65.0 中性偏熱,未到超買區"
     ],
-    "watch_for_tw": "外資已連賣 1 日，翻買（連買 2-3 天）才是反彈確認訊號；觀察 TAIEX 能否守住 SMA20 及外資方向性轉變。",
+    "watch_for_tw": "外資從連買轉成單日,下一個轉折是出現連賣。融資餘額已連 4 天走低,散戶若再退場就是本土動能消失。TAIEX 跌破 SMA20 (41426) 是技術面節奏改變,台積電守不住 1100 牽動整個權值。台幣若反向貶破 31.5 是熱錢退潮的第一道訊號。",
     "action": "積極減碼",
     "action_thresholds": {
       "market": "tw",

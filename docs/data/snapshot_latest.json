@@ -1,5 +1,5 @@
 {
-  "date": "2026-06-01",
+  "date": "2026-06-02",
   "data_sources": {
     "market_prices": "Yahoo Finance (yfinance)",
     "tw_margin": "FinMind API (TWSE OpenData)",
@@ -19,13 +19,13 @@
     "US_10Y_yield": 4.47
   },
   "tw_market": {
-    "TAIEX_close": 45338.0,
-    "TAIEX_RSI14": 68.2,
-    "TAIEX_SMA20": 42165.0,
+    "TAIEX_close": 45557.0,
+    "TAIEX_RSI14": 72.9,
+    "TAIEX_SMA20": 42404.0,
     "TAIEX_vs_52w_high_pct": 100.0,
-    "TAIEX_5d_return_pct": 3.88,
-    "TAIEX_20d_return_pct": 11.38,
-    "TSMC_close": 2355.0,
+    "TAIEX_5d_return_pct": 4.67,
+    "TAIEX_20d_return_pct": 11.74,
+    "TSMC_close": 2380.0,
     "TSMC_vs_52w_high_pct": 100.0
   },
   "tw_retail_indicators": {
@@ -38,25 +38,25 @@
     "foreign_consecutive_days": 2,
     "foreign_consecutive_direction": "buy",
     "TSMC_margin_balance": 29079,
-    "TSMC_margin_30d_change_pct": 13.28
+    "TSMC_margin_30d_change_pct": 11.79
   },
   "jp_market": {
-    "NIKKEI_close": 66934.33,
-    "NIKKEI_RSI14": 67.4,
-    "NIKKEI_SMA20": 62807.31,
-    "NIKKEI_vs_52w_high_pct": 100.0,
-    "NIKKEI_5d_return_pct": 2.73,
-    "NIKKEI_20d_return_pct": 11.71,
-    "jp_moodring_score": 83.5
+    "NIKKEI_close": 66625.08,
+    "NIKKEI_RSI14": 64.2,
+    "NIKKEI_SMA20": 63174.32,
+    "NIKKEI_vs_52w_high_pct": 99.5,
+    "NIKKEI_5d_return_pct": 2.51,
+    "NIKKEI_20d_return_pct": 12.38,
+    "jp_moodring_score": 82.5
   },
   "kr_market": {
-    "KOSPI_close": 8788.38,
-    "KOSPI_RSI14": 66.1,
-    "KOSPI_SMA20": 7703.92,
+    "KOSPI_close": 8843.68,
+    "KOSPI_RSI14": 70.9,
+    "KOSPI_SMA20": 7816.16,
     "KOSPI_vs_52w_high_pct": 100.0,
-    "KOSPI_5d_return_pct": 11.99,
-    "KOSPI_20d_return_pct": 31.35,
-    "kr_moodring_score": 88.8
+    "KOSPI_5d_return_pct": 9.89,
+    "KOSPI_20d_return_pct": 34.02,
+    "kr_moodring_score": 90.4
   },
   "eu_market": {
     "STOXX50_close": 6034.95,
@@ -68,8 +68,8 @@
     "eu_moodring_score": 76.2
   },
   "global_context": {
-    "Gold": 4503.0,
-    "USDJPY": 159.7,
-    "USDTWD": 31.39
+    "Gold": 4548.0,
+    "USDJPY": 159.73,
+    "USDTWD": 31.43
   }
 }

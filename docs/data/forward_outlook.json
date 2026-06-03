@@ -1,6 +1,6 @@
 {
   "us_current_score": 87.1,
-  "tw_current_score": 96.6,
+  "tw_current_score": 96.9,
   "us_forward": {
     "spy_fwd_5d": {
       "mean": 0.19,
@@ -69,7 +69,7 @@
       "n": 80
     }
   },
-  "jp_current_score": 82.8,
+  "jp_current_score": 84.6,
   "jp_forward": {
     "jp_fwd_5d": {
       "mean": 0.2,

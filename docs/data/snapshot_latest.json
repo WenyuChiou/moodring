@@ -1,5 +1,5 @@
 {
-  "date": "2026-06-02",
+  "date": "2026-06-03",
   "data_sources": {
     "market_prices": "Yahoo Finance (yfinance)",
     "tw_margin": "FinMind API (TWSE OpenData)",
@@ -19,13 +19,13 @@
     "US_10Y_yield": 4.45
   },
   "tw_market": {
-    "TAIEX_close": 45557.0,
-    "TAIEX_RSI14": 72.9,
-    "TAIEX_SMA20": 42404.0,
+    "TAIEX_close": 46459.0,
+    "TAIEX_RSI14": 74.4,
+    "TAIEX_SMA20": 42670.0,
     "TAIEX_vs_52w_high_pct": 100.0,
-    "TAIEX_5d_return_pct": 4.67,
-    "TAIEX_20d_return_pct": 11.74,
-    "TSMC_close": 2380.0,
+    "TAIEX_5d_return_pct": 4.98,
+    "TAIEX_20d_return_pct": 12.93,
+    "TSMC_close": 2425.0,
     "TSMC_vs_52w_high_pct": 100.0
   },
   "tw_retail_indicators": {
@@ -41,13 +41,13 @@
     "TSMC_margin_30d_change_pct": 12.01
   },
   "jp_market": {
-    "NIKKEI_close": 66734.24,
-    "NIKKEI_RSI14": 64.8,
-    "NIKKEI_SMA20": 63179.78,
-    "NIKKEI_vs_52w_high_pct": 99.7,
-    "NIKKEI_5d_return_pct": 2.67,
-    "NIKKEI_20d_return_pct": 12.57,
-    "jp_moodring_score": 82.8
+    "NIKKEI_close": 68761.39,
+    "NIKKEI_RSI14": 73.2,
+    "NIKKEI_SMA20": 63642.19,
+    "NIKKEI_vs_52w_high_pct": 100.0,
+    "NIKKEI_5d_return_pct": 5.79,
+    "NIKKEI_20d_return_pct": 15.54,
+    "jp_moodring_score": 84.6
   },
   "kr_market": {
     "KOSPI_close": 8801.49,
@@ -68,8 +68,8 @@
     "eu_moodring_score": 82.0
   },
   "global_context": {
-    "Gold": 4505.0,
-    "USDJPY": 159.83,
-    "USDTWD": 31.42
+    "Gold": 4494.0,
+    "USDJPY": 159.93,
+    "USDTWD": 31.48
   }
 }

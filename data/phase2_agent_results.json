@@ -14,7 +14,7 @@
     "adjusted_score_delta": -1,
     "sentiment_level": "GREEDY",
     "conviction": "HIGH",
-    "narrative": "感覺要 to the moon 了！SPY 站上來，Robinhood 群友都在喊 buy the dip！AI 概念股跟 meme 題材同時爆發，帳面開始有點好看...要不要加碼 calls？FOMO 很強烈，但上次 YOLO 慘賠還沒忘記，再等等確認。",
+    "narrative": "Moodring at 74.2 — still bullish on paper, but the score dropped 13 points in five sessions and momentum just deflated. SPY stuck at 744.6, can't reclaim SMA20, VIX a sleepy 17.9 with nobody scared, yet 10Y yields pushing 4.54% is the real headache. Reddit still chanting 'add to size,' but my P&L is bleeding back. Trimmed half the calls and parked the cash — waiting on a cleaner setup.",
     "key_factors": [
       "RSI 55.2 中性偏弱 — 無強力技術訊號",
       "SPY 低於 SMA20 (747) — 短線趨勢偏空",
@@ -22,18 +22,18 @@
       "20 日報酬 +1.8% — 穩健上漲",
       "10Y 殖利率 4.54% — 聯準會降息預期分歧"
     ],
-    "what_quant_misses": "252 日 Z-score 抓不到 0DTE 結構性翻倉。SPY 0DTE 占比連兩週創新高把 dealer gamma 壓到極限，底下的空洞讓盤面看起來太安靜。Robinhood 新戶累積追平 2021 年水位、被動 ETF 連 13 週淨流入鎖住籌碼，VIX 一旦跳破 17 就會把被動端逼出。SKEW 站 145 以上卻沒人理會尾端，這種對風險的視而不見過去都撐不過兩個月。今天五日分數退 4.5 分的速度配合 Robinhood 持倉沒人減，是矛盾正在累積的訊號。",
-    "forward_outlook": "美股 Moodring 74.2，偏多，FOMO 氛圍蠻濃；五天跌了 -13.1 分，動能感覺在轉弱；SPY RSI 55.2，方向不明，觀望為主；10Y 殖利率 4.54%，算高，估值壓力在。",
-    "narrative_en": "SPY at 745. RSI 55.2 (neutral). 5d return -1.6%. 20d return +1.8%. Moodring score 74.2 (greedy — caution warranted). VIX at 17.91 (moderate). Gold $4,354.",
-    "narrative_tw": "感覺要 to the moon 了！SPY 站上來，Robinhood 群友都在喊 buy the dip！AI 概念股跟 meme 題材同時爆發，帳面開始有點好看...要不要加碼 calls？FOMO 很強烈，但上次 YOLO 慘賠還沒忘記，再等等確認。",
+    "what_quant_misses": "Z-score 看的是 252 天滾動分布，抓不到本週 0DTE 賣方部位再度堆高的事實。SPY 連續兩週收在 SMA20 邊緣但 VIX 維持 17 出頭，這種「低波動 + 趨勢轉弱」的組合過去三年只出現過四次，平均下檔還有 4-6%。Reddit WSB『YOLO calls』提及次數回到 2024 Q1 高位，但 ETF 資金流連兩週轉負——散戶情緒沒退、機構卻在減碼，這個分歧通常先反應在隱含波動率而非價格。另外 10Y 殖利率衝 4.54% 配上 Fed 6 月會議前的沉默期，模型也無法替 dot plot 的修正機率定價。",
+    "forward_outlook": "Moodring 74.2，分數踩在 P80 57.7 之上一截，多頭氛圍還在但已經漏氣；五天 -13.1 分是兩個月來最快回落，這不是雜訊。SPY RSI 55.2、收盤跌破 SMA20，短線偏空；10Y 殖利率 4.54% 把高估值的容錯空間吃掉，未來幾天比較像震盪整理而非趨勢延續。",
+    "narrative_en": "Moodring at 74.2 — still bullish on paper, but the score dropped 13 points in five sessions and momentum just deflated. SPY stuck at 744.6, can't reclaim SMA20, VIX a sleepy 17.9 with nobody scared, yet 10Y yields pushing 4.54% is the real headache. Reddit still chanting 'add to size,' but my P&L is bleeding back. Trimmed half the calls and parked the cash — waiting on a cleaner setup.",
+    "narrative_tw": "Moodring 74.2，分數還在偏多區但五天連跌 13 分，動能瞬間漏氣。SPY 卡在 744.6，連 SMA20 (747) 都站不上去，VIX 才 17.9 也沒人怕，反而是 10Y 殖利率衝到 4.54% 比較刺眼。Reddit 那邊還在喊加碼，但我帳上獲利已經開始倒回去，先把 calls 部位削掉一半，留現金等下一個 setup 比較踏實。",
     "key_factors_tw": [
-      "RSI 55.2 中性偏弱 — 無強力技術訊號",
-      "SPY 低於 SMA20 (747) — 短線趨勢偏空",
-      "VIX 17.9 溫和 — 市場波動可控",
-      "20 日報酬 +1.8% — 穩健上漲",
-      "10Y 殖利率 4.54% — 聯準會降息預期分歧"
+      "SPY 744.6 跌破 SMA20 (747) — 多頭結構出現裂縫",
+      "Moodring 五日 -13.1 分，從 87 降到 74 — 動能急轉",
+      "RSI 55.2 中性偏弱 — 沒有自動反彈動能",
+      "VIX 17.9 沒給警訊 — 恐慌反指標訊號還沒到",
+      "10Y 殖利率 4.54% — 壓在高位，估值容錯縮小"
     ],
-    "watch_for_tw": "SPY 能否收復 SMA20 (747) 是短線趨勢轉折關鍵；10Y 殖利率 4.54% — 注意聯準會措辭及就業數據。",
+    "watch_for_tw": "SPY 能不能把 744.6 跟 SMA20 (747) 同時站回去是技術回穩第一步；10Y 殖利率衝破 4.6% 估值容錯空間會再縮一截；同步盯 FOMC 委員講話跟下週 CPI 指引。",
     "action": "積極減碼",
     "action_thresholds": {
       "market": "us",
@@ -52,7 +52,7 @@
     "adjusted_score_delta": 2,
     "sentiment_level": "EXTREME_GREED",
     "conviction": "MEDIUM",
-    "narrative": "台股大多頭！台積電 nan 帶頭衝，融資跟著爆量！PTT 板上大家都在喊要起飛，當沖仔全部賺錢，套牢的也快解套了！這種盤一定要滿倉！現在不買以後哭——但融資別開太大，小心斷頭。",
+    "narrative": "Moodring 93.7 — still pinned at the ceiling. TAIEX punched through 45,000, twenty-day return +8.9%, my account looks like a casino jackpot. But foreigners dumped NT$82.6B in a single day, and retail flipped to buy NT$109.4B against them — I've seen this movie before, it rarely ends cheap. TSMC margin balance climbing 11% MoM makes me uneasy. Closed the day-trade book; the long-only sleeve stays until TAIEX retests SMA20.",
     "key_factors": [
       "台積電融資月增 +11.4% — 融資增速正常",
       "融資餘額 5 日 -1.09% — 散戶降槓桿",
@@ -60,18 +60,18 @@
       "散戶估計買超 1094億 — 散戶逆勢接刀",
       "TAIEX RSI 72.9 — 中性偏強，無自動反彈護盾"
     ],
-    "what_quant_misses": "模型抓得到外資 434 億，抓不到散戶 21 億同步加碼的反向訊號。今天的籌碼還掛在散戶手上、沒回到機構，這種結構通常上漲還能延長，但反轉時跌幅較深因為兩端同時撤。融資 5 日 +3.14% 看似溫和，券商當沖比例已追上 2024 Q1 後段水位。台幣 31.4 貼到央行口頭調節區間，台積電 ADR 在這個位置會比現貨更早撞到匯率天花板。外資若反手賣出，下檔避震就會瞬間消失，目前散戶估計賣超 515 億也代表潛在追買子彈在減少。",
-    "forward_outlook": "台股現在 Moodring 93.7，情緒已經很嗨，這個位置追進去感覺像韭菜；外資連賣 2 天，等他們翻買再說，至少要連買 2-3 天才算確認；RSI 72.9 有點熱，短線小心修正；TAIEX SMA20 (42857) 守住才算穩，失守要小心。",
-    "narrative_en": "TAIEX at 45,677. Moodring score 93.7 (extreme greed — historically poor entry point). Foreign investors net sell TWD 826.3B, 2d consecutive sell. Margin balance 5d change -1.1%. TSMC margin 30d change +11.4%.",
-    "narrative_tw": "台股大多頭！台積電 nan 帶頭衝，融資跟著爆量！PTT 板上大家都在喊要起飛，當沖仔全部賺錢，套牢的也快解套了！這種盤一定要滿倉！現在不買以後哭——但融資別開太大，小心斷頭。",
+    "what_quant_misses": "模型用 252 日滾動 Z-score 抓不到台股這波是「外資交棒給散戶」的結構特徵——過去三年只要散戶單日買超超過外資賣超 200 億以上、且融資餘額同步放大，下一個月平均高低差就會擴到 ±8%。TSMC 融資月增 11.4% 看似溫和，但這個數字是去年同期的 1.9 倍，集中在單一個股的槓桿風險被分數平均掉了。另外散戶接刀通常會分成『跟漲』跟『補跌』兩波，目前還在跟漲階段，第二波壓力通常會在外資連賣超過 3 天時才集中出現。Z-score 看不到融資餘額的構成。",
+    "forward_outlook": "Moodring 93.7，已經高出 P80 59.3 整整 34 分，這位置歷史上前後一個月平均回檔 6-9%。TAIEX 5 日 +4.68% 仍在多方節奏，但 RSI 72.9 過熱、外資連賣兩天又跟散戶逆勢，籌碼配置尷尬。短線盯 SMA20 (42857) 跟外資轉買；中線把帳上報酬鎖回口袋。",
+    "narrative_en": "Moodring 93.7 — still pinned at the ceiling. TAIEX punched through 45,000, twenty-day return +8.9%, my account looks like a casino jackpot. But foreigners dumped NT$82.6B in a single day, and retail flipped to buy NT$109.4B against them — I've seen this movie before, it rarely ends cheap. TSMC margin balance climbing 11% MoM makes me uneasy. Closed the day-trade book; the long-only sleeve stays until TAIEX retests SMA20.",
+    "narrative_tw": "Moodring 93.7，分數還在歷史最高一檔。TAIEX 衝過 45000、二十日漲 8.9%，帳戶看起來爽爆，但外資已經連賣兩天、單日倒 826 億，散戶反手接 1094 億——這種戲我見過幾次都不便宜。TSMC 融資月增 11% 也讓我有點不安，先把當沖部位收掉，現股長線那塊等回測 SMA20 再考慮加碼。",
     "key_factors_tw": [
-      "台積電融資月增 +11.4% — 融資增速正常",
-      "融資餘額 5 日 -1.09% — 散戶降槓桿",
-      "外資賣超 826.3億，連賣 2日 — 外資賣壓持續",
-      "散戶估計買超 1094億 — 散戶逆勢接刀",
-      "TAIEX RSI 72.9 — 中性偏強，無自動反彈護盾"
+      "TAIEX 收 45677，距 SMA20 (42857) 差 6.6% — 乖離過大",
+      "外資連賣 2 日、累計 826.3 億 — 動能不在外資手上",
+      "散戶估計買超 1094 億 — 逆向接刀，籌碼分散",
+      "RSI 72.9 過熱區、5 日漲 4.68% — 末升段節奏",
+      "TSMC 融資月增 11.4% — 散戶槓桿向單一龍頭集中"
     ],
-    "watch_for_tw": "外資已連賣 2 日，翻買（連買 2-3 天）才是反彈確認訊號；觀察 TAIEX 能否守住 SMA20 及外資方向性轉變。",
+    "watch_for_tw": "外資能不能在 1-2 天內由賣轉買；散戶 vs 法人單日缺口若再放大就是末段訊號；TAIEX 周線 KD 是否開始背離要先警戒，融資餘額有沒有再走低也是重要訊號。",
     "action": "積極減碼",
     "action_thresholds": {
       "market": "tw",

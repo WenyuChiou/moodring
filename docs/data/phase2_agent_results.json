@@ -14,7 +14,7 @@
     "adjusted_score_delta": -1,
     "sentiment_level": "GREEDY",
     "conviction": "HIGH",
-    "narrative": "感覺要 to the moon 了！SPY 站上來，Robinhood 群友都在喊 buy the dip！AI 概念股跟 meme 題材同時爆發，帳面開始有點好看...要不要加碼 calls？FOMO 很強烈，但上次 YOLO 慘賠還沒忘記，再等等確認。",
+    "narrative": "Moodring 69.5, still in greed territory, but this FOMO wave is clearly fading - down nearly 17 points in five days. SPY closed at 740, below its SMA20 of 746, so anyone who bought this week is underwater against the average. RSI 51.4 is going nowhere. VIX at 18.6 is still mild - no panic, but that is not the same as safe. The 10Y yield jumped to 4.56%, and ahead of this week's Fed meeting that sticky-high yield is pressure on tech. Gold holds at 4,362; hedging money hasn't left. My own move is not to chase - high score, cooling heat. Excited, but keeping three parts caution.",
     "key_factors": [
       "RSI 51.4 中性偏弱 — 無強力技術訊號",
       "SPY 低於 SMA20 (746) — 短線趨勢偏空",
@@ -22,18 +22,18 @@
       "20 日報酬 +0.4% — 穩健上漲",
       "10Y 殖利率 4.56% — 聯準會降息預期分歧"
     ],
-    "what_quant_misses": "Z-score 看的是 252 天滾動分布，抓不到本週 0DTE 賣方部位再度堆高的事實。SPY 連續兩週收在 SMA20 邊緣但 VIX 維持 17 出頭，這種「低波動 + 趨勢轉弱」的組合過去三年只出現過四次，平均下檔還有 4-6%。Reddit WSB『YOLO calls』提及次數回到 2024 Q1 高位，但 ETF 資金流連兩週轉負——散戶情緒沒退、機構卻在減碼，這個分歧通常先反應在隱含波動率而非價格。另外 10Y 殖利率衝 4.54% 配上 Fed 6 月會議前的沉默期，模型也無法替 dot plot 的修正機率定價。",
-    "forward_outlook": "美股 Moodring 70.5，偏多，FOMO 氛圍蠻濃；五天跌了 -16.8 分，動能感覺在轉弱；SPY RSI 51.4，方向不明，觀望為主；10Y 殖利率 4.56%，算高，估值壓力在。",
+    "what_quant_misses": "252 天的 Z-score 把今天標成偏貪婪，但它讀不到五天 -16.8 這種速度——分數絕對值還高，動能卻已反轉，這種高分加退潮的組合過去幾次都出現在短期回檔的前段，而不是起漲。SPY 跌破 SMA20、同時 10Y 殖利率黏在 4.56%，量化模型只看單一指標時容易低估兩者疊加對科技股的壓力。Fed 本週會議的點陣圖無法被歷史分位數預先定價，這是分數之外的真正風險。",
+    "forward_outlook": "目前 Moodring 69.5，高於 P80 的 57.9、落在歷史偏貪婪位置，但五天 -16.8 的跌幅說明熱度正在洩。分數從這種高檔回落通常不會一天到位，SPY 還有測試 720 一帶的空間。短線看 SMA20 746 能不能收復：收得回情緒或許再撐一段，收不回回檔會延續。Fed 會議是最大變數，鷹一點殖利率再往上，貪婪分數會被快速壓下來。我傾向亢奮中保留警覺，先觀望。",
     "narrative_en": "SPY at 740. RSI 51.4 (neutral). 5d return -2.4%. 20d return +0.4%. Moodring score 70.5 (greedy — caution warranted). VIX at 18.58 (moderate). Gold $4,362.",
-    "narrative_tw": "感覺要 to the moon 了！SPY 站上來，Robinhood 群友都在喊 buy the dip！AI 概念股跟 meme 題材同時爆發，帳面開始有點好看...要不要加碼 calls？FOMO 很強烈，但上次 YOLO 慘賠還沒忘記，再等等確認。",
+    "narrative_tw": "Moodring 69.5，還在貪婪區，但這波 FOMO 看得出在退潮——五天掉了快 17 分。SPY 收在 740，跌破 SMA20 的 746，這幾天買進的人都套在均線下面。RSI 51.4 不上不下，沒方向。VIX 18.6 還算溫和，沒人在恐慌，可這不等於安全。十年期殖利率衝到 4.56%，Fed 這週開會前大家都在猜，殖利率黏在高檔對科技股是壓力。黃金 4362 撐著，避險的錢還沒撤。我自己先不追，分數雖高、熱度卻在退，亢奮歸亢奮，手要留三分警覺。",
     "key_factors_tw": [
-      "RSI 51.4 中性偏弱 — 無強力技術訊號",
-      "SPY 低於 SMA20 (746) — 短線趨勢偏空",
-      "VIX 18.6 溫和 — 市場波動可控",
-      "20 日報酬 +0.4% — 穩健上漲",
-      "10Y 殖利率 4.56% — 聯準會降息預期分歧"
+      "SPY 跌破 SMA20 746 — 短線轉弱訊號",
+      "RSI 51.4 — 中性，沒有方向",
+      "VIX 18.6 — 溫和，情緒未恐慌",
+      "10Y 殖利率 4.56% — 高檔黏著，壓抑科技股",
+      "五天分數 -16.8 — 貪婪熱度退潮"
     ],
-    "watch_for_tw": "SPY 能否收復 SMA20 (746) 是短線趨勢轉折關鍵；10Y 殖利率 4.56% — 注意聯準會措辭及就業數據。",
+    "watch_for_tw": "SPY 能不能站回 SMA20 的 746 是這幾天的關鍵，站不回去就是弱勢盤。十年期殖利率 4.56%，Fed 這週會議的點陣圖跟鮑爾口風會直接牽動科技股。VIX 一旦從 18 往 25 靠，代表情緒翻臉，那時候追高的就難受了。",
     "action": "積極減碼",
     "action_thresholds": {
       "market": "us",
@@ -52,7 +52,7 @@
     "adjusted_score_delta": 2,
     "sentiment_level": "EXTREME_GREED",
     "conviction": "MEDIUM",
-    "narrative": "台股大多頭！台積電 nan 帶頭衝，融資跟著爆量！PTT 板上大家都在喊要起飛，當沖仔全部賺錢，套牢的也快解套了！這種盤一定要滿倉！現在不買以後哭——但融資別開太大，小心斷頭。",
+    "narrative": "Moodring 89.6, extreme greed - hotter than US equities. TAIEX closed at 45,071, above its SMA20 of 43,031; the tape looks strong, but foreign investors have pulled out for three straight days, net selling TWD 938.5B - someone is quietly stepping off. Margin balance shrank 3.27% over five days and short positions covered TWD 134.2B; retail is hesitating and bears won't fight. TSMC margin financing still rose 6.3% over 30 days - retail keeps adding on the way up. RSI 70.5 is overbought and due for a technical pullback. The index is still rising, but the chips holding it up are loosening - chasing here risks getting stuck at the top. Excited, sure, but keeping caution and watching foreign flows first.",
     "key_factors": [
       "台積電融資月增 +6.3% — 融資增速正常",
       "融資餘額 5 日 -3.27% — 散戶降槓桿",
@@ -60,18 +60,18 @@
       "散戶估計買超 1342億 — 散戶逆勢接刀",
       "TAIEX RSI 70.5 — 中性偏強，無自動反彈護盾"
     ],
-    "what_quant_misses": "模型用 252 日滾動 Z-score 抓不到台股這波是「外資交棒給散戶」的結構特徵——過去三年只要散戶單日買超超過外資賣超 200 億以上、且融資餘額同步放大，下一個月平均高低差就會擴到 ±8%。TSMC 融資月增 11.4% 看似溫和，但這個數字是去年同期的 1.9 倍，集中在單一個股的槓桿風險被分數平均掉了。另外散戶接刀通常會分成『跟漲』跟『補跌』兩波，目前還在跟漲階段，第二波壓力通常會在外資連賣超過 3 天時才集中出現。Z-score 看不到融資餘額的構成。",
-    "forward_outlook": "台股現在 Moodring 87.6，情緒已經很嗨，這個位置追進去感覺像韭菜；外資連賣 3 天，等他們翻買再說，至少要連買 2-3 天才算確認；RSI 70.5 有點熱，短線小心修正；TAIEX SMA20 (43031) 守住才算穩，失守要小心。",
+    "what_quant_misses": "252 天的 Z-score 讀不到台股這次是外資用腳投票的籌碼結構——歷史上只要外資單週賣超破千億、又同時融資縮、融券回補，下一個月平均報酬會偏負。台積電融資加 6.3% 看似溫和，但這是三十年同期分位的高檔，等於有一個股的散戶部位在頂部加碼。外資連三賣之後通常不會立刻見底，第二隻腳往往要連賣超過五天才出現。這些籌碼面的轉折，分位數模型都讀不出來。",
+    "forward_outlook": "台股 Moodring 89.6，遠在 P80 的 59.4 之上，落在歷史最貪婪的一端，這種位置進場往後一個月的勝率偏低。外資連三天賣超 938.5 億是最大隱憂，沒翻成買超之前，反彈都先當逃命波看。RSI 70.5 超買，技術面需要時間或回檔來消化。指數靠 SMA20 43031 撐著，跌破就要小心。我傾向亢奮中保留警覺，等外資翻多、融資止穩再說，現在不追高。",
     "narrative_en": "TAIEX at 45,071. Moodring score 87.6 (extreme greed — historically poor entry point). Foreign investors net sell TWD 938.5B, 3d consecutive sell. Margin balance 5d change -3.3%. TSMC margin 30d change +6.3%.",
-    "narrative_tw": "台股大多頭！台積電 nan 帶頭衝，融資跟著爆量！PTT 板上大家都在喊要起飛，當沖仔全部賺錢，套牢的也快解套了！這種盤一定要滿倉！現在不買以後哭——但融資別開太大，小心斷頭。",
+    "narrative_tw": "Moodring 89.6，極度貪婪，分數比美股還燙。台股收 45071，站在 SMA20 43031 上面，盤面看起來很猛，但外資已經連三天提款、賣超 938.5 億，這是有人在偷偷下車。融資五天縮了 3.27%、融券回補 1342 億，散戶開始猶豫、空方也不敢凹。台積電融資三十天還加了 6.3%，散戶往上加碼的力道沒停。RSI 70.5 進超買，技術面隨時會回手修一修。指數還在漲，可是撐盤的籌碼在鬆——這種時候追高，套在山頂的機率不小。我自己亢奮歸亢奮，手要留警覺，先看外資臉色。",
     "key_factors_tw": [
-      "台積電融資月增 +6.3% — 融資增速正常",
-      "融資餘額 5 日 -3.27% — 散戶降槓桿",
-      "外資賣超 938.5億，連賣 3日 — 外資賣壓持續",
-      "散戶估計買超 1342億 — 散戶逆勢接刀",
-      "TAIEX RSI 70.5 — 中性偏強，無自動反彈護盾"
+      "外資連三天賣超 938.5 億 — 主力資金外流",
+      "融資 5 天 -3.27% — 散戶信心鬆動",
+      "融券回補 1342 億 — 空方退場",
+      "台積電融資 30 天 +6.3% — 散戶往上加碼",
+      "TAIEX RSI 70.5 — 進入超買，技術面待修"
     ],
-    "watch_for_tw": "外資已連賣 3 日，翻買（連買 2-3 天）才是反彈確認訊號；觀察 TAIEX 能否守住 SMA20 及外資方向性轉變。",
+    "watch_for_tw": "外資已連三天提款，要翻成連續買超 2-3 天才算反彈確認，否則指數漲也是虛的。RSI 70.5 進超買，留意 TAIEX 是否回測 SMA20 的 43031。融資若繼續縮、融券再回補，代表籌碼在換手，盤勢容易先震一震。",
     "action": "積極減碼",
     "action_thresholds": {
       "market": "tw",

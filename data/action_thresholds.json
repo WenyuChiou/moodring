@@ -2,24 +2,24 @@
   "us": {
     "market": "us",
     "lookback_days": 252,
-    "sample_size": 246,
+    "sample_size": 247,
     "computed_at": "2026-06-15",
     "p20": 43.2,
     "p40": 47.5,
     "p60": 52.5,
-    "p80": 58.3,
+    "p80": 58.7,
     "fallback": false
   },
   "tw": {
     "market": "tw",
     "lookback_days": 252,
-    "sample_size": 218,
+    "sample_size": 217,
     "computed_at": "2026-06-15",
     "p20": 43.7,
     "p40": 47.3,
-    "p60": 51.6,
+    "p60": 51.5,
     "p80": 61.1,
     "fallback": false
   },
-  "generated_at": "2026-06-15T06:40:37+00:00"
+  "generated_at": "2026-06-15T18:27:20+00:00"
 }

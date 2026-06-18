@@ -14,26 +14,26 @@
     "adjusted_score_delta": -1,
     "sentiment_level": "EXTREME_GREED",
     "conviction": "HIGH",
-    "narrative": "🚀🚀🚀 To the moon！我已經全倉，Robinhood 群友說這波才剛開始！Diamond hands，任何 dip 都是買點！身邊的人也在問要不要進場，感覺 FOMO 氛圍很濃——這種時候歷史上往往就是頂部，但我還是忍不住加碼了。",
+    "narrative": "Moodring 75.7 — off the 79-handle of the past two days, but five sessions ago it was only 58, so that's a +17.4 jump in a week and the group chats are on fire. My positions are all green and I'm itching to add. But RSI is just 47 — the index ripped while the tech setup didn't follow, and the score has slipped three days straight. That 'mood still high, momentum already turning' combo has burned me before. The 10Y is stuck at 4.43%; what the Fed says this week is what matters. I'd rather book some profit and hold cash for a pullback than chase the top.",
     "key_factors": [
-      "RSI 47.2 中性偏弱 — 無強力技術訊號",
-      "SPY 站上 SMA20/SMA60 — 多頭格局",
+      "Moodring 75.7 > P80 (59.1) — 情緒站在偏熱區",
+      "五天 +17.4 分但分數連三日回落 — 動能轉彎",
+      "SPY 站上 SMA20/SMA60、RSI 47.2 偏弱 — 漲勢技術面沒跟上",
       "VIX 16.9 溫和 — 市場波動可控",
-      "20 日報酬 +2.2% — 穩健上漲",
-      "10Y 殖利率 4.43% — 聯準會降息預期分歧"
+      "10Y 殖利率 4.43%、本週 Fed 點陣圖 — 降息預期分歧"
     ],
-    "what_quant_misses": "252 天的分位數把 69.7 讀成偏熱，卻看不出這是高檔退潮：五天 -4.5 分、SPY 同時跌破 SMA20，這種分數還高、動能先轉向的組合，過去多半落在回檔前段而非起漲。模型只盯單一指標時，容易低估殖利率黏在 4.49% 對科技股估值的壓力。最關鍵的是這週 Fed 點陣圖，歷史分位數無法提前替它定價，這才是分數之外的真風險。",
-    "forward_outlook": "美股 Moodring 75.7，偏多，FOMO 氛圍蠻濃；五天衝了 +17.4 分，FOMO 蠻濃；SPY RSI 47.2，方向不明，觀望為主；10Y 殖利率 4.43%，再來就看 Fed 怎麼講。",
-    "narrative_en": "SPY at 750. RSI 47.2 (neutral). 5d return +3.4%. 20d return +2.2%. Moodring score 75.7 (extreme greed — historically poor entry point). VIX at 16.85 (moderate). Gold $4,377.",
-    "narrative_tw": "🚀🚀🚀 To the moon！我已經全倉，Robinhood 群友說這波才剛開始！Diamond hands，任何 dip 都是買點！身邊的人也在問要不要進場，感覺 FOMO 氛圍很濃——這種時候歷史上往往就是頂部，但我還是忍不住加碼了。",
+    "what_quant_misses": "252 天分位數把 75.7 讀成偏熱，卻看不出兩個矛盾：一是五天 +17.4 分的猛衝其實已連三天回落，動能先於價格轉向；二是 RSI 才 47.2、指數卻創高，背離藏在分數底下。模型盯單一指標時，也容易低估 10Y 黏在 4.43% 對科技股估值的壓力。最關鍵的是這週 Fed 點陣圖，歷史分位數沒辦法提前替它定價，這才是分數之外的真風險。",
+    "forward_outlook": "美股 Moodring 75.7，仍站在 P80（59.1）之上，情緒偏亢奮。五天 +17.4 分這股衝勁很猛，但分數已從 79.6 連三天滑落，動能像是在轉彎。SPY RSI 47.2 不上不下，VIX 16.9 溫和，盤面看似穩。我的做法是亢奮歸亢奮，先減一部分碼、留現金，等 Fed 這週把話講清楚再決定要不要追。",
+    "narrative_en": "Moodring 75.7 — off the 79-handle of the past two days, but five sessions ago it was only 58, so that's a +17.4 jump in a week and the group chats are on fire. My positions are all green and I'm itching to add. But RSI is just 47 — the index ripped while the tech setup didn't follow, and the score has slipped three days straight. That 'mood still high, momentum already turning' combo has burned me before. The 10Y is stuck at 4.43%; what the Fed says this week is what matters. I'd rather book some profit and hold cash for a pullback than chase the top.",
+    "narrative_tw": "Moodring 75.7，雖然比前兩天的 79 出頭退了一點，但回頭看五天前才 58 分，等於一週衝了 +17.4 分，這種噴法身邊群組整個沸騰。我手上的部位都在賺，說真的還想加碼。不過 RSI 才 47，指數衝這麼兇技術面卻沒跟上，加上分數連三天往下掉，這種情緒還在高檔、動能先轉彎的組合我以前吃過虧。10Y 殖利率黏在 4.43%，這週 Fed 怎麼講才是關鍵。先把獲利收一部分回來，留現金等回檔，比追在頂上安心。",
     "key_factors_tw": [
-      "RSI 47.2 中性偏弱 — 無強力技術訊號",
-      "SPY 站上 SMA20/SMA60 — 多頭格局",
+      "Moodring 75.7 > P80 (59.1) — 情緒站在偏熱區",
+      "五天 +17.4 分但分數連三日回落 — 動能轉彎",
+      "SPY 站上 SMA20/SMA60、RSI 47.2 偏弱 — 漲勢技術面沒跟上",
       "VIX 16.9 溫和 — 市場波動可控",
-      "20 日報酬 +2.2% — 穩健上漲",
-      "10Y 殖利率 4.43% — 聯準會降息預期分歧"
+      "10Y 殖利率 4.43%、本週 Fed 點陣圖 — 降息預期分歧"
     ],
-    "watch_for_tw": "SPY 能否收復 SMA20 (747) 是短線趨勢轉折關鍵；10Y 殖利率 4.43% — 注意聯準會措辭及就業數據。",
+    "watch_for_tw": "SPY 站上 SMA20/SMA60，但 RSI 47 偏弱、分數連三日回落，留意這波是不是高檔退潮的開頭；10Y 殖利率 4.43% 卡著不動，這週 Fed 點陣圖和措辭是下一個轉折點；VIX 16.9 還算溫和，真要翻臉會先從這裡跳。",
     "action": "積極減碼",
     "action_thresholds": {
       "market": "us",
@@ -52,26 +52,26 @@
     "adjusted_score_delta": 2,
     "sentiment_level": "EXTREME_GREED",
     "conviction": "MEDIUM",
-    "narrative": "台股大多頭！台積電 nan 帶頭衝，融資跟著爆量！PTT 板上大家都在喊要起飛，當沖仔全部賺錢，套牢的也快解套了！這種盤一定要滿倉！現在不買以後哭——但融資別開太大，小心斷頭。",
+    "narrative": "Moodring 92.0 — even hotter than yesterday's 91.8, the whole board is scorching and the forums are all 'to the moon.' My account's green and it feels great, but at 92 my palms are sweating: mood this hot usually ends in either one more spike or a sharp flush. Worse, foreign investors flipped to net selling for one day after buying three straight — that support just loosened. Don't lever up on margin; chasing a top like this is how you become the last buyer. I'm scaling out some profit and keeping dry powder until it cools off on its own.",
     "key_factors": [
-      "台積電融資月增 +0.7% — 融資增速正常",
-      "融資餘額 5 日 +2.57% — 散戶槓桿擴張",
-      "外資賣超 206.8億，連賣 1日 — 外資賣壓持續",
-      "散戶估計買超 252億 — 散戶逆勢接刀",
-      "TAIEX RSI 56.6 — 中性偏強，無自動反彈護盾"
+      "Moodring 92.0 >> P80 (61.1) — 情緒燒到極熱區",
+      "外資由連買 3 天轉連賣 1 天 — 買盤先縮手",
+      "TAIEX 守 SMA20 (44076) 是高檔支撐關鍵",
+      "融資爆量 — 槓桿過熱風險升高",
+      "分數比昨日 91.8 再墊高 — 高檔鈍化、易急轉"
     ],
-    "what_quant_misses": "252 天的分位數把 90.5 讀成偏熱，卻讀不到這是一天彈 9 分、靠情緒推上來的籌碼盤。外資連買才 1 天就被當成回流，但歷史上外資要連買超過五天才算真的轉向；散戶同一天逆勢接了 519 億，等於在高檔把法人倒出來的貨全吃下。台積電融資月減 4.7%、價格卻急拉，這種量價背離分位數模型抓不到。這些籌碼轉折，才是分數之外要小心的地方。",
-    "forward_outlook": "台股現在 Moodring 92.0，情緒已經很嗨，這個位置追進去感覺像韭菜；外資連賣 1 天，等他們翻買再說，至少要連買 2-3 天才算確認；TAIEX SMA20 (44076) 守住才算穩，失守要小心。",
-    "narrative_en": "TAIEX at 45,809. Moodring score 92.0 (extreme greed — historically poor entry point). Foreign investors net sell TWD 206.8B, 1d consecutive sell. Margin balance 5d change +2.6%. TSMC margin 30d change +0.7%.",
-    "narrative_tw": "台股大多頭！台積電 nan 帶頭衝，融資跟著爆量！PTT 板上大家都在喊要起飛，當沖仔全部賺錢，套牢的也快解套了！這種盤一定要滿倉！現在不買以後哭——但融資別開太大，小心斷頭。",
+    "what_quant_misses": "分位數把 92.0 讀成極熱，卻量不出兩件事：一是外資剛從連買 3 天翻成連賣，籌碼面的轉向比分數更早示警；二是融資爆量堆出來的分數，含金量比實買低，一旦斷頭會跌得比模型預期快。歷史分位數也假設情緒會均值回歸，但台股在 90 以上鈍化、續創高的時間有時拉得比想像久，提前空手一樣會痛。真正的風險在籌碼，不在分數本身。",
+    "forward_outlook": "台股 Moodring 92.0，遠在 P80（61.1）之上，情緒已經燒到很燙。分數比昨天 91.8 再墊高，但外資昨天翻空連賣 1 天，前幾天連買 3 天的買盤先縮手了。這個位置追進去，賺的是別人下車的錢、賠的是自己的本。我的做法是亢奮歸亢奮，分批獲利了結、守好 SMA20 (44076)，等外資翻買、情緒降溫再談下一波。",
+    "narrative_en": "Moodring 92.0 — even hotter than yesterday's 91.8, the whole board is scorching and the forums are all 'to the moon.' My account's green and it feels great, but at 92 my palms are sweating: mood this hot usually ends in either one more spike or a sharp flush. Worse, foreign investors flipped to net selling for one day after buying three straight — that support just loosened. Don't lever up on margin; chasing a top like this is how you become the last buyer. I'm scaling out some profit and keeping dry powder until it cools off on its own.",
+    "narrative_tw": "Moodring 92.0，這溫度比前一天 91.8 又往上頂，整個盤熱到燙手，PTT 上全是起飛、航向月球的文。我帳上是賺的，氣氛也爽，但 92 分這位置我反而手心冒汗——情緒燒到這種程度，後面常常不是再噴就是急殺。更要命的是外資昨天翻空、連賣 1 天，前幾天還連買 3 天的支撐一下就鬆了。融資別開太大，這種高檔追進去很容易當最後一棒。我選擇分批把賺的收一些回來，留銀彈等它自己冷靜。",
     "key_factors_tw": [
-      "台積電融資月增 +0.7% — 融資增速正常",
-      "融資餘額 5 日 +2.57% — 散戶槓桿擴張",
-      "外資賣超 206.8億，連賣 1日 — 外資賣壓持續",
-      "散戶估計買超 252億 — 散戶逆勢接刀",
-      "TAIEX RSI 56.6 — 中性偏強，無自動反彈護盾"
+      "Moodring 92.0 >> P80 (61.1) — 情緒燒到極熱區",
+      "外資由連買 3 天轉連賣 1 天 — 買盤先縮手",
+      "TAIEX 守 SMA20 (44076) 是高檔支撐關鍵",
+      "融資爆量 — 槓桿過熱風險升高",
+      "分數比昨日 91.8 再墊高 — 高檔鈍化、易急轉"
     ],
-    "watch_for_tw": "外資已連賣 1 日，翻買（連買 2-3 天）才是反彈確認訊號；觀察 TAIEX 能否守住 SMA20 及外資方向性轉變。",
+    "watch_for_tw": "外資由連買 3 天轉為連賣 1 天，要等他們翻回連買 2-3 天才算反彈確認；TAIEX 能不能守住 SMA20 (44076) 是高檔有沒有撐的關鍵，失守代表這波情緒退燒；融資餘額若續爆量、指數卻不漲，就是過熱警訊。",
     "action": "積極減碼",
     "action_thresholds": {
       "market": "tw",

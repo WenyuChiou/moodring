@@ -1,6 +1,6 @@
 {
   "us_current_score": 72.1,
-  "tw_current_score": 80.9,
+  "tw_current_score": 79.2,
   "us_forward": {
     "spy_fwd_5d": {
       "mean": 0.19,
@@ -139,7 +139,7 @@
       "n": 1367
     }
   },
-  "eu_current_score": 85.6,
+  "eu_current_score": 86.8,
   "eu_forward": {
     "eu_fwd_5d": {
       "mean": 0.01,

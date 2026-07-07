@@ -1,5 +1,5 @@
 {
-  "date": "2026-07-06",
+  "date": "2026-07-07",
   "data_sources": {
     "market_prices": "Yahoo Finance (yfinance)",
     "tw_margin": "FinMind API (TWSE OpenData)",
@@ -16,17 +16,17 @@
     "SPY_5d_return_pct": 3.06,
     "SPY_20d_return_pct": -0.51,
     "VIX": 15.57,
-    "US_10Y_yield": 4.48
+    "US_10Y_yield": 4.49
   },
   "tw_market": {
-    "TAIEX_close": 46556.0,
-    "TAIEX_RSI14": 56.5,
-    "TAIEX_SMA20": 45612.0,
-    "TAIEX_vs_52w_high_pct": 97.5,
-    "TAIEX_5d_return_pct": 3.46,
-    "TAIEX_20d_return_pct": 3.3,
-    "TSMC_close": 2460.0,
-    "TSMC_vs_52w_high_pct": 98.0
+    "TAIEX_close": 45623.0,
+    "TAIEX_RSI14": 49.0,
+    "TAIEX_SMA20": 45718.0,
+    "TAIEX_vs_52w_high_pct": 95.6,
+    "TAIEX_5d_return_pct": -1.09,
+    "TAIEX_20d_return_pct": 4.87,
+    "TSMC_close": 2455.0,
+    "TSMC_vs_52w_high_pct": 97.8
   },
   "tw_retail_indicators": {
     "margin_balance": 9579335,
@@ -38,25 +38,25 @@
     "foreign_consecutive_days": 3,
     "foreign_consecutive_direction": "sell",
     "TSMC_margin_balance": 34111,
-    "TSMC_margin_30d_change_pct": 26.59
+    "TSMC_margin_30d_change_pct": 30.33
   },
   "jp_market": {
-    "NIKKEI_close": 69737.69,
-    "NIKKEI_RSI14": 51.0,
-    "NIKKEI_SMA20": 69101.29,
-    "NIKKEI_vs_52w_high_pct": 96.4,
-    "NIKKEI_5d_return_pct": 0.39,
-    "NIKKEI_20d_return_pct": 8.92,
-    "jp_moodring_score": 70.8
+    "NIKKEI_close": 68371.97,
+    "NIKKEI_RSI14": 45.5,
+    "NIKKEI_SMA20": 69249.06,
+    "NIKKEI_vs_52w_high_pct": 94.5,
+    "NIKKEI_5d_return_pct": -2.41,
+    "NIKKEI_20d_return_pct": 4.52,
+    "jp_moodring_score": 62.6
   },
   "kr_market": {
-    "KOSPI_close": 8051.33,
-    "KOSPI_RSI14": 41.5,
-    "KOSPI_SMA20": 8403.08,
-    "KOSPI_vs_52w_high_pct": 88.3,
-    "KOSPI_5d_return_pct": -4.09,
-    "KOSPI_20d_return_pct": 7.57,
-    "kr_moodring_score": 57.3
+    "KOSPI_close": 7404.48,
+    "KOSPI_RSI14": 33.7,
+    "KOSPI_SMA20": 8368.46,
+    "KOSPI_vs_52w_high_pct": 81.2,
+    "KOSPI_5d_return_pct": -12.65,
+    "KOSPI_20d_return_pct": -8.55,
+    "kr_moodring_score": 20.9
   },
   "eu_market": {
     "STOXX50_close": 6398.01,
@@ -68,8 +68,8 @@
     "eu_moodring_score": 85.2
   },
   "global_context": {
-    "Gold": 4156.0,
-    "USDJPY": 161.82,
-    "USDTWD": 32.05
+    "Gold": 4138.0,
+    "USDJPY": 161.8,
+    "USDTWD": 32.1
   }
 }

@@ -2,11 +2,11 @@
   "us": {
     "market": "us",
     "lookback_days": 252,
-    "sample_size": 244,
+    "sample_size": 245,
     "computed_at": "2026-07-22",
     "p20": 43.2,
-    "p40": 48.2,
-    "p60": 54.2,
+    "p40": 48.3,
+    "p60": 54.3,
     "p80": 75.7,
     "fallback": false
   },
@@ -21,5 +21,5 @@
     "p80": 64.7,
     "fallback": false
   },
-  "generated_at": "2026-07-22T04:40:55+00:00"
+  "generated_at": "2026-07-22T15:43:29+00:00"
 }

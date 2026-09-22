@@ -8,37 +8,37 @@
     "behavioral_params": "Kahneman & Tversky (1979), Banerjee (1992)"
   },
   "us_market": {
-    "SPY_close": 773.5,
-    "SPY_RSI14": 56.0,
-    "SPY_SMA20": 762.99,
-    "SPY_SMA60": 755.91,
+    "SPY_close": 773.38,
+    "SPY_RSI14": 60.4,
+    "SPY_SMA20": 763.58,
+    "SPY_SMA60": 756.68,
     "SPY_vs_52w_high_pct": 99.7,
-    "SPY_5d_return_pct": 1.91,
-    "SPY_20d_return_pct": 1.27,
-    "VIX": 14.87,
-    "US_10Y_yield": 4.96
+    "SPY_5d_return_pct": 2.36,
+    "SPY_20d_return_pct": 1.55,
+    "VIX": 14.21,
+    "US_10Y_yield": 4.97
   },
   "tw_market": {
-    "TAIEX_close": 47800.0,
-    "TAIEX_RSI14": 63.6,
-    "TAIEX_SMA20": 46537.0,
+    "TAIEX_close": 47719.0,
+    "TAIEX_RSI14": 55.7,
+    "TAIEX_SMA20": 46406.0,
     "TAIEX_vs_52w_high_pct": 100.0,
-    "TAIEX_5d_return_pct": 5.03,
-    "TAIEX_20d_return_pct": 5.82,
+    "TAIEX_5d_return_pct": 4.05,
+    "TAIEX_20d_return_pct": 6.6,
     "TSMC_close": 2460.0,
     "TSMC_vs_52w_high_pct": 98.5
   },
   "tw_retail_indicators": {
-    "margin_balance": 9330477,
-    "margin_5d_change_pct": 1.52,
-    "margin_5d_trend": "INCREASING",
-    "institutional_net_TWD": 478.0,
-    "retail_net_est_TWD": -478.0,
-    "foreign_net_TWD": 204.8,
-    "foreign_consecutive_days": 3,
+    "margin_balance": 9245371,
+    "margin_5d_change_pct": -0.04,
+    "margin_5d_trend": "FLAT",
+    "institutional_net_TWD": 608.1,
+    "retail_net_est_TWD": -608.1,
+    "foreign_net_TWD": 453.2,
+    "foreign_consecutive_days": 4,
     "foreign_consecutive_direction": "buy",
-    "TSMC_margin_balance": 28742,
-    "TSMC_margin_30d_change_pct": -3.51
+    "TSMC_margin_balance": 29525,
+    "TSMC_margin_30d_change_pct": -0.88
   },
   "jp_market": {
     "NIKKEI_close": 65018.95,
@@ -50,12 +50,12 @@
     "jp_moodring_score": 52.2
   },
   "kr_market": {
-    "KOSPI_close": 7025.12,
-    "KOSPI_RSI14": 66.5,
-    "KOSPI_SMA20": 6830.61,
-    "KOSPI_vs_52w_high_pct": 77.1,
-    "KOSPI_5d_return_pct": 6.0,
-    "KOSPI_20d_return_pct": 4.19,
+    "KOSPI_close": 7007.72,
+    "KOSPI_RSI14": 55.2,
+    "KOSPI_SMA20": 6816.49,
+    "KOSPI_vs_52w_high_pct": 76.9,
+    "KOSPI_5d_return_pct": 4.84,
+    "KOSPI_20d_return_pct": 4.64,
     "kr_moodring_score": 43.1
   },
   "eu_market": {
@@ -68,8 +68,8 @@
     "eu_moodring_score": 74.6
   },
   "global_context": {
-    "Gold": 4356.0,
-    "USDJPY": 157.59,
-    "USDTWD": 31.7
+    "Gold": 4400.0,
+    "USDJPY": 157.46,
+    "USDTWD": 31.68
   }
 }

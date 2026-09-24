@@ -2,10 +2,10 @@
   "us": {
     "market": "us",
     "lookback_days": 252,
-    "sample_size": 236,
+    "sample_size": 237,
     "computed_at": "2026-09-24",
-    "p20": 43.8,
-    "p40": 49.7,
+    "p20": 43.9,
+    "p40": 49.9,
     "p60": 69.3,
     "p80": 81.9,
     "fallback": false
@@ -13,12 +13,12 @@
   "tw": {
     "market": "tw",
     "lookback_days": 252,
-    "sample_size": 166,
+    "sample_size": 165,
     "computed_at": "2026-09-24",
-    "p20": 40.2,
-    "p40": 45.0,
+    "p20": 40.1,
+    "p40": 44.9,
     "p60": 48.9,
-    "p80": 84.6,
+    "p80": 83.2,
     "fallback": false
   },
   "jp": {
@@ -26,9 +26,9 @@
     "lookback_days": 252,
     "sample_size": 252,
     "computed_at": "2026-09-24",
-    "p20": 47.8,
+    "p20": 48.0,
     "p40": 52.9,
-    "p60": 56.7,
+    "p60": 56.8,
     "p80": 60.3,
     "fallback": false
   },
@@ -54,5 +54,5 @@
     "p80": 73.9,
     "fallback": false
   },
-  "generated_at": "2026-09-24T06:19:26+00:00"
+  "generated_at": "2026-09-24T23:42:48+00:00"
 }

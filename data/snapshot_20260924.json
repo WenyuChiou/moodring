@@ -8,45 +8,45 @@
     "behavioral_params": "Kahneman & Tversky (1979), Banerjee (1992)"
   },
   "us_market": {
-    "SPY_close": 767.81,
-    "SPY_RSI14": 53.4,
-    "SPY_SMA20": 763.77,
-    "SPY_SMA60": 757.16,
-    "SPY_vs_52w_high_pct": 99.0,
-    "SPY_5d_return_pct": 2.08,
-    "SPY_20d_return_pct": 0.5,
-    "VIX": 15.18,
-    "US_10Y_yield": 5.11
+    "SPY_close": 767.18,
+    "SPY_RSI14": 46.6,
+    "SPY_SMA20": 763.92,
+    "SPY_SMA60": 757.53,
+    "SPY_vs_52w_high_pct": 98.9,
+    "SPY_5d_return_pct": 0.85,
+    "SPY_20d_return_pct": 0.39,
+    "VIX": 15.67,
+    "US_10Y_yield": 5.16
   },
   "tw_market": {
-    "TAIEX_close": 48025.0,
-    "TAIEX_RSI14": 67.4,
-    "TAIEX_SMA20": 46665.0,
-    "TAIEX_vs_52w_high_pct": 99.7,
-    "TAIEX_5d_return_pct": 4.75,
-    "TAIEX_20d_return_pct": 4.78,
+    "TAIEX_close": 48157.0,
+    "TAIEX_RSI14": 65.6,
+    "TAIEX_SMA20": 46555.0,
+    "TAIEX_vs_52w_high_pct": 100.0,
+    "TAIEX_5d_return_pct": 5.81,
+    "TAIEX_20d_return_pct": 6.61,
     "TSMC_close": 2475.0,
     "TSMC_vs_52w_high_pct": 99.0
   },
   "tw_retail_indicators": {
-    "margin_balance": 9282264,
-    "margin_5d_change_pct": 0.22,
+    "margin_balance": 9279712,
+    "margin_5d_change_pct": -0.0,
     "margin_5d_trend": "FLAT",
-    "institutional_net_TWD": 383.8,
-    "retail_net_est_TWD": -383.8,
-    "foreign_net_TWD": 373.1,
-    "foreign_consecutive_days": 5,
-    "foreign_consecutive_direction": "buy",
-    "TSMC_margin_balance": 28833,
-    "TSMC_margin_30d_change_pct": -3.21
+    "institutional_net_TWD": -444.5,
+    "retail_net_est_TWD": 444.5,
+    "foreign_net_TWD": -329.6,
+    "foreign_consecutive_days": 1,
+    "foreign_consecutive_direction": "sell",
+    "TSMC_margin_balance": 29707,
+    "TSMC_margin_30d_change_pct": -0.27
   },
   "jp_market": {
-    "NIKKEI_close": 65587.59,
-    "NIKKEI_RSI14": 46.7,
-    "NIKKEI_SMA20": 65124.08,
-    "NIKKEI_vs_52w_high_pct": 90.6,
-    "NIKKEI_5d_return_pct": 3.3,
-    "NIKKEI_20d_return_pct": 0.09,
+    "NIKKEI_close": 65018.95,
+    "NIKKEI_RSI14": 42.8,
+    "NIKKEI_SMA20": 65121.1,
+    "NIKKEI_vs_52w_high_pct": 89.8,
+    "NIKKEI_5d_return_pct": 1.57,
+    "NIKKEI_20d_return_pct": -1.51,
     "jp_moodring_score": 43.8
   },
   "kr_market": {
@@ -68,8 +68,8 @@
     "eu_moodring_score": 74.6
   },
   "global_context": {
-    "Gold": 4318.0,
-    "USDJPY": 158.31,
-    "USDTWD": 31.82
+    "Gold": 4308.0,
+    "USDJPY": 158.82,
+    "USDTWD": 31.8
   }
 }

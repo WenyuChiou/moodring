@@ -1,0 +1,75 @@
+{
+  "date": "2026-10-30",
+  "data_sources": {
+    "market_prices": "Yahoo Finance (yfinance)",
+    "tw_margin": "FinMind API (TWSE OpenData)",
+    "tw_institutional": "FinMind API (三大法人)",
+    "scoring_method": "Linear floor-range normalization with RSI and momentum components",
+    "behavioral_params": "Kahneman & Tversky (1979), Banerjee (1992)"
+  },
+  "us_market": {
+    "SPY_close": null,
+    "SPY_RSI14": 44.3,
+    "SPY_SMA20": null,
+    "SPY_SMA60": null,
+    "SPY_vs_52w_high_pct": null,
+    "SPY_5d_return_pct": null,
+    "SPY_20d_return_pct": null,
+    "VIX": 17.2,
+    "US_10Y_yield": 4.99
+  },
+  "tw_market": {
+    "TAIEX_close": 47036.0,
+    "TAIEX_RSI14": 30.7,
+    "TAIEX_SMA20": 47930.0,
+    "TAIEX_vs_52w_high_pct": 94.4,
+    "TAIEX_5d_return_pct": 0.46,
+    "TAIEX_20d_return_pct": -2.33,
+    "TSMC_close": 2415.0,
+    "TSMC_vs_52w_high_pct": 93.4
+  },
+  "tw_retail_indicators": {
+    "margin_balance": 9588759,
+    "margin_5d_change_pct": -0.45,
+    "margin_5d_trend": "DECREASING",
+    "institutional_net_TWD": -832.7,
+    "retail_net_est_TWD": 832.7,
+    "foreign_net_TWD": -688.2,
+    "foreign_consecutive_days": 1,
+    "foreign_consecutive_direction": "sell",
+    "TSMC_margin_balance": 35343,
+    "TSMC_margin_30d_change_pct": 20.7
+  },
+  "jp_market": {
+    "NIKKEI_close": 63767.0,
+    "NIKKEI_RSI14": 27.4,
+    "NIKKEI_SMA20": 66183.57,
+    "NIKKEI_vs_52w_high_pct": 88.1,
+    "NIKKEI_5d_return_pct": 1.37,
+    "NIKKEI_20d_return_pct": -4.47,
+    "jp_moodring_score": 20.3
+  },
+  "kr_market": {
+    "KOSPI_close": 5709.67,
+    "KOSPI_RSI14": 33.8,
+    "KOSPI_SMA20": 6090.27,
+    "KOSPI_vs_52w_high_pct": 62.6,
+    "KOSPI_5d_return_pct": 3.18,
+    "KOSPI_20d_return_pct": -16.9,
+    "kr_moodring_score": 11.2
+  },
+  "eu_market": {
+    "STOXX50_close": 6167.81,
+    "STOXX50_RSI14": 53.4,
+    "STOXX50_SMA20": 6170.89,
+    "STOXX50_vs_52w_high_pct": 94.1,
+    "STOXX50_5d_return_pct": -0.64,
+    "STOXX50_20d_return_pct": -1.61,
+    "eu_moodring_score": 55.6
+  },
+  "global_context": {
+    "Gold": 4023.0,
+    "USDJPY": 157.7,
+    "USDTWD": 32.58
+  }
+}

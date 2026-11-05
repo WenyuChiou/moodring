@@ -8,68 +8,68 @@
     "behavioral_params": "Kahneman & Tversky (1979), Banerjee (1992)"
   },
   "us_market": {
-    "SPY_close": null,
-    "SPY_RSI14": 36.8,
-    "SPY_SMA20": null,
-    "SPY_SMA60": null,
-    "SPY_vs_52w_high_pct": null,
-    "SPY_5d_return_pct": null,
-    "SPY_20d_return_pct": null,
-    "VIX": 16.61,
-    "US_10Y_yield": 4.89
+    "SPY_close": 733.15,
+    "SPY_RSI14": 35.5,
+    "SPY_SMA20": 765.53,
+    "SPY_SMA60": 765.99,
+    "SPY_vs_52w_high_pct": 94.1,
+    "SPY_5d_return_pct": -4.71,
+    "SPY_20d_return_pct": -5.27,
+    "VIX": 27.02,
+    "US_10Y_yield": 4.84
   },
   "tw_market": {
-    "TAIEX_close": 42060.0,
-    "TAIEX_RSI14": 19.5,
-    "TAIEX_SMA20": 47002.0,
-    "TAIEX_vs_52w_high_pct": 84.4,
-    "TAIEX_5d_return_pct": -10.58,
-    "TAIEX_20d_return_pct": -13.24,
-    "TSMC_close": 2255.0,
-    "TSMC_vs_52w_high_pct": 87.2
+    "TAIEX_close": 42949.0,
+    "TAIEX_RSI14": 21.4,
+    "TAIEX_SMA20": 47047.0,
+    "TAIEX_vs_52w_high_pct": 86.2,
+    "TAIEX_5d_return_pct": -8.69,
+    "TAIEX_20d_return_pct": -11.4,
+    "TSMC_close": null,
+    "TSMC_vs_52w_high_pct": null
   },
   "tw_retail_indicators": {
-    "margin_balance": 9514915,
-    "margin_5d_change_pct": -0.77,
+    "margin_balance": 9440455,
+    "margin_5d_change_pct": -1.21,
     "margin_5d_trend": "DECREASING",
-    "institutional_net_TWD": -1601.6,
-    "retail_net_est_TWD": 1601.6,
-    "foreign_net_TWD": -1499.0,
-    "foreign_consecutive_days": 5,
+    "institutional_net_TWD": -1233.9,
+    "retail_net_est_TWD": 1233.9,
+    "foreign_net_TWD": -1024.6,
+    "foreign_consecutive_days": 6,
     "foreign_consecutive_direction": "sell",
-    "TSMC_margin_balance": 35144,
-    "TSMC_margin_30d_change_pct": 22.27
+    "TSMC_margin_balance": 34596,
+    "TSMC_margin_30d_change_pct": 20.37
   },
   "jp_market": {
-    "NIKKEI_close": 61663.81,
-    "NIKKEI_RSI14": 28.1,
-    "NIKKEI_SMA20": 65269.33,
-    "NIKKEI_vs_52w_high_pct": 85.2,
-    "NIKKEI_5d_return_pct": -2.54,
-    "NIKKEI_20d_return_pct": -11.84,
+    "NIKKEI_close": 62188.63,
+    "NIKKEI_RSI14": 29.2,
+    "NIKKEI_SMA20": 65295.57,
+    "NIKKEI_vs_52w_high_pct": 85.9,
+    "NIKKEI_5d_return_pct": -1.71,
+    "NIKKEI_20d_return_pct": -11.09,
     "jp_moodring_score": 11.8
   },
   "kr_market": {
-    "KOSPI_close": 5455.08,
-    "KOSPI_RSI14": 47.8,
-    "KOSPI_SMA20": 5848.63,
-    "KOSPI_vs_52w_high_pct": 59.9,
-    "KOSPI_5d_return_pct": -9.27,
-    "KOSPI_20d_return_pct": -21.41,
+    "KOSPI_close": 5683.8,
+    "KOSPI_RSI14": 53.1,
+    "KOSPI_SMA20": 5860.07,
+    "KOSPI_vs_52w_high_pct": 62.4,
+    "KOSPI_5d_return_pct": -5.47,
+    "KOSPI_20d_return_pct": -18.12,
     "kr_moodring_score": 15.8
   },
   "eu_market": {
-    "STOXX50_close": 6144.56,
-    "STOXX50_RSI14": 46.5,
-    "STOXX50_SMA20": 6157.42,
-    "STOXX50_vs_52w_high_pct": 93.8,
-    "STOXX50_5d_return_pct": -0.33,
-    "STOXX50_20d_return_pct": -2.04,
-    "eu_moodring_score": 64.6
+    "STOXX50_close": 6231.54,
+    "STOXX50_RSI14": 51.8,
+    "STOXX50_SMA20": 6166.93,
+    "STOXX50_vs_52w_high_pct": 95.1,
+    "STOXX50_5d_return_pct": 0.39,
+    "STOXX50_20d_return_pct": 1.71,
+    "eu_moodring_score": 61.9
   },
   "global_context": {
-    "Gold": 4123.0,
-    "USDJPY": 158.1,
-    "USDTWD": 32.92
+    "Gold": 4112.0,
+    "USDJPY": 157.82,
+    "USDTWD": 33.03
   }
 }

@@ -1,162 +1,162 @@
 {
   "date": "2026-11-11",
-  "tw": {
-    "current_score": 26.9,
+  "us": {
+    "current_score": 68.8,
     "analogues": [
       {
-        "date": "2026-07-24",
-        "score": 27.0,
-        "distance": 0.1,
-        "fwd_5d": 4.94,
-        "fwd_10d": 9.11,
-        "fwd_20d": 7.25,
-        "context": "Score near 52w low, 20d move +5.5%"
+        "date": "2023-11-29",
+        "score": 68.8,
+        "distance": 0.0,
+        "fwd_5d": 0.03,
+        "fwd_10d": 3.5,
+        "fwd_20d": 5.28,
+        "context": "20d move +8.7%"
       },
       {
-        "date": "2024-08-23",
-        "score": 26.8,
-        "distance": 0.1,
-        "fwd_5d": 0.5,
-        "fwd_10d": -3.26,
-        "fwd_20d": 0.58,
-        "context": "Fear zone"
+        "date": "2023-06-01",
+        "score": 68.8,
+        "distance": 0.0,
+        "fwd_5d": 1.73,
+        "fwd_10d": 4.93,
+        "fwd_20d": 5.48,
+        "context": "Score near 52w high"
       },
       {
-        "date": "2015-09-08",
-        "score": 26.8,
-        "distance": 0.1,
-        "fwd_5d": 3.23,
-        "fwd_10d": 4.55,
-        "fwd_20d": 5.55,
-        "context": "Fear zone"
+        "date": "2013-04-25",
+        "score": 68.8,
+        "distance": 0.0,
+        "fwd_5d": 0.78,
+        "fwd_10d": 2.75,
+        "fwd_20d": 4.37,
+        "context": "Greed zone"
       },
       {
-        "date": "2011-11-28",
-        "score": 27.0,
-        "distance": 0.1,
-        "fwd_5d": 2.89,
-        "fwd_10d": 0.73,
-        "fwd_20d": 2.81,
-        "context": "20d move -9.1%"
+        "date": "2013-04-12",
+        "score": 68.8,
+        "distance": 0.0,
+        "fwd_5d": -2.09,
+        "fwd_10d": -0.35,
+        "fwd_20d": 2.91,
+        "context": "Greed zone"
       },
       {
-        "date": "2010-06-02",
-        "score": 27.0,
-        "distance": 0.1,
-        "fwd_5d": -1.72,
-        "fwd_10d": 4.45,
-        "fwd_20d": 0.81,
-        "context": "20d move -6.5%"
+        "date": "2013-02-08",
+        "score": 68.8,
+        "distance": 0.0,
+        "fwd_5d": 0.21,
+        "fwd_10d": -1.84,
+        "fwd_20d": 2.79,
+        "context": "Greed zone"
       }
     ],
     "summary": {
-      "n_similar": 93,
-      "avg_fwd_20d": 2.09,
-      "win_rate_20d": 76.0,
-      "best_analogue": "2026-07-29",
-      "worst_analogue": "2020-02-24"
+      "n_similar": 203,
+      "avg_fwd_20d": 1.3,
+      "win_rate_20d": 74.0,
+      "best_analogue": "2026-04-08",
+      "worst_analogue": "2010-04-22"
     }
   },
   "jp": {
-    "current_score": 16.0,
+    "current_score": 28.3,
     "analogues": [
       {
-        "date": "2020-04-02",
-        "score": 16.1,
+        "date": "2024-10-23",
+        "score": 28.3,
+        "distance": 0.0,
+        "fwd_5d": 3.08,
+        "fwd_10d": 3.35,
+        "fwd_20d": -0.21,
+        "context": "Fear zone"
+      },
+      {
+        "date": "2016-02-26",
+        "score": 28.3,
+        "distance": 0.0,
+        "fwd_5d": 5.1,
+        "fwd_10d": 4.64,
+        "fwd_20d": 5.84,
+        "context": "20d move -5.0%"
+      },
+      {
+        "date": "2009-11-26",
+        "score": 28.3,
+        "distance": 0.0,
+        "fwd_5d": 6.34,
+        "fwd_10d": 5.11,
+        "fwd_20d": 11.85,
+        "context": "Score near 52w low, 5d decline of -3.0%, 20d move -8.1%"
+      },
+      {
+        "date": "2018-10-30",
+        "score": 28.2,
         "distance": 0.1,
-        "fwd_5d": 8.57,
-        "fwd_10d": 8.26,
-        "fwd_20d": 10.11,
-        "context": "Score near 52w low, 5d decline of -4.5%, 20d move -15.6%"
+        "fwd_5d": 3.22,
+        "fwd_10d": 1.65,
+        "fwd_20d": 3.35,
+        "context": "20d move -11.5%"
       },
       {
-        "date": "2020-03-26",
-        "score": 15.8,
-        "distance": 0.2,
-        "fwd_5d": -4.53,
-        "fwd_10d": 3.65,
-        "fwd_20d": 4.1,
-        "context": "Score near 52w low, Sharp 5d rally of +11.6%, 20d move -16.8%"
-      },
-      {
-        "date": "2025-04-14",
-        "score": 16.3,
-        "distance": 0.3,
-        "fwd_5d": 0.88,
-        "fwd_10d": 5.47,
-        "fwd_20d": 11.1,
-        "context": "Score near 52w low, Sharp 5d rally of +9.1%, 20d move -8.3%"
-      },
-      {
-        "date": "2020-04-01",
-        "score": 15.6,
-        "distance": 0.4,
-        "fwd_5d": 7.13,
-        "fwd_10d": 8.22,
-        "fwd_20d": 11.78,
-        "context": "Score near 52w low, Sharp 5d decline of -7.6%, 20d move -14.3%"
-      },
-      {
-        "date": "2026-07-28",
-        "score": 16.6,
-        "distance": 0.6,
-        "fwd_5d": 6.04,
-        "fwd_10d": 7.04,
-        "fwd_20d": 0.07,
-        "context": "Score near 52w low, Sharp 5d decline of -8.8%, 20d move +6.7%"
+        "date": "2015-09-03",
+        "score": 28.2,
+        "distance": 0.1,
+        "fwd_5d": 0.64,
+        "fwd_10d": 1.37,
+        "fwd_20d": 0.02,
+        "context": "20d move -12.0%"
       }
     ],
     "summary": {
-      "n_similar": 46,
-      "avg_fwd_20d": 4.16,
-      "win_rate_20d": 67.0,
-      "best_analogue": "2020-03-23",
-      "worst_analogue": "2025-03-11"
+      "n_similar": 198,
+      "avg_fwd_20d": 1.47,
+      "win_rate_20d": 62.0,
+      "best_analogue": "2026-03-24",
+      "worst_analogue": "2020-03-05"
     }
   },
   "kr": {
-    "current_score": 15.1,
+    "current_score": 13.7,
     "analogues": [
       {
-        "date": "2011-10-05",
-        "score": 15.0,
-        "distance": 0.1,
-        "fwd_5d": 8.58,
-        "fwd_10d": 11.37,
-        "fwd_20d": 13.89,
-        "context": "Score near 52w low, 20d move -11.4%"
+        "date": "2020-03-17",
+        "score": 13.9,
+        "distance": 0.2,
+        "fwd_5d": -3.74,
+        "fwd_10d": 4.91,
+        "fwd_20d": 11.04,
+        "context": "Score near 52w low, Sharp 5d decline of -14.8%, 20d move -24.3%"
       },
       {
-        "date": "2022-09-30",
-        "score": 15.4,
+        "date": "2020-03-26",
+        "score": 14.0,
         "distance": 0.3,
-        "fwd_5d": 1.7,
-        "fwd_10d": 4.38,
-        "fwd_20d": 8.34,
-        "context": "Sharp 5d decline of -5.9%, 20d move -12.8%"
+        "fwd_5d": 2.29,
+        "fwd_10d": 8.89,
+        "fwd_20d": 12.02,
+        "context": "Score near 52w low, Sharp 5d rally of +15.7%, 20d move -17.9%"
       },
       {
-        "date": "2018-10-26",
-        "score": 14.8,
+        "date": "2020-03-25",
+        "score": 14.0,
         "distance": 0.3,
-        "fwd_5d": 3.4,
-        "fwd_10d": 2.91,
-        "fwd_20d": 1.5,
-        "context": "Score near 52w low, Sharp 5d decline of -6.0%, 20d move -13.3%"
+        "fwd_5d": -1.13,
+        "fwd_10d": 6.01,
+        "fwd_20d": 12.32,
+        "context": "Score near 52w low, Sharp 5d rally of +7.1%, 20d move -17.9%"
       },
       {
-        "date": "2011-08-08",
-        "score": 14.8,
+        "date": "2011-08-17",
+        "score": 13.4,
         "distance": 0.3,
-        "fwd_5d": 0.56,
-        "fwd_10d": -4.96,
-        "fwd_20d": -5.5,
-        "context": "Score near 52w low, Sharp 5d decline of -13.9%, 20d move -13.3%"
+        "fwd_5d": -7.29,
+        "fwd_10d": -0.66,
+        "fwd_20d": -2.78,
+        "context": "Score near 52w low, Sharp 5d rally of +5.1%, 20d move -11.2%"
       },
       {
         "date": "2026-08-10",
         "score": 14.7,
-        "distance": 0.4,
+        "distance": 1.0,
         "fwd_5d": 8.26,
         "fwd_10d": 11.18,
         "fwd_20d": -5.75,
@@ -165,67 +165,67 @@
     ],
     "summary": {
       "n_similar": 34,
-      "avg_fwd_20d": 4.46,
-      "win_rate_20d": 65.0,
-      "best_analogue": "2020-03-18",
-      "worst_analogue": "2011-08-04"
+      "avg_fwd_20d": 2.84,
+      "win_rate_20d": 55.0,
+      "best_analogue": "2020-03-20",
+      "worst_analogue": "2011-08-05"
     }
   },
   "eu": {
-    "current_score": 69.6,
+    "current_score": 76.7,
     "analogues": [
       {
-        "date": "2024-02-28",
-        "score": 69.6,
-        "distance": 0.0,
-        "fwd_5d": 0.65,
-        "fwd_10d": 2.39,
-        "fwd_20d": 4.05,
-        "context": "Score near 52w high, 20d move +5.1%"
-      },
-      {
-        "date": "2016-12-29",
-        "score": 69.6,
-        "distance": 0.0,
-        "fwd_5d": 1.51,
-        "fwd_10d": 1.61,
-        "fwd_20d": 0.96,
-        "context": "Score near 52w high, 20d move +7.2%"
-      },
-      {
-        "date": "2013-05-21",
-        "score": 69.6,
-        "distance": 0.0,
-        "fwd_5d": 0.5,
-        "fwd_10d": -2.34,
-        "fwd_20d": -4.28,
-        "context": "20d move +10.4%"
-      },
-      {
-        "date": "2024-02-26",
-        "score": 69.7,
+        "date": "2026-06-24",
+        "score": 76.8,
         "distance": 0.1,
-        "fwd_5d": 1.0,
-        "fwd_10d": 1.36,
-        "fwd_20d": 3.7,
+        "fwd_5d": 1.09,
+        "fwd_10d": -0.16,
+        "fwd_20d": 1.67,
+        "context": "Extreme Greed zone"
+      },
+      {
+        "date": "2013-01-07",
+        "score": 76.6,
+        "distance": 0.1,
+        "fwd_5d": 0.73,
+        "fwd_10d": 1.15,
+        "fwd_20d": -2.61,
         "context": "Score near 52w high"
       },
       {
-        "date": "2012-08-03",
-        "score": 69.5,
+        "date": "2013-01-03",
+        "score": 76.8,
         "distance": 0.1,
-        "fwd_5d": 2.13,
-        "fwd_10d": 4.17,
-        "fwd_20d": 2.87,
-        "context": "Score near 52w high, Sharp 5d rally of +5.4%"
+        "fwd_5d": 0.26,
+        "fwd_10d": 0.66,
+        "fwd_20d": 0.07,
+        "context": "Score near 52w high, 20d move +6.1%"
+      },
+      {
+        "date": "2026-06-01",
+        "score": 76.2,
+        "distance": 0.5,
+        "fwd_5d": 0.45,
+        "fwd_10d": 4.39,
+        "fwd_20d": 4.1,
+        "context": "Extreme Greed zone"
+      },
+      {
+        "date": "2026-08-20",
+        "score": 76.1,
+        "distance": 0.6,
+        "fwd_5d": 0.82,
+        "fwd_10d": -4.9,
+        "fwd_20d": -2.05,
+        "context": "Extreme Greed zone"
       }
     ],
     "summary": {
-      "n_similar": 177,
-      "avg_fwd_20d": 1.4,
-      "win_rate_20d": 65.0,
-      "best_analogue": "2009-04-08",
-      "worst_analogue": "2015-08-05"
+      "n_similar": 35,
+      "avg_fwd_20d": 0.13,
+      "win_rate_20d": 55.0,
+      "best_analogue": "2026-05-29",
+      "worst_analogue": "2013-01-10"
     }
   }
 }

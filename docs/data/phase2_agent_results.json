@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-25",
+  "date": "2026-11-26",
   "generated_by": "Claude (claude-opus-4-6)",
   "data_sources": {
     "market_prices": "Yahoo Finance (yfinance)",
@@ -9,67 +9,65 @@
     "behavioral_theory": "Prospect Theory (Kahneman & Tversky, 1979), Herding Model (Banerjee, 1992)"
   },
   "us_base_score": 42.0,
-  "tw_base_score": 18.5,
+  "tw_base_score": 19.7,
   "us_agent": {
     "adjusted_score_delta": -1,
     "sentiment_level": "NEUTRAL",
     "conviction": "HIGH",
-    "narrative": "最近美股 SPY 717漲漲跌跌，VIX 27.8，近 5 日 -1.8%，WSB 板也安靜了很多...沒有 meme stock 爆發，也沒有大崩盤，就這樣橫著。繼續 diamond hands 好了，等真正的訊號出來再說。FOMO 上車虧過一次就夠了。",
+    "narrative": "最近美股 SPY nan漲漲跌跌，VIX 28.3，近 5 日 +nan%，WSB 板也安靜了很多...沒有 meme stock 爆發，也沒有大崩盤，就這樣橫著。繼續 diamond hands 好了，等真正的訊號出來再說。FOMO 上車虧過一次就夠了。",
     "key_factors": [
-      "RSI 44.2 中性偏弱 — 無強力技術訊號",
-      "SPY 低於 SMA20/SMA60 雙線 — 下行趨勢仍在",
-      "VIX 27.8 偏高未破 30 — 恐慌升溫但非極端",
-      "20 日報酬 -7.2% — 顯著修正",
+      "RSI 44.9 中性偏弱 — 無強力技術訊號",
+      "VIX 28.3 偏高未破 30 — 恐慌升溫但非極端",
+      "20 日報酬 +nan% — 穩健上漲",
       "10Y 殖利率 4.85% — 聯準會降息預期分歧"
     ],
     "what_quant_misses": "252 天分位把 86.2 讀成偏熱，但有兩件事它算不進去。一是這波往上是幾根權值大陽線拉的，量能沒跟上，價量背離被平均值抹平。二是這週 Fed 點陣圖，利率預期一動估值分母先變，這種事件風險不在歷史分位裡。分數只講你站多高，不會告訴你退潮那天跌得多急。",
-    "forward_outlook": "美股 Moodring 42.0，偏弱，不太敢進場；五天跌了 -6.0 分，動能感覺在轉弱；SPY RSI 44.2，方向不明，觀望為主；VIX 27.8，還是有點緊張，不算穩；10Y 殖利率 4.85%，算高，估值壓力在；SPY 能不能守住 SMA20 (740) 蠻關鍵的。",
-    "narrative_en": "SPY at 717. RSI 44.2 (neutral). 5d return -1.8%. 20d return -7.2%. Moodring score 42.0 (neutral — no strong directional signal). VIX at 27.83 (elevated). Gold $3,605.",
-    "narrative_tw": "最近美股 SPY 717漲漲跌跌，VIX 27.8，近 5 日 -1.8%，WSB 板也安靜了很多...沒有 meme stock 爆發，也沒有大崩盤，就這樣橫著。繼續 diamond hands 好了，等真正的訊號出來再說。FOMO 上車虧過一次就夠了。",
+    "forward_outlook": "美股 Moodring 42.0，偏弱，不太敢進場；五天跌了 -6.0 分，動能感覺在轉弱；SPY RSI 44.9，方向不明，觀望為主；VIX 28.3，還是有點緊張，不算穩；10Y 殖利率 4.85%，算高，估值壓力在；SPY 能不能守住 SMA20 (nan) 蠻關鍵的。",
+    "narrative_en": "SPY at ?. RSI 44.9 (neutral). Moodring score 42.0 (neutral — no strong directional signal). VIX at 28.29 (elevated). Gold $3,604.",
+    "narrative_tw": "最近美股 SPY nan漲漲跌跌，VIX 28.3，近 5 日 +nan%，WSB 板也安靜了很多...沒有 meme stock 爆發，也沒有大崩盤，就這樣橫著。繼續 diamond hands 好了，等真正的訊號出來再說。FOMO 上車虧過一次就夠了。",
     "key_factors_tw": [
-      "RSI 44.2 中性偏弱 — 無強力技術訊號",
-      "SPY 低於 SMA20/SMA60 雙線 — 下行趨勢仍在",
-      "VIX 27.8 偏高未破 30 — 恐慌升溫但非極端",
-      "20 日報酬 -7.2% — 顯著修正",
+      "RSI 44.9 中性偏弱 — 無強力技術訊號",
+      "VIX 28.3 偏高未破 30 — 恐慌升溫但非極端",
+      "20 日報酬 +nan% — 穩健上漲",
       "10Y 殖利率 4.85% — 聯準會降息預期分歧"
     ],
-    "watch_for_tw": "SPY 能否收復 SMA20 (740) 是短線趨勢轉折關鍵；VIX 27.8 需回落 20 以下才代表恐慌解除；10Y 殖利率 4.85% — 注意聯準會措辭及就業數據。",
+    "watch_for_tw": "SPY 能否收復 SMA20 (nan) 是短線趨勢轉折關鍵；VIX 28.3 需回落 20 以下才代表恐慌解除；10Y 殖利率 4.85% — 注意聯準會措辭及就業數據。",
     "action": "積極加碼",
     "action_thresholds": {
       "market": "us",
       "lookback_days": 252,
-      "sample_size": 218,
-      "computed_at": "2026-11-25",
+      "sample_size": 217,
+      "computed_at": "2026-11-26",
       "p20": 44.5,
-      "p40": 55.5,
-      "p60": 72.4,
+      "p40": 55.8,
+      "p60": 72.5,
       "p80": 82.3,
       "fallback": false
     },
-    "cross_market_summary": "US Moodring 41.0；SPY RSI 44.2 中性；VIX 27.83 恐慌偏高；20 日 -7.2%；SPY 低於 SMA20 (740)。"
+    "cross_market_summary": "US Moodring 41.0；SPY RSI 44.9 中性；VIX 28.29 恐慌偏高；20 日 +nan%；SPY 高於 SMA20 (nan)。"
   },
   "tw_agent": {
     "adjusted_score_delta": 2,
     "sentiment_level": "EXTREME_FEAR",
     "conviction": "MEDIUM",
-    "narrative": "慘了！台股 40122 跌不停，三大法人連賣 8 天，台積電 nan 也在跌...PTT stock 板一片哀號，大家都在說要畢業了。我的融資快要斷頭，朋友說要停損，但我捨不得割，繼續套牢下去。這次真的是韭菜了。",
+    "narrative": "慘了！台股 38961 跌不停，三大法人連賣 8 天，台積電 2145 也在跌...PTT stock 板一片哀號，大家都在說要畢業了。我的融資快要斷頭，朋友說要停損，但我捨不得割，繼續套牢下去。這次真的是韭菜了。",
     "key_factors": [
       "台積電融資月增 -9.9% — 融資增速正常",
       "融資餘額 5 日 +4.87% — 散戶槓桿擴張",
       "外資賣超 1236.5億，連賣 8日 — 外資賣壓持續",
       "散戶估計買超 814億 — 散戶逆勢接刀",
-      "TAIEX RSI 43.4 — 中性偏弱，無自動反彈護盾"
+      "TAIEX RSI 43.9 — 中性偏弱，無自動反彈護盾"
     ],
     "what_quant_misses": "分位把 94.0 讀成極熱，但有兩件事它量不出來。一是外資連買雖到 5 天，方向能不能延續才是盤面關鍵，這比分數更早定生死。二是這波靠指數權值撐、台積電還沒補漲，擴散度不夠，這種結構被單一分數平均掉。台股從中性急拉回貪婪常是幾天內的事，追的人容易買在半山腰，該盯的是籌碼連不連續，不是分數落哪一區。",
-    "forward_outlook": "台股 Moodring 18.5，盤感很差，先躺著比較安全；外資連賣 8 天，等他們翻買再說，至少要連買 2-3 天才算確認；TAIEX SMA20 (41959) 守住才算穩，失守要小心。",
-    "narrative_en": "TAIEX at 40,122. Moodring score 18.5 (extreme fear — historically strong buy signal). Foreign investors net sell TWD 1236.5B, 8d consecutive sell. Margin balance 5d change +4.9%. TSMC margin 30d change -9.9%.",
-    "narrative_tw": "慘了！台股 40122 跌不停，三大法人連賣 8 天，台積電 nan 也在跌...PTT stock 板一片哀號，大家都在說要畢業了。我的融資快要斷頭，朋友說要停損，但我捨不得割，繼續套牢下去。這次真的是韭菜了。",
+    "forward_outlook": "台股 Moodring 19.7，盤感很差，先躺著比較安全；外資連賣 8 天，等他們翻買再說，至少要連買 2-3 天才算確認；TAIEX SMA20 (41556) 守住才算穩，失守要小心。",
+    "narrative_en": "TAIEX at 38,961. Moodring score 19.7 (extreme fear — historically strong buy signal). Foreign investors net sell TWD 1236.5B, 8d consecutive sell. Margin balance 5d change +4.9%. TSMC margin 30d change -9.9%.",
+    "narrative_tw": "慘了！台股 38961 跌不停，三大法人連賣 8 天，台積電 2145 也在跌...PTT stock 板一片哀號，大家都在說要畢業了。我的融資快要斷頭，朋友說要停損，但我捨不得割，繼續套牢下去。這次真的是韭菜了。",
     "key_factors_tw": [
       "台積電融資月增 -9.9% — 融資增速正常",
       "融資餘額 5 日 +4.87% — 散戶槓桿擴張",
       "外資賣超 1236.5億，連賣 8日 — 外資賣壓持續",
       "散戶估計買超 814億 — 散戶逆勢接刀",
-      "TAIEX RSI 43.4 — 中性偏弱，無自動反彈護盾"
+      "TAIEX RSI 43.9 — 中性偏弱，無自動反彈護盾"
     ],
     "watch_for_tw": "外資已連賣 8 日，翻買（連買 2-3 天）才是反彈確認訊號；觀察 TAIEX 能否守住 SMA20 及外資方向性轉變。",
     "action": "積極加碼",
@@ -77,51 +75,51 @@
       "market": "tw",
       "lookback_days": 252,
       "sample_size": 135,
-      "computed_at": "2026-11-25",
-      "p20": 41.8,
+      "computed_at": "2026-11-26",
+      "p20": 41.4,
       "p40": 47.2,
       "p60": 71.0,
       "p80": 92.8,
       "fallback": false
     },
-    "cross_market_summary": "TW Moodring 20.5；TAIEX RSI 43.4 中性偏弱；外資連賣 8 天（1236.5億）；散戶逆勢接刀 814億；台積電融資月減 9.9%。"
+    "cross_market_summary": "TW Moodring 21.7；TAIEX RSI 43.9 中性偏弱；外資連賣 8 天（1236.5億）；散戶逆勢接刀 814億；台積電融資月減 9.9%。"
   },
   "summary": {
     "us_final_score": 41.0,
-    "tw_final_score": 20.5,
-    "divergence": 20.5,
-    "cross_market_view": "US (41.0) 和 TW (20.5) 分歧 20.5 — TW 回升至恐懼區，US 仍偏弱。US RSI 44.2 中性，台股 RSI 43.4 中性偏弱。TW 外資連賣 8 天（1236.5億）；散戶逆勢接刀 814億；台積電融資月減 9.9%。韓股 (9.4) 恐懼區，歐股 Moodring 33.9 仍在恐懼區，RSI 34.1 接近超賣。",
-    "actionable_signal": "積極加碼 — US RSI 44.2 中性，趨勢持續觀察。 TW 散戶槓桿加速追買+外資賣超，不宜追多。等外資翻買連確認（2-3 天+）再動。"
+    "tw_final_score": 21.7,
+    "divergence": 19.3,
+    "cross_market_view": "US (41.0) 和 TW (21.7) 分歧 19.3 — TW 回升至恐懼區，US 仍偏弱。US RSI 44.9 中性，台股 RSI 43.9 中性偏弱。TW 外資連賣 8 天（1236.5億）；散戶逆勢接刀 814億；台積電融資月減 9.9%。韓股 (12.1) 恐懼區，歐股 Moodring 33.9 仍在恐懼區，RSI 36.7 偏弱。",
+    "actionable_signal": "積極加碼 — US RSI 44.9 中性，趨勢持續觀察。 TW 散戶槓桿加速追買+外資賣超，不宜追多。等外資翻買連確認（2-3 天+）再動。"
   },
   "jp_agent": {
     "adjusted_score_delta": 0,
     "sentiment_level": "EXTREME_FEAR",
     "conviction": "MEDIUM",
-    "narrative": "日經 58645 一片慘烈，円高來了，出口股全部在跌...渡邊太太們的外幣部位也虧大了。BOJ 到底要怎麼搞？NISA 帳戶裡的配當股也在縮水，真的要先出場了。",
+    "narrative": "日經 58054 一片慘烈，円高來了，出口股全部在跌...渡邊太太們的外幣部位也虧大了。BOJ 到底要怎麼搞？NISA 帳戶裡的配當股也在縮水，真的要先出場了。",
     "key_factors": [
-      "日經 RSI 37.9 中性",
-      "5 日報酬 -1.7% — 溫和下跌",
-      "20 日報酬 -6.5% — 中等回調",
-      "USDJPY 159.2 — 日圓偏弱，出口股獲利"
+      "日經 RSI 38.5 中性",
+      "5 日報酬 -1.4% — 溫和下跌",
+      "20 日報酬 -6.7% — 中等回調",
+      "USDJPY 159.1 — 日圓偏弱，出口股獲利"
     ],
     "what_quant_misses": "BOJ 利率決策和日圓套利交易平倉是目前日股最大不確定因素，非技術指標可以量化。日圓一旦快速升值（如 USD/JPY 跌破 155），可能引發套利交易大規模平倉。",
-    "forward_outlook": "日股 Moodring 13.1，怕了，先躺著；五天跌了 -38.8 分，感覺在轉折；USD/JPY 159.2，円安繼續幫出口股衝；RSI 37.9 快超賣了。",
-    "narrative_en": "Nikkei at 58,645. RSI 37.9 (neutral). 5d return -1.7%. 20d return -6.5%. Moodring score 13.1 (extreme fear — historically strong buy signal).",
-    "narrative_tw": "日經 58645 一片慘烈，円高來了，出口股全部在跌...渡邊太太們的外幣部位也虧大了。BOJ 到底要怎麼搞？NISA 帳戶裡的配當股也在縮水，真的要先出場了。",
+    "forward_outlook": "日股 Moodring 15.4，怕了，先躺著；五天跌了 -31.4 分，感覺在轉折；USD/JPY 159.1，円安繼續幫出口股衝；RSI 38.5 快超賣了。",
+    "narrative_en": "Nikkei at 58,054. RSI 38.5 (neutral). 5d return -1.4%. 20d return -6.7%. Moodring score 15.4 (extreme fear — historically strong buy signal).",
+    "narrative_tw": "日經 58054 一片慘烈，円高來了，出口股全部在跌...渡邊太太們的外幣部位也虧大了。BOJ 到底要怎麼搞？NISA 帳戶裡的配當股也在縮水，真的要先出場了。",
     "key_factors_tw": [
-      "日經 RSI 37.9 中性",
-      "5 日報酬 -1.7% — 溫和下跌",
-      "20 日報酬 -6.5% — 中等回調",
-      "USDJPY 159.2 — 日圓偏弱，出口股獲利"
+      "日經 RSI 38.5 中性",
+      "5 日報酬 -1.4% — 溫和下跌",
+      "20 日報酬 -6.7% — 中等回調",
+      "USDJPY 159.1 — 日圓偏弱，出口股獲利"
     ],
-    "watch_for_tw": "USD/JPY 159.2 円安，BOJ 什麼時候出手干預是最大不確定；日經 RSI 37.9，等一個方向性突破。",
+    "watch_for_tw": "USD/JPY 159.1 円安，BOJ 什麼時候出手干預是最大不確定；日經 RSI 38.5，等一個方向性突破。",
     "action": "積極加碼",
-    "cross_market_summary": "日經 Moodring 13.1 恐懼；RSI 37.9 偏弱；20 日 -6.5%；USDJPY 159.2 日圓偏弱（利出口）。",
+    "cross_market_summary": "日經 Moodring 15.4 恐懼；RSI 38.5 偏弱；20 日 -6.7%；USDJPY 159.1 日圓偏弱（利出口）。",
     "action_thresholds": {
       "market": "jp",
       "lookback_days": 252,
       "sample_size": 252,
-      "computed_at": "2026-11-25",
+      "computed_at": "2026-11-26",
       "p20": 47.9,
       "p40": 53.3,
       "p60": 57.2,
@@ -133,31 +131,31 @@
     "adjusted_score_delta": 0,
     "sentiment_level": "EXTREME_FEAR",
     "conviction": "MEDIUM",
-    "narrative": "KOSPI 5006 崩盤！三星、海力士一起跌，外資鯨魚在大賣...Naver 股版上 개미（散戶螞蟻）哀鴻遍野，信用交易帳戶紛紛被追繳。三星信仰還撐得住嗎？DRAM 需求真的不行了？先減碼再說。",
+    "narrative": "KOSPI 4784 崩盤！三星、海力士一起跌，外資鯨魚在大賣...Naver 股版上 개미（散戶螞蟻）哀鴻遍野，信用交易帳戶紛紛被追繳。三星信仰還撐得住嗎？DRAM 需求真的不行了？先減碼再說。",
     "key_factors": [
-      "KOSPI RSI 35.4 中性",
-      "5 日報酬 +0.8% — 持平",
-      "20 日報酬 -11.2% — 中期回調",
-      "Moodring 9.4 — 逆勢買入區間"
+      "KOSPI RSI 36.7 中性",
+      "5 日報酬 -5.6% — 小幅下跌",
+      "20 日報酬 -20.4% — 中期回調",
+      "Moodring 12.1 — 逆勢買入區間"
     ],
     "what_quant_misses": "三星/SK 海力士記憶體週期、DRAM 現貨價格和韓元匯率是韓股特有催化劑，Z-score 無法量化。AI 記憶體需求預期是近期主要題材。",
-    "forward_outlook": "韓股 Moodring 9.4，怕了，先扛著；KOSPI RSI 35.4 快超賣了，小心；KOSPI SMA20 (5322) 能不能守住蠻關鍵。",
-    "narrative_en": "KOSPI at 5,006. RSI 35.4 (neutral). 5d return +0.8%. 20d return -11.2%. Moodring score 9.4 (extreme fear — historically strong buy signal).",
-    "narrative_tw": "KOSPI 5006 崩盤！三星、海力士一起跌，外資鯨魚在大賣...Naver 股版上 개미（散戶螞蟻）哀鴻遍野，信用交易帳戶紛紛被追繳。三星信仰還撐得住嗎？DRAM 需求真的不行了？先減碼再說。",
+    "forward_outlook": "韓股 Moodring 12.1，怕了，先扛著；五天漲了 +5.1 分，衝勁蠻強；KOSPI RSI 36.7 快超賣了，小心；近五天 KOSPI -5.6%，跌比較急；KOSPI SMA20 (5261) 能不能守住蠻關鍵。",
+    "narrative_en": "KOSPI at 4,784. RSI 36.7 (neutral). 5d return -5.6%. 20d return -20.4%. Moodring score 12.1 (extreme fear — historically strong buy signal).",
+    "narrative_tw": "KOSPI 4784 崩盤！三星、海力士一起跌，外資鯨魚在大賣...Naver 股版上 개미（散戶螞蟻）哀鴻遍野，信用交易帳戶紛紛被追繳。三星信仰還撐得住嗎？DRAM 需求真的不行了？先減碼再說。",
     "key_factors_tw": [
-      "KOSPI RSI 35.4 中性",
-      "5 日報酬 +0.8% — 持平",
-      "20 日報酬 -11.2% — 中期回調",
-      "Moodring 9.4 — 逆勢買入區間"
+      "KOSPI RSI 36.7 中性",
+      "5 日報酬 -5.6% — 小幅下跌",
+      "20 日報酬 -20.4% — 中期回調",
+      "Moodring 12.1 — 逆勢買入區間"
     ],
-    "watch_for_tw": "KOSPI RSI 35.4，三星/SK 海力士 AI 記憶體出貨是最大催化劑。",
+    "watch_for_tw": "KOSPI RSI 36.7，三星/SK 海力士 AI 記憶體出貨是最大催化劑；近五天 KOSPI -5.6%，跌比較急，支撐在哪先確認。",
     "action": "積極加碼",
-    "cross_market_summary": "韓股 Moodring 9.4 恐懼；KOSPI RSI 35.4 偏弱；近 5 日 +0.8%；月報酬 -11.2%。",
+    "cross_market_summary": "韓股 Moodring 12.1 恐懼；KOSPI RSI 36.7 偏弱；近 5 日 -5.6%；月報酬 -20.4%。",
     "action_thresholds": {
       "market": "kr",
       "lookback_days": 252,
       "sample_size": 252,
-      "computed_at": "2026-11-25",
+      "computed_at": "2026-11-26",
       "p20": 49.0,
       "p40": 56.6,
       "p60": 61.6,
@@ -169,31 +167,31 @@
     "adjusted_score_delta": 0,
     "sentiment_level": "FEARFUL",
     "conviction": "LOW",
-    "narrative": "歐股近月跌 -4.4%，ECB 升息路徑還不清楚，能源、銀行輪流出事...我的被動 ETF 部位縮水，但比主動選股好一點。ESG 主題股跌更多，ESG 溢價好像在消退？先觀望，等 ECB 明確再說。",
+    "narrative": "歐股近月跌 -2.6%，ECB 升息路徑還不清楚，能源、銀行輪流出事...我的被動 ETF 部位縮水，但比主動選股好一點。ESG 主題股跌更多，ESG 溢價好像在消退？先觀望，等 ECB 明確再說。",
     "key_factors": [
-      "STOXX50 RSI 34.1 接近超賣 — 技術支撐區",
-      "5 日報酬 -4.2% — 近期持續下跌",
-      "20 日報酬 -4.4% — 中期回調",
+      "STOXX50 RSI 36.7 中性",
+      "5 日報酬 -3.4% — 近期持續下跌",
+      "20 日報酬 -2.6% — 中期回調",
       "Moodring 33.9 — 恐懼區，需更多降息確信訊號"
     ],
     "what_quant_misses": "ECB 政策路徑、俄烏局勢和德國財政刺激的規模是歐股非對稱風險的主要來源，這些因素使技術超賣的反彈幅度難以預估。",
-    "forward_outlook": "歐股 Moodring 33.9，怕了，等止跌；五天跌了 -20.5 分，注意修正；STOXX50 RSI 34.1 快超賣了；近五天 STOXX50 -4.2%，跌比較快；STOXX50 SMA20 (6193) 是近期重要支撐。",
-    "narrative_en": "STOXX50 at 5,894. RSI 34.1 (near oversold). 5d return -4.2%. 20d return -4.4%. Moodring score 33.9 (fearful — contrarian opportunity building).",
-    "narrative_tw": "歐股近月跌 -4.4%，ECB 升息路徑還不清楚，能源、銀行輪流出事...我的被動 ETF 部位縮水，但比主動選股好一點。ESG 主題股跌更多，ESG 溢價好像在消退？先觀望，等 ECB 明確再說。",
+    "forward_outlook": "歐股 Moodring 33.9，怕了，等止跌；五天跌了 -20.5 分，注意修正；STOXX50 RSI 36.7 快超賣了；近五天 STOXX50 -3.4%，跌比較快；STOXX50 SMA20 (6207) 是近期重要支撐。",
+    "narrative_en": "STOXX50 at 6,004. RSI 36.7 (neutral). 5d return -3.4%. 20d return -2.6%. Moodring score 33.9 (fearful — contrarian opportunity building).",
+    "narrative_tw": "歐股近月跌 -2.6%，ECB 升息路徑還不清楚，能源、銀行輪流出事...我的被動 ETF 部位縮水，但比主動選股好一點。ESG 主題股跌更多，ESG 溢價好像在消退？先觀望，等 ECB 明確再說。",
     "key_factors_tw": [
-      "STOXX50 RSI 34.1 接近超賣 — 技術支撐區",
-      "5 日報酬 -4.2% — 近期持續下跌",
-      "20 日報酬 -4.4% — 中期回調",
+      "STOXX50 RSI 36.7 中性",
+      "5 日報酬 -3.4% — 近期持續下跌",
+      "20 日報酬 -2.6% — 中期回調",
       "Moodring 33.9 — 恐懼區，需更多降息確信訊號"
     ],
-    "watch_for_tw": "STOXX50 RSI 34.1 超賣，技術面反彈條件有了；近五天 STOXX50 -4.2%，地緣政治溢價難量化。",
+    "watch_for_tw": "STOXX50 RSI 36.7，ECB 怎麼降息才是真正影響歐股的變數；近五天 STOXX50 -3.4%，地緣政治溢價難量化。",
     "action": "積極加碼",
-    "cross_market_summary": "歐股 Moodring 33.9 恐懼區；STOXX50 RSI 34.1 接近超賣；近 5 日 -4.2%；20 日 -4.4%。",
+    "cross_market_summary": "歐股 Moodring 33.9 恐懼區；STOXX50 RSI 36.7 偏弱；近 5 日 -3.4%；20 日 -2.6%。",
     "action_thresholds": {
       "market": "eu",
       "lookback_days": 252,
       "sample_size": 252,
-      "computed_at": "2026-11-25",
+      "computed_at": "2026-11-26",
       "p20": 46.3,
       "p40": 49.8,
       "p60": 57.4,
@@ -201,8 +199,8 @@
       "fallback": false
     }
   },
-  "global_narrative": "2026-11-25：美股 SPY RSI 44.2 中性，VIX 27.83，Moodring 41.0 偏弱中性。台股回升至 Moodring 20.5，TAIEX RSI 43.4，外資連賣 8 天（1236.5億），散戶逆勢接刀 814億。日經 Moodring 13.1 恐懼，USDJPY 159.2 日圓偏弱。韓股 Moodring 9.4 由上週恐懼區回落恐懼，KOSPI 近 5 日 +0.8%。歐股 Moodring 33.9 恐懼區，STOXX50 RSI 34.1 接近超賣，20 日 -4.4%。整體：US/EU 技術偏空，等外資翻買確認。",
-  "jp_base_score": 13.1,
-  "kr_base_score": 9.4,
+  "global_narrative": "2026-11-26：美股 SPY RSI 44.9 中性，VIX 28.29，Moodring 41.0 偏弱中性。台股回升至 Moodring 21.7，TAIEX RSI 43.9，外資連賣 8 天（1236.5億），散戶逆勢接刀 814億。日經 Moodring 15.4 恐懼，USDJPY 159.1 日圓偏弱。韓股 Moodring 12.1 由上週恐懼區回落恐懼，KOSPI 近 5 日 -5.6%。歐股 Moodring 33.9 恐懼區，STOXX50 RSI 36.7 偏弱，20 日 -2.6%。整體：US/EU 技術偏空，等外資翻買確認。",
+  "jp_base_score": 15.4,
+  "kr_base_score": 12.1,
   "eu_base_score": 33.9
 }
